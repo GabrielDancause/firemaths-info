@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Net Worth Tracker — Calculate Assets and Liabilities</title>
+    <meta name="description" content="Calculate your net worth by tracking your assets and liabilities. See your overall financial picture with our interactive net worth calculator.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Net Worth Tracker",
+      "description": "Calculate your net worth by tracking your assets and liabilities.",
+      "url": "https://firemaths.info/net-worth-tracker.html",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any"
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0c0a00;
+            color: #e0d8c8;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 24px 40px;
+            background: linear-gradient(180deg, #1a0f00 0%, #0c0a00 100%);
+            position: relative;
+            border-bottom: 1px solid #2a2010;
+        }
+        .header-content { position: relative; z-index: 1; }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, #D4A017 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p {
+            color: #888;
+            font-size: 1.05rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: #141008;
+            border: 2px solid #2a2010;
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .section-title {
+            color: #e0d8c8;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2010;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #e0d8c8;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: #888;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            pointer-events: none;
+        }
+        .prefix { left: 16px; }
+        .suffix { right: 16px; }
+
+        input[type="number"] {
+            width: 100%;
+            background: #0c0a00;
+            border: 1px solid #2a2010;
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #D4A017;
+        }
+
+        .input-wrapper.has-prefix input { padding-left: 32px; }
+        .input-wrapper.has-suffix input { padding-right: 32px; }
+
+        .results {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .result-box {
+            background: #0c0a00;
+            border: 1px solid #2a2010;
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .result-box.highlight {
+            border-color: #D4A017;
+            background: linear-gradient(180deg, rgba(212,160,23,0.05) 0%, transparent 100%);
+        }
+
+        .result-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .result-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .result-value.negative {
+            color: #ff6b6b;
+        }
+
+        .result-box.highlight .result-value {
+            color: #D4A017;
+        }
+
+        .result-box.highlight .result-value.negative {
+            color: #ff6b6b;
+        }
+
+        .result-sub {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: transparent;
+            border: 1px solid #2a2010;
+            color: #888;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .copy-btn:hover {
+            border-color: #D4A017;
+            color: #D4A017;
+        }
+
+        .copy-btn.copied {
+            background: #D4A017;
+            color: #0c0a00;
+            border-color: #D4A017;
+        }
+
+        .content-section {
+            max-width: 760px;
+            margin: 0 auto 80px;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 40px 0 16px;
+        }
+
+        .content-section p {
+            color: #888;
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+
+        .content-section ul {
+            color: #888;
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .content-section li {
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid #2a2010;
+            background: #141008;
+        }
+        .footer a { color: #D4A017; text-decoration: none; font-weight: 500;}
+        .footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .calculator-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2rem; }
+            .card { padding: 24px; }
+            .result-value { font-size: 1.75rem; }
+        }
+
+        .mt-32 { margin-top: 32px; }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <h1>Net Worth Tracker</h1>
+        <p>Calculate your net worth by tracking your assets and liabilities to understand your financial health.</p>
+    </div>
+</header>
+
+<main class="container">
+    <div class="calculator-grid">
+        <!-- Inputs -->
+        <div class="card">
+            <h2 class="section-title">Assets</h2>
+            <div class="input-group">
+                <label for="cash">Cash & Bank Accounts</label>
+                <div class="input-wrapper has-prefix">
+                    <span class="prefix">$</span>
+                    <input type="number" id="cash" value="10000" min="0" step="100">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="investments">Investments (Stocks, Crypto, Retirement)</label>
+                <div class="input-wrapper has-prefix">
+                    <span class="prefix">$</span>
+                    <input type="number" id="investments" value="50000" min="0" step="1000">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="realEstate">Real Estate (Home Value, Properties)</label>
+                <div class="input-wrapper has-prefix">
+                    <span class="prefix">$</span>
+                    <input type="number" id="realEstate" value="300000" min="0" step="1000">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="vehicles">Vehicles & Other Valuables</label>
+                <div class="input-wrapper has-prefix">
+                    <span class="prefix">$</span>
+                    <input type="number" id="vehicles" value="20000" min="0" step="500">
+                </div>
+            </div>
+
+            <h2 class="section-title mt-32">Liabilities</h2>
+            <div class="input-group">
+                <label for="mortgages">Mortgages</label>
+                <div class="input-wrapper has-prefix">
+                    <span class="prefix">$</span>
+                    <input type="number" id="mortgages" value="200000" min="0" step="1000">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="autoLoans">Auto Loans</label>
+                <div class="input-wrapper has-prefix">
+                    <span class="prefix">$</span>
+                    <input type="number" id="autoLoans" value="10000" min="0" step="100">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="studentLoans">Student Loans</label>
+                <div class="input-wrapper has-prefix">
+                    <span class="prefix">$</span>
+                    <input type="number" id="studentLoans" value="15000" min="0" step="100">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="otherDebt">Credit Cards & Other Debt</label>
+                <div class="input-wrapper has-prefix">
+                    <span class="prefix">$</span>
+                    <input type="number" id="otherDebt" value="5000" min="0" step="100">
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="card results">
+            <div class="result-box highlight">
+                <div class="result-label">Your Net Worth</div>
+                <div class="result-value" id="res-net-worth">$150,000</div>
+                <div class="result-sub">Total Assets minus Total Liabilities</div>
+                <button class="copy-btn" data-copy="res-net-worth" aria-label="Copy Net Worth">Copy</button>
+            </div>
+
+            <div class="result-box">
+                <div class="result-label">Total Assets</div>
+                <div class="result-value" id="res-assets">$380,000</div>
+                <button class="copy-btn" data-copy="res-assets" aria-label="Copy Total Assets">Copy</button>
+            </div>
+
+            <div class="result-box">
+                <div class="result-label">Total Liabilities</div>
+                <div class="result-value" id="res-liabilities">$230,000</div>
+                <button class="copy-btn" data-copy="res-liabilities" aria-label="Copy Total Liabilities">Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <article class="content-section">
+        <h2>What is Net Worth?</h2>
+        <p>Your net worth is the most accurate measure of your overall financial health. It represents the value of everything you own (your <strong>assets</strong>) minus the value of everything you owe (your <strong>liabilities</strong>). Unlike your income, which only shows what you earn, your net worth provides a comprehensive picture of your financial standing at any given point in time.</p>
+
+        <h2>How to Calculate Your Net Worth</h2>
+        <p>Calculating your net worth is straightforward. Just follow these steps:</p>
+        <ul>
+            <li><strong>Add up your assets:</strong> Include the balances in your checking and savings accounts, the current market value of your investment portfolios, your retirement accounts, the estimated value of any real estate you own, and the value of large personal assets like vehicles.</li>
+            <li><strong>Add up your liabilities:</strong> Tally the outstanding balances on your mortgage, auto loans, student loans, credit card debt, and any other personal loans or debts.</li>
+            <li><strong>Subtract liabilities from assets:</strong> The resulting number is your net worth. It can be positive (you own more than you owe) or negative (you owe more than you own).</li>
+        </ul>
+
+        <h2>Why Tracking Net Worth Matters</h2>
+        <p>Consistently tracking your net worth is essential for achieving long-term financial goals, such as saving for retirement or reaching financial independence (FIRE).</p>
+        <ul>
+            <li><strong>Measures True Progress:</strong> A high income does not necessarily equate to wealth if you are spending it all. Net worth shows if you are actually building wealth over time.</li>
+            <li><strong>Highlights Debt:</strong> It forces you to confront your liabilities and motivates you to pay down high-interest debt, which directly increases your net worth.</li>
+            <li><strong>Informs Financial Decisions:</strong> Knowing your net worth helps you make better decisions about big purchases, investments, and your overall budget.</li>
+        </ul>
+    </article>
+</main>
+
+<footer class="footer">
+    <div class="container" style="padding:0">
+        © 2025 <a href="https://firemaths.info">firemaths.info</a> · A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const inputs = {
+            cash: document.getElementById('cash'),
+            investments: document.getElementById('investments'),
+            realEstate: document.getElementById('realEstate'),
+            vehicles: document.getElementById('vehicles'),
+            mortgages: document.getElementById('mortgages'),
+            autoLoans: document.getElementById('autoLoans'),
+            studentLoans: document.getElementById('studentLoans'),
+            otherDebt: document.getElementById('otherDebt')
+        };
+
+        const outputs = {
+            netWorth: document.getElementById('res-net-worth'),
+            assets: document.getElementById('res-assets'),
+            liabilities: document.getElementById('res-liabilities')
+        };
+
+        const copyButtons = document.querySelectorAll('.copy-btn');
+
+        const formatCurrency = (value) => {
+            // Keep the minus sign for negative numbers
+            const isNegative = value < 0;
+            const formatted = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            }).format(Math.abs(value));
+
+            return isNegative ? `-${formatted}` : formatted;
+        };
+
+        const calculateNetWorth = () => {
+            // Assets
+            const cash = parseFloat(inputs.cash.value) || 0;
+            const investments = parseFloat(inputs.investments.value) || 0;
+            const realEstate = parseFloat(inputs.realEstate.value) || 0;
+            const vehicles = parseFloat(inputs.vehicles.value) || 0;
+
+            // Liabilities
+            const mortgages = parseFloat(inputs.mortgages.value) || 0;
+            const autoLoans = parseFloat(inputs.autoLoans.value) || 0;
+            const studentLoans = parseFloat(inputs.studentLoans.value) || 0;
+            const otherDebt = parseFloat(inputs.otherDebt.value) || 0;
+
+            const totalAssets = cash + investments + realEstate + vehicles;
+            const totalLiabilities = mortgages + autoLoans + studentLoans + otherDebt;
+            const netWorth = totalAssets - totalLiabilities;
+
+            // Update UI
+            outputs.assets.textContent = formatCurrency(totalAssets);
+            outputs.liabilities.textContent = formatCurrency(totalLiabilities);
+            outputs.netWorth.textContent = formatCurrency(netWorth);
+
+            // Handle negative styling
+            if (netWorth < 0) {
+                outputs.netWorth.classList.add('negative');
+            } else {
+                outputs.netWorth.classList.remove('negative');
+            }
+        };
+
+        // Attach event listeners
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', calculateNetWorth);
+        });
+
+        // Copy functionality
+        copyButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const targetId = e.target.getAttribute('data-copy');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    navigator.clipboard.writeText(targetElement.textContent).then(() => {
+                        const originalText = e.target.textContent;
+                        e.target.textContent = 'Copied!';
+                        e.target.classList.add('copied');
+                        setTimeout(() => {
+                            e.target.textContent = originalText;
+                            e.target.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                }
+            });
+        });
+
+        // Initial calculation
+        calculateNetWorth();
+    });
+</script>
+
+</body>
+</html>
