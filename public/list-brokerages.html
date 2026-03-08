@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Online Brokerages Compared (2025) | firemaths.info</title>
+    <meta name="description" content="Compare the best online brokerages for investing, FIRE, and trading. Detailed breakdown of Fidelity, Schwab, Vanguard, IBKR, and Robinhood fees, features, and tools.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Best Online Brokerages Compared (2025)",
+      "description": "Compare the best online brokerages for investing: Fidelity, Schwab, Vanguard, IBKR, and Robinhood.",
+      "url": "https://firemaths.info/list-brokerages.html",
+      "author": {
+        "@type": "Organization",
+        "name": "firemaths.info"
+      }
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0c0a00;
+            color: #e0d8c8;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 24px 40px;
+            background: linear-gradient(180deg, #1a0f00 0%, #0c0a00 100%);
+            position: relative;
+            border-bottom: 1px solid #2a2010;
+        }
+        .header-content { position: relative; z-index: 1; }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, #D4A017 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p {
+            color: #888;
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .search-container input {
+            width: 100%;
+            background: #141008;
+            border: 2px solid #2a2010;
+            border-radius: 12px;
+            padding: 16px 20px 16px 48px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            transition: border-color 0.2s;
+        }
+        .search-container input:focus {
+            outline: none;
+            border-color: #D4A017;
+        }
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: #141008;
+            border: 1px solid #2a2010;
+            color: #888;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .filter-btn:hover {
+            border-color: #D4A017;
+            color: #e0d8c8;
+        }
+        .filter-btn.active {
+            background: rgba(212, 160, 23, 0.1);
+            border-color: #D4A017;
+            color: #D4A017;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        /* Cards */
+        .card {
+            background: #141008;
+            border: 1px solid #2a2010;
+            border-radius: 16px;
+            padding: 24px;
+            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        @media (min-width: 768px) {
+            .card {
+                flex-direction: row;
+                gap: 32px;
+            }
+        }
+        .card:hover {
+            border-color: #D4A017;
+            transform: translateY(-2px);
+        }
+        .card-left {
+            flex: 1;
+        }
+        .card-right {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        .card-title-group h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #D4A017;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .stars {
+            display: flex;
+        }
+        .star {
+            color: #D4A017;
+            font-size: 1.1rem;
+        }
+        .star.empty {
+            color: #2a2010;
+        }
+        .best-for {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        /* Metrics Table */
+        .metrics {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .metrics td {
+            padding: 10px 0;
+            border-bottom: 1px solid #2a2010;
+            font-size: 0.95rem;
+        }
+        .metrics tr:last-child td {
+            border-bottom: none;
+        }
+        .metric-label {
+            color: #888;
+            width: 45%;
+        }
+        .metric-value {
+            color: #e0d8c8;
+            font-family: 'JetBrains Mono', monospace;
+            text-align: right;
+            font-weight: 500;
+        }
+
+        /* Pros & Cons */
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: auto;
+        }
+        @media (max-width: 480px) {
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+        }
+        .pc-box {
+            background: #0c0a00;
+            border: 1px solid #2a2010;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .pc-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pc-title.pros { color: #4CAF50; }
+        .pc-title.cons { color: #E53935; }
+
+        .pc-list {
+            list-style: none;
+        }
+        .pc-list li {
+            position: relative;
+            padding-left: 20px;
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .pc-list li:last-child {
+            margin-bottom: 0;
+        }
+        .pc-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #2a2010;
+        }
+        .pc-list.pros-list li::before { color: #4CAF50; }
+        .pc-list.cons-list li::before { color: #E53935; }
+
+        /* SEO Content Section */
+        .content-section {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            padding-top: 40px;
+            border-top: 1px solid #2a2010;
+        }
+        .content-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 40px 0 16px;
+        }
+        .content-section h2:first-child {
+            margin-top: 0;
+        }
+        .content-section p {
+            color: #888;
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+        .content-section ul {
+            color: #888;
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+        .content-section li {
+            margin-bottom: 8px;
+        }
+        .content-section strong {
+            color: #e0d8c8;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid #2a2010;
+            background: #141008;
+        }
+        .footer a { color: #D4A017; text-decoration: none; font-weight: 500;}
+        .footer a:hover { text-decoration: underline; }
+
+        /* No Results Message */
+        #no-results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .card-header { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <h1>Best Online Brokerages</h1>
+        <p>Compare the top investing platforms for fees, features, and research tools.</p>
+    </div>
+</header>
+
+<main class="container">
+
+    <div class="search-container">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search brokerages by name or feature...">
+    </div>
+
+    <div class="filters" id="filterContainer">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="beginner">Beginner Friendly</button>
+        <button class="filter-btn" data-filter="fire">FIRE / Passive</button>
+        <button class="filter-btn" data-filter="advanced">Advanced Traders</button>
+    </div>
+
+    <div id="no-results">No brokerages match your criteria.</div>
+
+    <div class="grid" id="brokerageGrid">
+
+        <!-- Fidelity -->
+        <div class="card" data-tags="beginner fire all-rounder mutual funds">
+            <div class="card-left">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <h3>Fidelity</h3>
+                        <div class="best-for">Best All-Rounder</div>
+                    </div>
+                    <div class="rating">
+                        <div class="stars">★★★★★</div>
+                        4.8
+                    </div>
+                </div>
+
+                <table class="metrics">
+                    <tr>
+                        <td class="metric-label">Stock/ETF Trades</td>
+                        <td class="metric-value">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Options per Contract</td>
+                        <td class="metric-value">$0.65</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Account Minimum</td>
+                        <td class="metric-value">$0</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Fractional Shares</td>
+                        <td class="metric-value">Yes</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card-right">
+                <div class="pros-cons">
+                    <div class="pc-box">
+                        <div class="pc-title pros">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Pros
+                        </div>
+                        <ul class="pc-list pros-list">
+                            <li>Zero-fee index mutual funds (FZROX)</li>
+                            <li>High default cash sweep yield</li>
+                            <li>Excellent research and screener tools</li>
+                        </ul>
+                    </div>
+                    <div class="pc-box">
+                        <div class="pc-title cons">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            Cons
+                        </div>
+                        <ul class="pc-list cons-list">
+                            <li>Mobile app can be cluttered</li>
+                            <li>Active Trader Pro platform feels dated</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charles Schwab -->
+        <div class="card" data-tags="beginner advanced research thinkorswim">
+            <div class="card-left">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <h3>Charles Schwab</h3>
+                        <div class="best-for">Best for Research & Tools</div>
+                    </div>
+                    <div class="rating">
+                        <div class="stars">★★★★★</div>
+                        4.7
+                    </div>
+                </div>
+
+                <table class="metrics">
+                    <tr>
+                        <td class="metric-label">Stock/ETF Trades</td>
+                        <td class="metric-value">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Options per Contract</td>
+                        <td class="metric-value">$0.65</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Account Minimum</td>
+                        <td class="metric-value">$0</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Fractional Shares</td>
+                        <td class="metric-value">S&P 500 Only</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card-right">
+                <div class="pros-cons">
+                    <div class="pc-box">
+                        <div class="pc-title pros">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Pros
+                        </div>
+                        <ul class="pc-list pros-list">
+                            <li>Thinkorswim platform for advanced traders</li>
+                            <li>Top-tier 24/7 customer service</li>
+                            <li>No foreign transaction fees on debit card</li>
+                        </ul>
+                    </div>
+                    <div class="pc-box">
+                        <div class="pc-title cons">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            Cons
+                        </div>
+                        <ul class="pc-list cons-list">
+                            <li>Default cash sweep yields are extremely low</li>
+                            <li>Fractional shares limited to S&P 500</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vanguard -->
+        <div class="card" data-tags="fire passive long-term mutual funds">
+            <div class="card-left">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <h3>Vanguard</h3>
+                        <div class="best-for">Best for Passive / FIRE</div>
+                    </div>
+                    <div class="rating">
+                        <div class="stars">★★★★<span class="star empty">★</span></div>
+                        4.5
+                    </div>
+                </div>
+
+                <table class="metrics">
+                    <tr>
+                        <td class="metric-label">Stock/ETF Trades</td>
+                        <td class="metric-value">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Options per Contract</td>
+                        <td class="metric-value">$1.00</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Account Minimum</td>
+                        <td class="metric-value">$0</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Fractional Shares</td>
+                        <td class="metric-value">Vanguard Only</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card-right">
+                <div class="pros-cons">
+                    <div class="pc-box">
+                        <div class="pc-title pros">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Pros
+                        </div>
+                        <ul class="pc-list pros-list">
+                            <li>Investor-owned structure aligns with clients</li>
+                            <li>Pioneer of low-cost index funds</li>
+                            <li>Zero gamification encourages holding</li>
+                        </ul>
+                    </div>
+                    <div class="pc-box">
+                        <div class="pc-title cons">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            Cons
+                        </div>
+                        <ul class="pc-list cons-list">
+                            <li>Outdated and clunky user interface</li>
+                            <li>Poor tools for active or frequent trading</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Brokers -->
+        <div class="card" data-tags="advanced margin global day-trading">
+            <div class="card-left">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <h3>Interactive Brokers</h3>
+                        <div class="best-for">Best for Advanced Traders</div>
+                    </div>
+                    <div class="rating">
+                        <div class="stars">★★★★<span class="star empty">★</span></div>
+                        4.6
+                    </div>
+                </div>
+
+                <table class="metrics">
+                    <tr>
+                        <td class="metric-label">Stock/ETF Trades</td>
+                        <td class="metric-value">$0.00 (Lite)</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Options per Contract</td>
+                        <td class="metric-value">$0.65</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Margin Rates</td>
+                        <td class="metric-value">Lowest</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Fractional Shares</td>
+                        <td class="metric-value">Yes</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card-right">
+                <div class="pros-cons">
+                    <div class="pc-box">
+                        <div class="pc-title pros">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Pros
+                        </div>
+                        <ul class="pc-list pros-list">
+                            <li>Industry's lowest margin borrowing rates</li>
+                            <li>Access to global markets and forex</li>
+                            <li>Powerful API and Trader Workstation</li>
+                        </ul>
+                    </div>
+                    <div class="pc-box">
+                        <div class="pc-title cons">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            Cons
+                        </div>
+                        <ul class="pc-list cons-list">
+                            <li>Steep learning curve for beginners</li>
+                            <li>Overwhelming interface choices</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Robinhood -->
+        <div class="card" data-tags="beginner mobile options crypto">
+            <div class="card-left">
+                <div class="card-header">
+                    <div class="card-title-group">
+                        <h3>Robinhood</h3>
+                        <div class="best-for">Best for Mobile & Options</div>
+                    </div>
+                    <div class="rating">
+                        <div class="stars">★★★★<span class="star empty">★</span></div>
+                        4.0
+                    </div>
+                </div>
+
+                <table class="metrics">
+                    <tr>
+                        <td class="metric-label">Stock/ETF Trades</td>
+                        <td class="metric-value">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Options per Contract</td>
+                        <td class="metric-value">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Account Minimum</td>
+                        <td class="metric-value">$0</td>
+                    </tr>
+                    <tr>
+                        <td class="metric-label">Fractional Shares</td>
+                        <td class="metric-value">Yes</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card-right">
+                <div class="pros-cons">
+                    <div class="pc-box">
+                        <div class="pc-title pros">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            Pros
+                        </div>
+                        <ul class="pc-list pros-list">
+                            <li>Sleek, intuitive, best-in-class mobile UI</li>
+                            <li>No per-contract fees on options trading</li>
+                            <li>IRA match program (with Gold subscription)</li>
+                        </ul>
+                    </div>
+                    <div class="pc-box">
+                        <div class="pc-title cons">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            Cons
+                        </div>
+                        <ul class="pc-list cons-list">
+                            <li>Limited in-depth research tools</li>
+                            <li>History of gamification and platform limits</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SEO Content Section -->
+    <article class="content-section">
+        <h2>How to Choose the Right Brokerage</h2>
+        <p>Selecting the right online brokerage depends entirely on your investing goals. If your primary objective is long-term wealth building via index funds (a staple of the FIRE movement), you want a platform that minimizes fees and distractions. Conversely, if you are an active trader, execution speed, margin rates, and research tools become paramount.</p>
+        <ul>
+            <li><strong>For Beginners:</strong> Look for zero account minimums, fractional shares, and intuitive interfaces. Fidelity and Charles Schwab are excellent starting points due to their robust customer support and educational resources.</li>
+            <li><strong>For the FIRE Movement:</strong> Vanguard is a favorite for its investor-owned structure and low-cost index funds, while Fidelity offers zero-fee mutual funds (like FZROX) that are perfect for tax-advantaged accounts.</li>
+            <li><strong>For Active Traders:</strong> Interactive Brokers offers the best margin rates and global access, while Charles Schwab's Thinkorswim platform is legendary for its technical analysis capabilities.</li>
+        </ul>
+
+        <h2>Are "Zero-Fee" Brokerages Really Free?</h2>
+        <p>The industry standard for stock and ETF trades is now $0.00, but brokerages still make money. They generate revenue through Payment for Order Flow (PFOF), lending your shares to short sellers, and paying low interest rates on uninvested cash in your account (cash sweep).</p>
+        <p>When evaluating a brokerage, look beyond the trading commissions. If you plan to hold a lot of cash, ensure your brokerage offers a competitive cash sweep yield, or manually move your cash into a money market fund to maximize returns.</p>
+    </article>
+
+</main>
+
+<footer class="footer">
+    <div class="container" style="padding:0">
+        © 2025 <a href="https://firemaths.info">firemaths.info</a> · A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const cards = document.querySelectorAll('.card');
+        const noResultsMsg = document.getElementById('no-results');
+
+        let currentFilter = 'all';
+        let currentSearch = '';
+
+        function filterCards() {
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const tags = card.getAttribute('data-tags') || '';
+                const textContent = card.textContent.toLowerCase();
+
+                const matchesSearch = currentSearch === '' || textContent.includes(currentSearch);
+                const matchesFilter = currentFilter === 'all' || tags.includes(currentFilter);
+
+                if (matchesSearch && matchesFilter) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (visibleCount === 0) {
+                noResultsMsg.style.display = 'block';
+            } else {
+                noResultsMsg.style.display = 'none';
+            }
+        }
+
+        // Search Input Listener
+        searchInput.addEventListener('input', (e) => {
+            currentSearch = e.target.value.toLowerCase().trim();
+            filterCards();
+        });
+
+        // Filter Buttons Listener
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Update active state
+                filterBtns.forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+
+                // Update filter
+                currentFilter = e.target.getAttribute('data-filter');
+                filterCards();
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
