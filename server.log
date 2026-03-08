@@ -1,0 +1,15 @@
+
+> firemaths-info@0.0.1 dev
+> astro dev
+
+05:07:04 [types] Generated 1ms
+05:07:05 [content] Syncing content
+05:07:05 [content] Synced content
+05:07:05 [vite] Re-optimizing dependencies because vite config has changed
+
+ astro  v5.18.0 ready in 870 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+05:07:05 watching for file changes...
