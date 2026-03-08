@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Present Value Calculator | firemaths.info</title>
+    <meta name="description" content="Calculate the present value of future cash flows, including single amounts and annuities, based on your expected discount rate.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Present Value Calculator",
+      "url": "https://firemaths.info/present-value",
+      "description": "Calculate the present value of future cash flows, single amounts, and annuities.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --chart-color-a: #D4A017;
+            --chart-color-b: #4A90E2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .scenario-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scenario-header h2 {
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .indicator-a { background-color: var(--chart-color-a); }
+        .indicator-b { background-color: var(--chart-color-b); }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"], select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            padding-right: 2.5rem;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 1rem;
+            pointer-events: none;
+            color: var(--text-secondary);
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        .results {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.125rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-final .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .seo-content {
+            margin-bottom: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Present Value Calculator</h1>
+        <p>Calculate the current value of future cash flows</p>
+    </header>
+
+    <main>
+        <div class="calculator-grid">
+            <!-- Single Amount -->
+            <div class="scenario-card" id="card-single">
+                <div class="scenario-header">
+                    <h2><span class="indicator indicator-a"></span> Single Amount</h2>
+                </div>
+
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="fv-single">Future Value</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="fv-single" value="10000" min="0" step="100">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="rate-single">Discount Rate (Annual)</label>
+                        <div class="input-wrapper has-suffix">
+                            <span class="suffix">%</span>
+                            <input type="number" id="rate-single" value="5" min="0" step="0.1" max="100">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="years-single">Years</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="years-single" value="10" min="1" max="100" step="1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results">
+                    <div class="result-item result-final">
+                        <span class="result-label">Present Value</span>
+                        <div class="result-value">
+                            <span id="pv-single-result">$0</span>
+                            <button class="copy-btn" onclick="copyValue('pv-single-result', this)">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Annuity -->
+            <div class="scenario-card" id="card-annuity">
+                <div class="scenario-header">
+                    <h2><span class="indicator indicator-b"></span> Annuity</h2>
+                </div>
+
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="pmt-annuity">Periodic Payment</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="pmt-annuity" value="1000" min="0" step="50">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="freq-annuity">Payment Frequency</label>
+                        <div class="input-wrapper">
+                            <select id="freq-annuity">
+                                <option value="1">Annually</option>
+                                <option value="2">Semi-Annually</option>
+                                <option value="4">Quarterly</option>
+                                <option value="12" selected>Monthly</option>
+                            </select>
+                            <span class="select-arrow">▼</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="rate-annuity">Discount Rate (Annual)</label>
+                        <div class="input-wrapper has-suffix">
+                            <span class="suffix">%</span>
+                            <input type="number" id="rate-annuity" value="5" min="0" step="0.1" max="100">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="years-annuity">Years</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="years-annuity" value="10" min="1" max="100" step="1">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results">
+                    <div class="result-item result-final">
+                        <span class="result-label">Present Value</span>
+                        <div class="result-value">
+                            <span id="pv-annuity-result">$0</span>
+                            <button class="copy-btn" onclick="copyValue('pv-annuity-result', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Payments</span>
+                        <span class="result-value" id="total-pmt-annuity">$0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>What is Present Value?</h2>
+            <p>Present value (PV) is the current value of a future sum of money or stream of cash flows given a specified rate of return. Future cash flows are discounted at the discount rate; the higher the discount rate, the lower the present value of the future cash flows. Determining the appropriate discount rate is the key to properly valuing future cash flows, whether they be earnings or debt obligations.</p>
+
+            <h2>Single Amount vs. Annuity</h2>
+            <ul>
+                <li><strong>Single Amount:</strong> A one-time lump sum received or paid at a future date. The present value calculates what that single future amount is worth in today's dollars.</li>
+                <li><strong>Annuity:</strong> A series of equal payments made at regular intervals over a period of time. The present value of an annuity calculates the current value of all those future payments combined.</li>
+            </ul>
+
+            <h2>Understanding the Discount Rate</h2>
+            <p>The discount rate represents the time value of money. It is the rate of return you could earn on an investment with similar risk. Because money today can be invested to earn a return, a dollar received today is worth more than a dollar received in the future. The discount rate reflects this opportunity cost.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    // Format currency
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 2
+        }).format(value);
+    };
+
+    // Copy to clipboard
+    window.copyValue = async (elementId, btn) => {
+        const text = document.getElementById(elementId).innerText;
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    const updateCalculator = () => {
+        // Single Amount Calculation
+        const fvSingle = parseFloat(document.getElementById('fv-single').value) || 0;
+        const rateSingle = parseFloat(document.getElementById('rate-single').value) || 0;
+        const yearsSingle = parseFloat(document.getElementById('years-single').value) || 0;
+
+        const rSingle = rateSingle / 100;
+        let pvSingle = 0;
+        if (rSingle === 0) {
+            pvSingle = fvSingle;
+        } else {
+            pvSingle = fvSingle / Math.pow(1 + rSingle, yearsSingle);
+        }
+        document.getElementById('pv-single-result').innerText = formatCurrency(pvSingle);
+
+        // Annuity Calculation
+        const pmtAnnuity = parseFloat(document.getElementById('pmt-annuity').value) || 0;
+        const freqAnnuity = parseInt(document.getElementById('freq-annuity').value) || 1;
+        const rateAnnuity = parseFloat(document.getElementById('rate-annuity').value) || 0;
+        const yearsAnnuity = parseFloat(document.getElementById('years-annuity').value) || 0;
+
+        const totalPeriods = yearsAnnuity * freqAnnuity;
+        const rAnnuity = (rateAnnuity / 100) / freqAnnuity;
+
+        let pvAnnuity = 0;
+        if (rAnnuity === 0) {
+            pvAnnuity = pmtAnnuity * totalPeriods;
+        } else {
+            pvAnnuity = pmtAnnuity * ((1 - Math.pow(1 + rAnnuity, -totalPeriods)) / rAnnuity);
+        }
+
+        const totalPmt = pmtAnnuity * totalPeriods;
+
+        document.getElementById('pv-annuity-result').innerText = formatCurrency(pvAnnuity);
+        document.getElementById('total-pmt-annuity').innerText = formatCurrency(totalPmt);
+    };
+
+    // Attach event listeners
+    const inputs = document.querySelectorAll('input[type="number"], select');
+    inputs.forEach(input => {
+        input.addEventListener('input', updateCalculator);
+        input.addEventListener('change', updateCalculator);
+    });
+
+    // Initial calculation
+    updateCalculator();
+</script>
+
+</body>
+</html>
