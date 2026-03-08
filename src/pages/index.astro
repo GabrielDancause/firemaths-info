@@ -3,7 +3,7 @@ import BaseHead from '../layouts/BaseHead.astro';
 
 const tools = [
   { emoji: "🔥", name: "FIRE Calculator", desc: "How much do you need to retire early? Calculate your FIRE number based on expenses, savings rate, and investment returns.", soon: true },
-  { emoji: "📊", name: "Compound Interest", desc: "Watch your money grow. Visualize compound interest over 10, 20, 30 years with monthly contributions.", soon: true },
+  { emoji: "📊", name: "Compound Interest", desc: "Calculate compound interest with monthly contributions. Visual chart showing growth over 5-40 years. Compare scenarios side by side.", slug: "/compound-interest-calculator" },
   { emoji: "🏠", name: "Rental Yield Calculator", desc: "Is that property worth it? Calculate gross and net rental yield, cap rate, and cash-on-cash return.", soon: true },
   { emoji: "❄️", name: "Debt Snowball vs Avalanche", desc: "Compare payoff strategies side by side. See which method saves you more interest and time.", soon: true },
   { emoji: "💰", name: "Hourly Rate Calculator", desc: "Freelancer? Convert annual salary to hourly rate accounting for taxes, time off, and overhead.", soon: true },
@@ -33,6 +33,10 @@ const tools = [
     .card h2 { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
     .card p { font-size: 0.85rem; color: #888; line-height: 1.6; }
     .badge { position: absolute; top: 14px; right: 14px; background: #2a2010; color: #D4A017; font-size: 0.65rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+    .live-badge { background: #D4A017; color: #0c0a00; font-weight: 800; }
+    a.card.live { text-decoration: none; color: inherit; cursor: pointer; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+    a.card.live:hover { border-color: #D4A017; transform: translateY(-3px); box-shadow: 0 8px 30px rgba(212,160,23,0.1); }
+    .arrow { color: #D4A017; font-size: 0.85rem; margin-top: 14px; display: inline-block; font-weight: 600; }
     .footer { text-align: center; padding: 40px 24px; font-size: 0.78rem; color: #333; border-top: 1px solid #1a1508; }
     .footer a { color: #D4A017; text-decoration: none; }
     @media (max-width: 600px) { .hero h1 { font-size: 2.2rem; } .hero { padding: 70px 20px 50px; } .grid { grid-template-columns: 1fr; } }
@@ -46,7 +50,15 @@ const tools = [
   </div>
 </div>
 <div class="grid">
-  {tools.map(t => (
+  {tools.map(t => t.slug ? (
+    <a class="card live" href={t.slug}>
+      <span class="badge live-badge">LIVE</span>
+      <span class="emoji">{t.emoji}</span>
+      <h2>{t.name}</h2>
+      <p>{t.desc}</p>
+      <span class="arrow">Try it →</span>
+    </a>
+  ) : (
     <div class="card">
       {t.soon && <span class="badge">COMING SOON</span>}
       <span class="emoji">{t.emoji}</span>
