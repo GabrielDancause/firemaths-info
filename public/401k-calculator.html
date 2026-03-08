@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>401k & RRSP Calculator | firemaths.info</title>
+    <meta name="description" content="Calculate your 401k or RRSP retirement savings growth. Model employer matches, catch-up contributions, and compare Traditional vs. Roth scenarios.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "401k & RRSP Calculator",
+      "url": "https://firemaths.info/401k-calculator",
+      "description": "Calculate 401k and RRSP retirement savings growth with employer matching and contribution limits.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --chart-color-a: #D4A017;
+            --chart-color-b: #4A90E2;
+            --chart-color-c: #50E3C2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .scenario-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scenario-header h2 {
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"], select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+        }
+
+        select {
+            font-family: var(--font-ui);
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        .results {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.125rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-final .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .chart-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .chart-header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .indicator-a { background-color: var(--chart-color-a); }
+        .indicator-b { background-color: var(--chart-color-b); }
+        .indicator-c { background-color: var(--chart-color-c); }
+
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            position: relative;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .seo-content {
+            margin-bottom: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>401k & RRSP Calculator</h1>
+        <p>Project your retirement savings growth with employer matching and limits</p>
+    </header>
+
+    <main>
+        <div class="calculator-grid">
+            <!-- Inputs -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Inputs</h2>
+                </div>
+
+                <div class="inputs">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="input-group">
+                            <label for="current-age">Current Age</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="current-age" value="30" min="18" max="80" step="1">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="retire-age">Retirement Age</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="retire-age" value="65" min="18" max="90" step="1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="current-balance">Current Balance</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="current-balance" value="25000" min="0" step="1000">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="annual-salary">Annual Salary</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="annual-salary" value="80000" min="0" step="1000">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="input-group">
+                            <label for="contribution-percent">Your Contribution</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="contribution-percent" value="10" min="0" max="100" step="1">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="annual-return">Est. Annual Return</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="annual-return" value="7" min="0" max="20" step="0.5">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="input-group">
+                            <label for="match-percent">Employer Match</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="match-percent" value="50" min="0" max="200" step="1">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="match-limit">Match Limit (of Salary)</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="match-limit" value="6" min="0" max="100" step="1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="input-group">
+                            <label for="contribution-limit">Base Limit (Yearly)</label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="contribution-limit" value="23000" min="0" step="500">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="catchup-limit">Catch-up Limit (Age 50+)</label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="catchup-limit" value="7500" min="0" step="500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="account-type">Account Type</label>
+                        <div class="input-wrapper">
+                            <select id="account-type">
+                                <option value="traditional">Traditional (Pre-tax)</option>
+                                <option value="roth">Roth (Post-tax)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Projections</h2>
+                </div>
+
+                <div class="results" style="margin-top: 0; border-top: none; padding-top: 0;">
+                    <div class="result-item result-final" style="margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color);">
+                        <span class="result-label" style="font-size: 1rem;">Estimated Balance at Retirement</span>
+                        <div class="result-value">
+                            <span id="final-balance">$0</span>
+                            <button class="copy-btn" onclick="copyValue('final-balance', this)">Copy</button>
+                        </div>
+                    </div>
+
+                    <div style="flex-grow: 1;"></div>
+
+                    <div class="result-item">
+                        <span class="result-label">Total Employee Contributions</span>
+                        <span class="result-value" id="total-employee" style="color: var(--chart-color-b);">$0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Employer Match</span>
+                        <span class="result-value" id="total-employer" style="color: var(--chart-color-c);">$0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Interest Earned</span>
+                        <span class="result-value" id="total-interest" style="color: var(--chart-color-a);">$0</span>
+                    </div>
+                    <div class="result-item" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border-color);">
+                        <span class="result-label" id="tax-note-label">Tax Status</span>
+                        <span class="result-value" style="font-size: 0.875rem; font-family: var(--font-ui); color: var(--text-secondary);" id="tax-note-text">Taxable on withdrawal</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>Understanding 401k & RRSP Limits</h2>
+            <p>Maximizing your retirement accounts is one of the most effective strategies for long-term wealth building due to the tax advantages they offer. However, the IRS and CRA set annual contribution limits to these tax-advantaged accounts to ensure fairness.</p>
+            <p>For 401k plans in the US, there is a base limit that applies to all employees, and an additional "catch-up" contribution limit available for individuals aged 50 and older. This catch-up provision is designed to help those closer to retirement accelerate their savings. Understanding and planning around these limits is crucial to maximizing your tax benefits.</p>
+
+            <h2>Maximizing Employer Match</h2>
+            <p>An employer match is essentially "free money" added to your retirement savings. Employers typically match a percentage of your contributions up to a certain limit of your salary. For example, a common structure is a 50% match up to 6% of your salary. This means if you contribute 6% of your income, your employer will add an additional 3% on top of that.</p>
+            <ul>
+                <li><strong>Always get the full match:</strong> The most important rule of retirement saving is to contribute at least enough to get the full employer match. Failing to do so is leaving part of your compensation on the table.</li>
+                <li><strong>Understand vesting schedules:</strong> While your own contributions are always 100% yours, employer matches may be subject to a vesting schedule, meaning you must remain with the company for a certain number of years before the matched funds are entirely yours.</li>
+                <li><strong>Matches don't count toward your personal limit:</strong> Good news! Employer contributions do not count toward your individual base contribution limit, though there is a higher combined limit for total contributions (employer + employee).</li>
+            </ul>
+
+            <h2>Traditional vs. Roth Contributions</h2>
+            <p>The decision between Traditional (Pre-tax) and Roth (Post-tax) contributions comes down to when you want to pay taxes: now or later.</p>
+            <p><strong>Traditional Contributions</strong> are made with pre-tax dollars, meaning they lower your taxable income in the year you make them. The money grows tax-deferred, and you pay ordinary income tax on your withdrawals during retirement. This is generally beneficial if you expect to be in a lower tax bracket in retirement than you are currently.</p>
+            <p><strong>Roth Contributions</strong> are made with after-tax dollars, so you don't get a tax deduction today. However, the money grows tax-free, and qualified withdrawals in retirement are entirely tax-free. This is often advantageous for younger workers or those who expect to be in a higher tax bracket in retirement.</p>
+            <p>Our calculator helps you visualize the total balance. Keep in mind that a $1 million Traditional balance will be reduced by taxes upon withdrawal, whereas a $1 million Roth balance is fully yours.</p>
+        </div>
+
+        <div class="chart-section">
+            <div class="chart-header">
+                <h2>Growth Projection</h2>
+                <div class="chart-legend">
+                    <div class="legend-item"><span class="indicator indicator-a"></span> Interest</div>
+                    <div class="legend-item"><span class="indicator indicator-b"></span> Your Contribs</div>
+                    <div class="legend-item"><span class="indicator indicator-c"></span> Employer Match</div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="growthChart"></canvas>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 0
+        }).format(value);
+    };
+
+    window.copyValue = async (elementId, btn) => {
+        const text = document.getElementById(elementId).innerText;
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    const calculate401k = () => {
+        const currentAge = parseInt(document.getElementById('current-age').value) || 0;
+        const retireAge = parseInt(document.getElementById('retire-age').value) || 0;
+        const currentBalance = parseFloat(document.getElementById('current-balance').value) || 0;
+        const annualSalary = parseFloat(document.getElementById('annual-salary').value) || 0;
+
+        const contributionPercent = parseFloat(document.getElementById('contribution-percent').value) || 0;
+        const annualReturn = parseFloat(document.getElementById('annual-return').value) || 0;
+
+        const matchPercent = parseFloat(document.getElementById('match-percent').value) || 0;
+        const matchLimit = parseFloat(document.getElementById('match-limit').value) || 0;
+
+        const baseLimit = parseFloat(document.getElementById('contribution-limit').value) || 0;
+        const catchupLimit = parseFloat(document.getElementById('catchup-limit').value) || 0;
+
+        const accountType = document.getElementById('account-type').value;
+
+        // Update tax note
+        document.getElementById('tax-note-text').innerText = accountType === 'traditional' ? 'Taxable on withdrawal' : 'Tax-free withdrawal';
+
+        const years = Math.max(0, retireAge - currentAge);
+        const monthlyReturn = (annualReturn / 100) / 12;
+
+        let balance = currentBalance;
+        let totalEmployee = currentBalance; // Assuming current balance is all employee for simplicity, or we can just count new
+        // Better: separate current balance from new contributions for tracking
+        totalEmployee = currentBalance;
+        let totalEmployer = 0;
+
+        const history = [{
+            balance: balance,
+            employee: totalEmployee,
+            employer: totalEmployer,
+            interest: 0
+        }];
+
+        let currentSalary = annualSalary;
+
+        for (let year = 1; year <= years; year++) {
+            const ageThisYear = currentAge + year - 1;
+
+            // Calculate employee contribution for the year
+            let desiredEmployeeContrib = currentSalary * (contributionPercent / 100);
+
+            // Apply limits
+            let maxContrib = baseLimit;
+            if (ageThisYear >= 50) {
+                maxContrib += catchupLimit;
+            }
+
+            let actualEmployeeContrib = Math.min(desiredEmployeeContrib, maxContrib);
+
+            // Calculate employer match
+            // Match is usually calculated per paycheck, but annual is close enough for projections
+            // E.g. 50% match up to 6% of salary
+            const matchEligibleSalaryPercent = Math.min(contributionPercent, matchLimit);
+            let actualEmployerContrib = currentSalary * (matchEligibleSalaryPercent / 100) * (matchPercent / 100);
+
+            // Add monthly contributions and compound
+            const monthlyEmployee = actualEmployeeContrib / 12;
+            const monthlyEmployer = actualEmployerContrib / 12;
+            const totalMonthly = monthlyEmployee + monthlyEmployer;
+
+            for (let month = 1; month <= 12; month++) {
+                balance = balance * (1 + monthlyReturn) + totalMonthly;
+            }
+
+            totalEmployee += actualEmployeeContrib;
+            totalEmployer += actualEmployerContrib;
+
+            history.push({
+                balance: balance,
+                employee: totalEmployee,
+                employer: totalEmployer,
+                interest: balance - totalEmployee - totalEmployer
+            });
+        }
+
+        const totalInterest = balance - totalEmployee - totalEmployer;
+
+        // Update UI
+        document.getElementById('final-balance').innerText = formatCurrency(balance);
+        document.getElementById('total-employee').innerText = formatCurrency(totalEmployee);
+        document.getElementById('total-employer').innerText = formatCurrency(totalEmployer);
+        document.getElementById('total-interest').innerText = formatCurrency(totalInterest);
+
+        return { years, history };
+    };
+
+    // Charting logic using vanilla canvas
+    let chartCanvas = document.getElementById('growthChart');
+    let ctx = chartCanvas.getContext('2d');
+
+    const drawChart = (years, history) => {
+        if (years <= 0) {
+            ctx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
+            return;
+        }
+
+        const dpr = window.devicePixelRatio || 1;
+        const rect = chartCanvas.parentElement.getBoundingClientRect();
+
+        chartCanvas.width = rect.width * dpr;
+        chartCanvas.height = rect.height * dpr;
+
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
+
+        const width = rect.width;
+        const height = rect.height;
+
+        ctx.clearRect(0, 0, width, height);
+
+        const padding = { top: 20, right: 20, bottom: 40, left: 80 };
+        const chartWidth = width - padding.left - padding.right;
+        const chartHeight = height - padding.top - padding.bottom;
+
+        const maxYears = years;
+        const maxVal = history[history.length - 1].balance;
+
+        // Draw grid and axes
+        ctx.strokeStyle = '#2a2010';
+        ctx.lineWidth = 1;
+        ctx.font = '12px Inter, sans-serif';
+        ctx.fillStyle = '#888888';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+
+        // Y-axis
+        const yTicks = 5;
+        for (let i = 0; i <= yTicks; i++) {
+            const val = maxVal * (i / yTicks);
+            const y = height - padding.bottom - (chartHeight * (i / yTicks));
+
+            ctx.beginPath();
+            ctx.moveTo(padding.left, y);
+            ctx.lineTo(width - padding.right, y);
+            ctx.stroke();
+
+            let label = val >= 1000000 ? '$' + (val / 1000000).toFixed(1) + 'M' :
+                        val >= 1000 ? '$' + (val / 1000).toFixed(0) + 'k' : '$' + val.toFixed(0);
+            ctx.fillText(label, padding.left - 10, y);
+        }
+
+        // X-axis
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        const xTicks = Math.min(maxYears, 10);
+        for (let i = 0; i <= xTicks; i++) {
+            const yearIndex = Math.round((maxYears / xTicks) * i);
+            const x = padding.left + (chartWidth * (yearIndex / maxYears));
+
+            ctx.beginPath();
+            ctx.moveTo(x, height - padding.bottom);
+            ctx.lineTo(x, height - padding.bottom + 5);
+            ctx.stroke();
+
+            // Label x-axis with actual age or relative years. Let's do relative years.
+            ctx.fillText('Yr ' + yearIndex, x, height - padding.bottom + 10);
+        }
+
+        // Stacked Area Chart (Interest, Employer, Employee)
+
+        // Helper to draw an area
+        const drawArea = (getDataFn, color) => {
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.lineJoin = 'round';
+            ctx.fillStyle = color;
+
+            // Forward path (top of this layer)
+            history.forEach((dataPoint, i) => {
+                const x = padding.left + (chartWidth * (i / maxYears));
+                const y = height - padding.bottom - (chartHeight * (getDataFn(dataPoint) / maxVal));
+
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+
+            // Fill down to bottom (or bottom of previous layer, but for simplicity we draw from back to front)
+            ctx.lineTo(padding.left + chartWidth, height - padding.bottom);
+            ctx.lineTo(padding.left, height - padding.bottom);
+            ctx.closePath();
+
+            ctx.globalAlpha = 0.8;
+            ctx.fill();
+            ctx.globalAlpha = 1.0;
+        };
+
+        // Draw from back (largest) to front (smallest)
+        // 1. Total Balance (includes everything)
+        drawArea(d => d.balance, '#D4A017'); // Interest is the top part
+
+        // 2. Employee + Employer (covers up interest base)
+        drawArea(d => d.employee + d.employer, '#50E3C2'); // Employer Match is the middle part
+
+        // 3. Employee only (covers up employer base)
+        drawArea(d => d.employee, '#4A90E2'); // Employee Contrib is the bottom part
+    };
+
+    const updateAll = () => {
+        const result = calculate401k();
+        drawChart(result.years, result.history);
+    };
+
+    // Attach event listeners
+    const inputs = document.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        input.addEventListener('input', updateAll);
+    });
+
+    // Handle window resize for canvas
+    window.addEventListener('resize', () => {
+        updateAll();
+    });
+
+    setTimeout(() => {
+        updateAll();
+    }, 0);
+</script>
+</body>
+</html>
