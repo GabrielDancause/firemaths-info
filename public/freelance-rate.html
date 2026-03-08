@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Rate Calculator | firemaths.info</title>
+    <meta name="description" content="Calculate your ideal hourly and project rates as a freelancer. Factor in desired salary, business expenses, taxes, and billable hours.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Freelance Rate Calculator",
+      "url": "https://firemaths.info/freelance-rate",
+      "description": "Calculate your ideal hourly and project rates as a freelancer. Factor in desired salary, business expenses, taxes, and billable hours.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .scenario-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scenario-header h2 {
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"] {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.125rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-final {
+            flex-direction: column;
+            align-items: flex-start;
+            background-color: var(--bg-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--accent-color);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--accent-color);
+        }
+
+        .result-final .result-label {
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-final .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .seo-content {
+            margin-bottom: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Freelance Rate Calculator</h1>
+        <p>Calculate your ideal hourly and project rates</p>
+    </header>
+
+    <main>
+        <div class="calculator-grid">
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Your Variables</h2>
+                </div>
+
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="net-income">Desired Annual Net Income</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="net-income" value="75000" min="0" step="1000">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="expenses">Annual Business Expenses</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="expenses" value="10000" min="0" step="500">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="tax-rate">Estimated Tax Rate</label>
+                        <div class="input-wrapper has-suffix">
+                            <span class="suffix">%</span>
+                            <input type="number" id="tax-rate" value="25" min="0" max="99" step="1">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="weeks">Weeks Worked Per Year</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="weeks" value="48" min="1" max="52" step="1">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="hours">Billable Hours Per Week</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="hours" value="25" min="1" max="168" step="1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Required Rates</h2>
+                </div>
+
+                <div class="results-container">
+                    <div class="result-final">
+                        <span class="result-label">Target Hourly Rate</span>
+                        <div class="result-value">
+                            <span id="hourly-rate">$0</span>
+                            <button class="copy-btn" onclick="copyValue('hourly-rate', this)">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="result-label">Target Weekly Revenue</span>
+                        <div class="result-value">
+                            <span id="weekly-rate">$0</span>
+                            <button class="copy-btn" onclick="copyValue('weekly-rate', this)">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="result-label">Target Monthly Revenue</span>
+                        <div class="result-value">
+                            <span id="monthly-rate">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="result-label">Target Annual Gross Revenue</span>
+                        <div class="result-value">
+                            <span id="annual-revenue">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="result-label">Total Billable Hours / Yr</span>
+                        <div class="result-value">
+                            <span id="total-hours">0</span>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="result-label">Estimated Annual Taxes</span>
+                        <div class="result-value">
+                            <span id="annual-taxes">$0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>How to Calculate Your Freelance Rate</h2>
+            <p>Determining your freelance rate isn't as simple as picking a number that sounds good. As a freelancer or independent contractor, you are responsible for covering your own business expenses, taxes, health insurance, and retirement savings. To find your true required rate, you must start with your desired net income (what you take home) and work backward.</p>
+            <p>First, figure out your <strong>Taxable Income</strong> by accounting for your estimated tax rate. Then, add your <strong>Business Expenses</strong> (software, hardware, travel, marketing) to find your <strong>Gross Revenue</strong> target. Finally, divide this target by the number of hours you can actually bill to clients.</p>
+
+            <h2>Why Billable Hours Matter</h2>
+            <p>One of the most common mistakes new freelancers make is assuming they will work 40 billable hours a week. In reality, a significant portion of your time will be spent on non-billable administrative tasks, marketing, sales, client communication, and professional development.</p>
+            <ul>
+                <li><strong>Billable Hours:</strong> Time spent directly working on client projects that you can invoice for. (Usually 20-30 hours per week)</li>
+                <li><strong>Non-Billable Hours:</strong> Time spent running your business.</li>
+                <li><strong>Time Off:</strong> Don't forget to account for vacations, sick days, and holidays by reducing your "Weeks Worked Per Year" (e.g., 46-48 weeks instead of 52).</li>
+            </ul>
+
+            <h2>Project Rates vs. Hourly Rates</h2>
+            <p>While this calculator provides an hourly rate, it can also help you price flat-rate projects. Once you know your minimum acceptable hourly rate, you can estimate how many hours a project will take, add a buffer for revisions or unexpected issues (typically 20-30%), and multiply by your hourly rate to get your project fee.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    // Format currency
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 0
+        }).format(value);
+    };
+
+    // Format number
+    const formatNumber = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            maximumFractionDigits: 0
+        }).format(value);
+    };
+
+    // Copy to clipboard
+    window.copyValue = async (elementId, btn) => {
+        const text = document.getElementById(elementId).innerText;
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    // Calculation logic
+    const updateCalculator = () => {
+        const netIncome = parseFloat(document.getElementById('net-income').value) || 0;
+        const expenses = parseFloat(document.getElementById('expenses').value) || 0;
+        const taxRate = parseFloat(document.getElementById('tax-rate').value) || 0;
+        const weeks = parseInt(document.getElementById('weeks').value) || 0;
+        const hours = parseInt(document.getElementById('hours').value) || 0;
+
+        let profit = 0;
+        if (taxRate >= 100) {
+            profit = netIncome;
+        } else {
+            profit = netIncome / (1 - (taxRate / 100));
+        }
+
+        const grossRevenue = profit + expenses;
+        const totalHours = weeks * hours;
+
+        let hourlyRate = 0;
+        if (totalHours > 0) {
+            hourlyRate = grossRevenue / totalHours;
+        }
+
+        const weeklyRate = weeks > 0 ? grossRevenue / weeks : 0;
+        const monthlyRate = grossRevenue / 12;
+        const taxes = profit - netIncome;
+
+        document.getElementById('hourly-rate').innerText = formatCurrency(hourlyRate);
+        document.getElementById('weekly-rate').innerText = formatCurrency(weeklyRate);
+        document.getElementById('monthly-rate').innerText = formatCurrency(monthlyRate);
+        document.getElementById('annual-revenue').innerText = formatCurrency(grossRevenue);
+        document.getElementById('total-hours').innerText = formatNumber(totalHours);
+        document.getElementById('annual-taxes').innerText = formatCurrency(taxes);
+    };
+
+    // Attach event listeners
+    const inputs = document.querySelectorAll('input[type="number"]');
+    inputs.forEach(input => {
+        input.addEventListener('input', updateCalculator);
+    });
+
+    // Initial calculation
+    updateCalculator();
+</script>
+
+</body>
+</html>
