@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIRE Movement: Complete Beginner's Guide</title>
+    <meta name="description" content="A comprehensive reference guide and cheat sheet for the FIRE (Financial Independence, Retire Early) movement. Learn about Lean FIRE, Fat FIRE, Barista FIRE, steps to FI, and savings rate targets.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "FIRE Movement: Complete Beginner's Guide",
+      "description": "A comprehensive reference guide and cheat sheet for the FIRE (Financial Independence, Retire Early) movement.",
+      "url": "https://firemaths.info/guide-fire-basics.html",
+      "author": {
+        "@type": "Organization",
+        "name": "firemaths.info"
+      }
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0c0a00;
+            color: #e0d8c8;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 24px 40px;
+            background: linear-gradient(180deg, #1a0f00 0%, #0c0a00 100%);
+            position: relative;
+            border-bottom: 1px solid #2a2010;
+        }
+        .header-content { position: relative; z-index: 1; }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, #D4A017 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p {
+            color: #888;
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .search-container input {
+            width: 100%;
+            background: #141008;
+            border: 2px solid #2a2010;
+            border-radius: 12px;
+            padding: 16px 20px 16px 48px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            transition: border-color 0.2s;
+        }
+        .search-container input:focus {
+            outline: none;
+            border-color: #D4A017;
+        }
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        /* Section Headings */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2010;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        /* Cards */
+        .card {
+            background: #141008;
+            border: 1px solid #2a2010;
+            border-radius: 16px;
+            padding: 24px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .card:hover {
+            border-color: #D4A017;
+            transform: translateY(-2px);
+        }
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #D4A017;
+            margin-bottom: 12px;
+        }
+        .card p {
+            color: #888;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+
+        /* Copyable Code/Values */
+        .code-block {
+            background: #0c0a00;
+            border: 1px solid #2a2010;
+            border-radius: 8px;
+            padding: 12px;
+            position: relative;
+            margin-top: 12px;
+        }
+        .code-block code {
+            font-family: 'JetBrains Mono', monospace;
+            color: #e0d8c8;
+            font-size: 0.9rem;
+            display: block;
+            padding-right: 60px; /* Space for button */
+            word-break: break-all;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 50%;
+            right: 8px;
+            transform: translateY(-50%);
+            background: transparent;
+            border: 1px solid #2a2010;
+            color: #888;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .copy-btn:hover {
+            border-color: #D4A017;
+            color: #D4A017;
+        }
+        .copy-btn.copied {
+            background: #D4A017;
+            color: #0c0a00;
+            border-color: #D4A017;
+        }
+
+        /* Accordion (Steps to FI) */
+        .accordion {
+            margin-bottom: 60px;
+        }
+        .accordion-item {
+            background: #141008;
+            border: 1px solid #2a2010;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        .accordion-header {
+            width: 100%;
+            text-align: left;
+            padding: 20px 24px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .accordion-header:hover {
+            background: rgba(212, 160, 23, 0.05);
+        }
+        .accordion-icon {
+            color: #D4A017;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #0c0a00;
+            border-top: 1px solid #2a2010;
+        }
+        .accordion-content-inner {
+            padding: 24px;
+            color: #888;
+            font-size: 0.95rem;
+        }
+        .accordion-item.active .accordion-icon {
+            transform: rotate(45deg);
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 500px; /* Arbitrary large number */
+        }
+
+        /* Table (Savings Rate) */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: #141008;
+            border: 1px solid #2a2010;
+            border-radius: 16px;
+            margin-bottom: 60px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th, td {
+            padding: 16px 24px;
+            border-bottom: 1px solid #2a2010;
+        }
+        th {
+            background: #0c0a00;
+            color: #888;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        td {
+            color: #e0d8c8;
+            font-size: 1rem;
+        }
+        td.highlight {
+            font-family: 'JetBrains Mono', monospace;
+            color: #D4A017;
+            font-weight: 600;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover td {
+            background: rgba(212, 160, 23, 0.05);
+        }
+
+        /* SEO Content Section */
+        .content-section {
+            max-width: 760px;
+            margin: 0 auto 80px;
+            padding-top: 40px;
+            border-top: 1px solid #2a2010;
+        }
+        .content-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 40px 0 16px;
+        }
+        .content-section h2:first-child {
+            margin-top: 0;
+        }
+        .content-section p {
+            color: #888;
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+        .content-section ul {
+            color: #888;
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+        .content-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid #2a2010;
+            background: #141008;
+        }
+        .footer a { color: #D4A017; text-decoration: none; font-weight: 500;}
+        .footer a:hover { text-decoration: underline; }
+
+        /* No Results Message */
+        #no-results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .grid { grid-template-columns: 1fr; }
+            th, td { padding: 12px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <h1>FIRE Movement Guide</h1>
+        <p>Your cheat sheet for Financial Independence, Retire Early. Concepts, variations, targets, and steps.</p>
+    </div>
+</header>
+
+<main class="container">
+
+    <div class="search-container">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search guides, terms, or steps...">
+    </div>
+
+    <div id="no-results">No matching guides found. Try another term.</div>
+
+    <div class="filterable-section" data-tags="types of fire variations lean fat barista">
+        <h2 class="section-title">Types of FIRE</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Lean FIRE</h3>
+                <p>Retiring with a minimalist lifestyle, covering only essential expenses. Requires a smaller portfolio but offers less financial cushion or room for luxury.</p>
+                <div class="code-block">
+                    <code id="code-lean">Target: $40k/yr or less</code>
+                    <button class="copy-btn" data-copy="code-lean">Copy</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Fat FIRE</h3>
+                <p>Retiring with a higher-than-average standard of living. Allows for significant discretionary spending (travel, dining, etc.). Requires a much larger portfolio.</p>
+                <div class="code-block">
+                    <code id="code-fat">Target: $100k/yr or more</code>
+                    <button class="copy-btn" data-copy="code-fat">Copy</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Barista FIRE</h3>
+                <p>Quitting the corporate rat race but continuing to work part-time (often for health insurance and basic income) while investments grow or cover the gap.</p>
+                <div class="code-block">
+                    <code id="code-barista">Target: Partial FI</code>
+                    <button class="copy-btn" data-copy="code-barista">Copy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="filterable-section" data-tags="savings rate targets years to retirement">
+        <h2 class="section-title">Savings Rate Targets</h2>
+        <p style="color: #888; margin-bottom: 20px; font-size: 0.95rem;">Assuming starting from $0, a 5% real return after inflation, and a 4% safe withdrawal rate.</p>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Savings Rate</th>
+                        <th>Years to Retirement</th>
+                        <th>Lifestyle Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="highlight">10%</td>
+                        <td>51 years</td>
+                        <td>Standard (Working till 65+)</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">25%</td>
+                        <td>32 years</td>
+                        <td>Above Average (Retire in 50s)</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">50%</td>
+                        <td>17 years</td>
+                        <td>Aggressive (True FIRE path)</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">75%</td>
+                        <td>7 years</td>
+                        <td>Extreme (Minimalist focus)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="filterable-section" data-tags="steps to financial independence fi path journey">
+        <h2 class="section-title">Steps to Financial Independence</h2>
+        <div class="accordion">
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    1. Calculate Your FIRE Number
+                    <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Determine your annual expenses and multiply by 25 (based on the 4% Safe Withdrawal Rate). This is your target portfolio size.</p>
+                        <div class="code-block" style="margin-top: 16px; max-width: 400px;">
+                            <code id="code-fire-num">FIRE Number = Annual Expenses × 25</code>
+                            <button class="copy-btn" data-copy="code-fire-num">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    2. Eliminate High-Interest Debt
+                    <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Before investing heavily, pay off credit cards and personal loans. The guaranteed "return" of avoiding 20% interest is unbeatable in the stock market.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    3. Build an Emergency Fund
+                    <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Save 3 to 6 months of living expenses in a High-Yield Savings Account (HYSA). This prevents you from needing to sell investments during a market downturn or personal crisis.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    4. Maximize Savings Rate
+                    <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Increase income (side hustles, promotions) and decrease expenses (housing, transport, food). The gap between your income and expenses is your wealth-building engine.</p>
+                        <div class="code-block" style="margin-top: 16px; max-width: 400px;">
+                            <code id="code-sav-rate">Savings Rate = (Savings / Income) × 100</code>
+                            <button class="copy-btn" data-copy="code-sav-rate">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    5. Invest Consistently (Index Funds)
+                    <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Invest the gap into low-cost, broadly diversified index funds (like VTSAX or VOO). Utilize tax-advantaged accounts (401k, IRA) first, then taxable brokerage accounts.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <article class="content-section">
+        <h2>What is the FIRE Movement?</h2>
+        <p>The FIRE (Financial Independence, Retire Early) movement is a lifestyle and financial strategy aimed at achieving financial freedom long before the traditional retirement age of 65. The core philosophy centers around aggressive savings, intentional spending, and consistent investing.</p>
+        <p>By saving a high percentage of their income—often 50% or more—followers of the FIRE movement build a portfolio of investments designed to generate enough passive income to cover their living expenses indefinitely.</p>
+
+        <h2>The Math Behind FIRE</h2>
+        <p>The movement relies heavily on the <strong>4% Rule</strong>, derived from the Trinity Study. This rule suggests that a retiree can safely withdraw 4% of their investment portfolio in the first year of retirement, adjusting for inflation in subsequent years, without running out of money over a 30-year period.</p>
+        <p>To find your target portfolio size, you simply invert the 4% rule by multiplying your annual expenses by 25. For example, if you need $40,000 a year to live, your FIRE number is $1,000,000 ($40,000 × 25).</p>
+
+        <h2>Is FIRE Right for You?</h2>
+        <p>While the "Retire Early" aspect gets the most attention, many proponents focus primarily on "Financial Independence." Reaching FI means work becomes optional. You gain the freedom to change careers, start a business, or work part-time without worrying about paying the bills.</p>
+        <p>However, the journey requires discipline. It involves scrutinizing your spending, avoiding lifestyle creep, and weathering stock market volatility. Whether you pursue Lean FIRE, Fat FIRE, or something in between, the principles of living below your means and investing for the future are universally beneficial.</p>
+    </article>
+
+</main>
+
+<footer class="footer">
+    <div class="container" style="padding:0">
+        © 2025 <a href="https://firemaths.info">firemaths.info</a> · A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- Copy Buttons ---
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        copyButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Prevent accordion from toggling if button is inside header
+                e.stopPropagation();
+
+                const targetId = e.target.getAttribute('data-copy');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    navigator.clipboard.writeText(targetElement.textContent).then(() => {
+                        const originalText = e.target.textContent;
+                        e.target.textContent = 'Copied!';
+                        e.target.classList.add('copied');
+                        setTimeout(() => {
+                            e.target.textContent = originalText;
+                            e.target.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                }
+            });
+        });
+
+        // --- Accordion ---
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+
+                // Close others (optional, remove if you want multiple open)
+                // document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                //     if(otherItem !== item) otherItem.classList.remove('active');
+                // });
+
+                item.classList.toggle('active');
+            });
+        });
+
+        // --- Search/Filter ---
+        const searchInput = document.getElementById('searchInput');
+        const sections = document.querySelectorAll('.filterable-section');
+        const noResultsMsg = document.getElementById('no-results');
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            sections.forEach(section => {
+                const tags = section.getAttribute('data-tags').toLowerCase();
+                const textContent = section.textContent.toLowerCase();
+
+                if (term === '' || tags.includes(term) || textContent.includes(term)) {
+                    section.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            if (visibleCount === 0 && term !== '') {
+                noResultsMsg.style.display = 'block';
+            } else {
+                noResultsMsg.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
