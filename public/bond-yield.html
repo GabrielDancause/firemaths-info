@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bond Yield Calculator | firemaths.info</title>
+    <meta name="description" content="Calculate yield to maturity (YTM), current yield, and yield to call (YTC) for bonds with this interactive calculator.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Bond Yield Calculator",
+      "url": "https://firemaths.info/bond-yield",
+      "description": "Calculate yield to maturity (YTM), current yield, and yield to call (YTC) for bonds.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            align-items: start;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .card-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-header h2 {
+            font-size: 1.25rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"], select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+            appearance: none;
+        }
+
+        select {
+            font-family: var(--font-ui);
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 16px;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        .optional-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .optional-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .results {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .result-item.highlight {
+            border-color: var(--accent-color);
+            background-color: rgba(212, 160, 23, 0.05);
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .highlight .result-label {
+            color: var(--text-primary);
+        }
+
+        .result-value-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .highlight .result-value {
+            color: var(--accent-color);
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.375rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover:not(:disabled) {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+            background-color: rgba(212, 160, 23, 0.1);
+        }
+
+        .copy-btn:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        .copy-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .seo-content {
+            margin-top: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+
+        .disabled-text {
+            color: var(--text-secondary) !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Bond Yield Calculator</h1>
+        <p>Calculate yield to maturity, current yield, and yield to call for bonds</p>
+    </header>
+
+    <main>
+        <div class="calculator-grid">
+            <!-- Inputs -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Bond Parameters</h2>
+                </div>
+
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="face-value">Face Value (Par Value)</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="face-value" value="1000" min="0" step="100">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="coupon-rate">Annual Coupon Rate</label>
+                        <div class="input-wrapper has-suffix">
+                            <span class="suffix">%</span>
+                            <input type="number" id="coupon-rate" value="5" min="0" step="0.125">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="current-price">Current Price</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="current-price" value="950" min="0" step="1">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="years-maturity">Years to Maturity</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="years-maturity" value="10" min="0" step="0.5">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="payment-frequency">Payment Frequency</label>
+                        <div class="input-wrapper">
+                            <select id="payment-frequency">
+                                <option value="1">Annually (1x/yr)</option>
+                                <option value="2" selected>Semi-Annually (2x/yr)</option>
+                                <option value="4">Quarterly (4x/yr)</option>
+                                <option value="12">Monthly (12x/yr)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="optional-section">
+                        <div class="optional-header">
+                            <span>Call Features (Optional)</span>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="call-price">Call Price</label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="call-price" placeholder="e.g. 1050" min="0" step="1">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="years-call">Years to Call</label>
+                            <div class="input-wrapper">
+                                <input type="number" id="years-call" placeholder="e.g. 5" min="0" step="0.5">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Yield Results</h2>
+                </div>
+
+                <div class="results">
+                    <div class="result-item highlight">
+                        <span class="result-label">Yield to Maturity (YTM)</span>
+                        <div class="result-value-container">
+                            <span class="result-value" id="res-ytm">0.00%</span>
+                            <button class="copy-btn" onclick="copyValue('res-ytm', this)">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="result-label">Current Yield</span>
+                        <div class="result-value-container">
+                            <span class="result-value" id="res-current-yield">0.00%</span>
+                            <button class="copy-btn" onclick="copyValue('res-current-yield', this)">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="result-item" id="ytc-container">
+                        <span class="result-label">Yield to Call (YTC)</span>
+                        <div class="result-value-container">
+                            <span class="result-value disabled-text" id="res-ytc">N/A</span>
+                            <button class="copy-btn" id="btn-copy-ytc" onclick="copyValue('res-ytc', this)" disabled>Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>Understanding Yield to Maturity (YTM)</h2>
+            <p>Yield to Maturity (YTM) is the total return anticipated on a bond if it is held until its maturity date. YTM is considered a long-term bond yield but is expressed as an annual rate. It factors in the bond's current market price, par value, coupon interest rate, and time to maturity.</p>
+            <p>YTM is a complex calculation because it assumes that all coupon payments are reinvested at the same rate as the bond's current yield. Because of this, it is often considered the most accurate measure of a bond's return.</p>
+
+            <h2>Current Yield vs. YTM</h2>
+            <p>While YTM accounts for the time value of money and the bond's eventual return to par value at maturity, the <strong>Current Yield</strong> is a simpler calculation. It measures the annual income (interest or dividends) divided by the current price of the security.</p>
+            <ul>
+                <li><strong>Premium Bonds:</strong> When a bond is priced above its par value, the Current Yield will be higher than the YTM, as the investor will experience a capital loss when the bond matures at par.</li>
+                <li><strong>Discount Bonds:</strong> When a bond is priced below its par value, the YTM will be higher than the Current Yield, as the investor will experience a capital gain at maturity.</li>
+            </ul>
+
+            <h2>What is Yield to Call (YTC)?</h2>
+            <p>Some bonds have a callable feature, allowing the issuer to redeem the bond before it matures, usually at a slight premium to par value. The Yield to Call (YTC) calculates the investor's yield assuming the bond is called at the earliest possible date.</p>
+            <p>Investors should look at both YTM and YTC, often focusing on the "Yield to Worst" (YTW)&mdash;which is simply the lower of the two yields&mdash;to understand their minimum expected return.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    // Format percentage
+    const formatPercent = (value) => {
+        if (isNaN(value) || !isFinite(value)) return 'N/A';
+        return value.toFixed(2) + '%';
+    };
+
+    // Copy to clipboard
+    window.copyValue = async (elementId, btn) => {
+        if (btn.disabled) return;
+        const text = document.getElementById(elementId).innerText;
+        if (text === 'N/A') return;
+
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    // Calculation logic for YTM / YTC
+    const solveYield = (price, faceValue, redemptionValue, annualCouponRate, years, frequency) => {
+        if (price <= 0 || faceValue <= 0 || redemptionValue <= 0 || years <= 0 || frequency <= 0) return NaN;
+
+        const coupon = (faceValue * (annualCouponRate / 100)) / frequency;
+        const periods = years * frequency;
+
+        let low = -0.9999;
+        let high = 10; // 1000% per period
+        let mid = 0;
+
+        for (let i = 0; i < 100; i++) {
+            mid = (low + high) / 2;
+            let presentValue = 0;
+
+            if (mid === 0) {
+                presentValue = (coupon * periods) + redemptionValue;
+            } else {
+                presentValue = coupon * (1 - Math.pow(1 + mid, -periods)) / mid + redemptionValue * Math.pow(1 + mid, -periods);
+            }
+
+            if (presentValue > price) {
+                low = mid;
+            } else {
+                high = mid;
+            }
+        }
+
+        return mid * frequency * 100;
+    };
+
+    const updateCalculator = () => {
+        const faceValue = parseFloat(document.getElementById('face-value').value);
+        const couponRate = parseFloat(document.getElementById('coupon-rate').value);
+        const currentPrice = parseFloat(document.getElementById('current-price').value);
+        const yearsMaturity = parseFloat(document.getElementById('years-maturity').value);
+        const frequency = parseInt(document.getElementById('payment-frequency').value);
+
+        const callPriceRaw = document.getElementById('call-price').value;
+        const yearsCallRaw = document.getElementById('years-call').value;
+
+        const callPrice = callPriceRaw !== '' ? parseFloat(callPriceRaw) : NaN;
+        const yearsCall = yearsCallRaw !== '' ? parseFloat(yearsCallRaw) : NaN;
+
+        // Current Yield
+        let currentYield = NaN;
+        if (currentPrice > 0 && !isNaN(faceValue) && !isNaN(couponRate)) {
+            const annualCoupon = faceValue * (couponRate / 100);
+            currentYield = (annualCoupon / currentPrice) * 100;
+        }
+
+        // YTM
+        const ytm = solveYield(currentPrice, faceValue, faceValue, couponRate, yearsMaturity, frequency);
+
+        // YTC
+        let ytc = NaN;
+        if (!isNaN(callPrice) && !isNaN(yearsCall) && yearsCall > 0) {
+            ytc = solveYield(currentPrice, faceValue, callPrice, couponRate, yearsCall, frequency);
+        }
+
+        // Update UI
+        document.getElementById('res-current-yield').innerText = formatPercent(currentYield);
+        document.getElementById('res-ytm').innerText = formatPercent(ytm);
+
+        const ytcEl = document.getElementById('res-ytc');
+        const ytcBtn = document.getElementById('btn-copy-ytc');
+
+        if (!isNaN(ytc)) {
+            ytcEl.innerText = formatPercent(ytc);
+            ytcEl.classList.remove('disabled-text');
+            ytcBtn.disabled = false;
+        } else {
+            ytcEl.innerText = 'N/A';
+            ytcEl.classList.add('disabled-text');
+            ytcBtn.disabled = true;
+        }
+    };
+
+    // Attach event listeners
+    const inputs = document.querySelectorAll('input[type="number"], select');
+    inputs.forEach(input => {
+        input.addEventListener('input', updateCalculator);
+    });
+
+    // Initial calculation
+    updateCalculator();
+</script>
+
+</body>
+</html>
