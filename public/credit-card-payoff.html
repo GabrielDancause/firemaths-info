@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Payoff Calculator | firemaths.info</title>
+    <meta name="description" content="Calculate your credit card payoff timeline. Compare minimum payments, fixed payments, and find the optimal amount to become debt-free faster.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Credit Card Payoff Calculator",
+      "url": "https://firemaths.info/credit-card-payoff",
+      "description": "Calculate your credit card payoff timeline with minimum or fixed payments and find the optimal monthly amount.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .main-inputs {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .main-inputs {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        .scenario-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scenario-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scenario-header h2 {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"] {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        .results {
+            margin-top: auto;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-highlight .result-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .seo-content {
+            margin-bottom: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Credit Card Payoff Calculator</h1>
+            <p>Find the fastest way to become debt-free</p>
+        </header>
+        <main>
+            <div class="main-inputs">
+                <div class="input-group">
+                    <label for="balance">Current Card Balance</label>
+                    <div class="input-wrapper has-prefix">
+                        <span class="prefix">$</span>
+                        <input type="number" id="balance" value="5000" min="0" step="100">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="rate">Interest Rate (APR)</label>
+                    <div class="input-wrapper has-suffix">
+                        <span class="suffix">%</span>
+                        <input type="number" id="rate" value="21.99" min="0" step="0.1" max="100">
+                    </div>
+                </div>
+            </div>
+
+            <div class="calculator-grid">
+                <!-- Fixed Payment Scenario -->
+                <div class="scenario-card" id="scenario-fixed">
+                    <div class="scenario-header">
+                        <h2>Fixed Payment</h2>
+                    </div>
+
+                    <div class="inputs">
+                        <div class="input-group">
+                            <label for="fixed-payment">Monthly Payment</label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="fixed-payment" value="200" min="0" step="10">
+                            </div>
+                            <div id="fixed-error" class="error-message">Payment is too low to cover interest!</div>
+                        </div>
+                    </div>
+
+                    <div class="results">
+                        <div class="result-item result-highlight">
+                            <span class="result-label">Time to Payoff</span>
+                            <div class="result-value">
+                                <span id="fixed-months">0</span>
+                            </div>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Total Interest</span>
+                            <div class="result-value">
+                                <span id="fixed-interest">$0</span>
+                                <button class="copy-btn" onclick="copyValue('fixed-interest', this)">Copy</button>
+                            </div>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Total Paid</span>
+                            <span class="result-value" id="fixed-total">$0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Optimal Target Scenario -->
+                <div class="scenario-card" id="scenario-target">
+                    <div class="scenario-header">
+                        <h2>Target Payoff</h2>
+                    </div>
+
+                    <div class="inputs">
+                        <div class="input-group">
+                            <label for="target-months">Desired Payoff Time</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">mo</span>
+                                <input type="number" id="target-months" value="12" min="1" max="360" step="1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="results">
+                        <div class="result-item result-highlight">
+                            <span class="result-label">Required Payment</span>
+                            <div class="result-value">
+                                <span id="target-payment">$0</span>
+                                <button class="copy-btn" onclick="copyValue('target-payment', this)">Copy</button>
+                            </div>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Total Interest</span>
+                            <span class="result-value" id="target-interest">$0</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Total Paid</span>
+                            <span class="result-value" id="target-total">$0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Minimum Payment Scenario -->
+                <div class="scenario-card" id="scenario-min">
+                    <div class="scenario-header">
+                        <h2>Minimum Payment</h2>
+                    </div>
+
+                    <div class="inputs">
+                        <div class="input-group">
+                            <label for="min-percent">Min Payment %</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="min-percent" value="2" min="1" step="0.5" max="100">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="min-floor">Min Payment Floor</label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="min-floor" value="25" min="0" step="5">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="results">
+                        <div class="result-item result-highlight">
+                            <span class="result-label">Time to Payoff</span>
+                            <div class="result-value">
+                                <span id="min-months">0</span>
+                            </div>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Total Interest</span>
+                            <div class="result-value">
+                                <span id="min-interest">$0</span>
+                                <button class="copy-btn" onclick="copyValue('min-interest', this)">Copy</button>
+                            </div>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Total Paid</span>
+                            <span class="result-value" id="min-total">$0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seo-content">
+                <h2>How to Pay Off Credit Card Debt Faster</h2>
+                <p>Credit card debt can be notoriously difficult to pay off because of high compound interest rates. Making only the minimum payment each month is the most expensive and slowest way to eliminate your debt, often keeping you trapped in a cycle of debt for decades. By increasing your monthly payments even slightly, you can drastically cut down both the time it takes to become debt-free and the amount of interest you will pay.</p>
+
+                <h2>The Danger of Minimum Payments</h2>
+                <p>Credit card companies usually set your minimum payment to be a tiny percentage of your overall balance, typically between 1% and 3%, or a flat minimum floor (like $25 or $35). This means the majority of your payment goes towards the interest, and only a fraction actually reduces the principal balance. The lower your balance gets, the lower the minimum payment required becomes, which artificially stretches out your payoff timeline.</p>
+
+                <h2>Choosing the Right Strategy</h2>
+                <ul>
+                    <li><strong>Fixed Monthly Payment:</strong> Decide on a set amount that you can comfortably afford, ideally significantly more than your minimum, and pay that exact amount every single month until the balance is zero.</li>
+                    <li><strong>Target Payoff Goal:</strong> Choose a specific date or number of months by which you want to be completely debt-free. Our calculator determines the optimal, fixed monthly payment required to hit that exact target, taking interest into account.</li>
+                    <li><strong>Snowball or Avalanche Methods:</strong> If you have multiple cards, you can focus extra payments on the smallest balance first for a psychological win (Debt Snowball), or focus on the card with the highest interest rate to save the most money mathematically (Debt Avalanche).</li>
+                </ul>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+        </footer>
+    </div>
+
+<script>
+    // Format currency
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2
+        }).format(value);
+    };
+
+    // Format months to readable string (e.g., "2 yrs 4 mos")
+    const formatMonths = (months) => {
+        if (!isFinite(months) || months <= 0) return "Never";
+        const yrs = Math.floor(months / 12);
+        const mos = Math.ceil(months % 12);
+
+        let result = [];
+        if (yrs > 0) result.push(`${yrs} yr${yrs !== 1 ? 's' : ''}`);
+        if (mos > 0 || yrs === 0) result.push(`${mos} mo${mos !== 1 ? 's' : ''}`);
+
+        return result.join(' ');
+    };
+
+    // Copy to clipboard
+    window.copyValue = async (elementId, btn) => {
+        const text = document.getElementById(elementId).innerText;
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    const calculateFixedPayment = (balance, apr, payment) => {
+        const monthlyRate = (apr / 100) / 12;
+        let currentBalance = balance;
+        let months = 0;
+        let totalInterest = 0;
+
+        // If payment is less than the first month's interest, it will never be paid off
+        if (payment <= balance * monthlyRate) {
+            return { months: Infinity, interest: Infinity, total: Infinity, valid: false };
+        }
+
+        while (currentBalance > 0 && months < 1200) { // cap at 100 years
+            const interest = currentBalance * monthlyRate;
+            totalInterest += interest;
+
+            let principalPaid = payment - interest;
+            if (principalPaid > currentBalance) {
+                principalPaid = currentBalance;
+            }
+
+            currentBalance -= principalPaid;
+            months++;
+        }
+
+        return { months, interest: totalInterest, total: balance + totalInterest, valid: true };
+    };
+
+    const calculateTargetPayoff = (balance, apr, targetMonths) => {
+        const monthlyRate = (apr / 100) / 12;
+
+        // PMT formula: P = (r * PV) / (1 - (1 + r)^-n)
+        let payment;
+        if (monthlyRate === 0) {
+            payment = balance / targetMonths;
+        } else {
+            payment = (monthlyRate * balance) / (1 - Math.pow(1 + monthlyRate, -targetMonths));
+        }
+
+        const totalPaid = payment * targetMonths;
+        const totalInterest = totalPaid - balance;
+
+        return { payment, interest: totalInterest, total: totalPaid };
+    };
+
+    const calculateMinimumPayment = (balance, apr, minPercent, minFloor) => {
+        const monthlyRate = (apr / 100) / 12;
+        const minRate = minPercent / 100;
+
+        let currentBalance = balance;
+        let months = 0;
+        let totalInterest = 0;
+        let totalPaid = 0;
+
+        // Failsafe: if min payment is always less than interest, infinite loop
+        // Standard credit card rules usually make min payment = interest + 1% of principal if higher
+        // We'll use max(balance * minRate, minFloor)
+
+        while (currentBalance > 0 && months < 1200) { // cap at 100 years
+            const interest = currentBalance * monthlyRate;
+            totalInterest += interest;
+
+            let payment = Math.max(currentBalance * minRate, minFloor);
+
+            // If payment is less than interest, debt will grow
+            if (payment <= interest) {
+                // Often minimum payment includes all interest plus 1%
+                payment = interest + (currentBalance * 0.01);
+                if (payment < minFloor) payment = minFloor;
+            }
+
+            if (payment > currentBalance + interest) {
+                payment = currentBalance + interest;
+            }
+
+            totalPaid += payment;
+            currentBalance -= (payment - interest);
+            months++;
+        }
+
+        return { months, interest: totalInterest, total: totalPaid };
+    };
+
+    const updateCalculator = () => {
+        const balance = parseFloat(document.getElementById('balance').value) || 0;
+        const apr = parseFloat(document.getElementById('rate').value) || 0;
+
+        if (balance <= 0) return;
+
+        // 1. Fixed Payment Scenario
+        const fixedPayment = parseFloat(document.getElementById('fixed-payment').value) || 0;
+        const fixedRes = calculateFixedPayment(balance, apr, fixedPayment);
+
+        const fixedError = document.getElementById('fixed-error');
+        if (!fixedRes.valid) {
+            fixedError.style.display = 'block';
+            document.getElementById('fixed-months').innerText = "Never";
+            document.getElementById('fixed-interest').innerText = "Infinity";
+            document.getElementById('fixed-total').innerText = "Infinity";
+        } else {
+            fixedError.style.display = 'none';
+            document.getElementById('fixed-months').innerText = formatMonths(fixedRes.months);
+            document.getElementById('fixed-interest').innerText = formatCurrency(fixedRes.interest);
+            document.getElementById('fixed-total').innerText = formatCurrency(fixedRes.total);
+        }
+
+        // 2. Target Payoff Scenario
+        const targetMonths = parseInt(document.getElementById('target-months').value) || 1;
+        const targetRes = calculateTargetPayoff(balance, apr, targetMonths);
+
+        document.getElementById('target-payment').innerText = formatCurrency(targetRes.payment);
+        document.getElementById('target-interest').innerText = formatCurrency(targetRes.interest);
+        document.getElementById('target-total').innerText = formatCurrency(targetRes.total);
+
+        // 3. Minimum Payment Scenario
+        const minPercent = parseFloat(document.getElementById('min-percent').value) || 0;
+        const minFloor = parseFloat(document.getElementById('min-floor').value) || 0;
+        const minRes = calculateMinimumPayment(balance, apr, minPercent, minFloor);
+
+        document.getElementById('min-months').innerText = formatMonths(minRes.months);
+        document.getElementById('min-interest').innerText = formatCurrency(minRes.interest);
+        document.getElementById('min-total').innerText = formatCurrency(minRes.total);
+    };
+
+    // Attach event listeners
+    const inputs = document.querySelectorAll('input[type="number"]');
+    inputs.forEach(input => {
+        input.addEventListener('input', updateCalculator);
+    });
+
+    // Initial calculation
+    updateCalculator();
+</script>
+
+</body>
+</html>
