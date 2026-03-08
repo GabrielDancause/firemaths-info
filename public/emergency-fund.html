@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Fund Calculator | firemaths.info</title>
+    <meta name="description" content="Calculate your ideal emergency fund based on your monthly expenses, job stability, and dependents. Plan for 3, 6, or 12 months of runway.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Emergency Fund Calculator",
+      "url": "https://firemaths.info/emergency-fund",
+      "description": "Calculate your ideal emergency fund based on your monthly expenses, job stability, and dependents.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .scenario-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .scenario-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scenario-header h2 {
+            font-size: 1.25rem;
+            color: var(--accent-color);
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"], select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+            font-family: var(--font-ui);
+        }
+
+        input[type="number"] {
+            font-family: var(--font-mono);
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        .results {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.125rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-recommended {
+            background-color: rgba(212, 160, 23, 0.1);
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .result-recommended .result-label {
+            color: var(--accent-color);
+            font-size: 1rem;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-recommended .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-recommended .recommendation-note {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-family: var(--font-ui);
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .seo-content {
+            margin-bottom: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Emergency Fund Calculator</h1>
+        <p>Determine your ideal safety net based on your expenses and risk profile</p>
+    </header>
+
+    <main>
+        <div class="calculator-grid">
+            <!-- Inputs -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Your Details</h2>
+                </div>
+
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="monthly-expenses">Monthly Living Expenses</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="monthly-expenses" value="3000" min="0" step="100">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="job-stability">Job Stability</label>
+                        <select id="job-stability">
+                            <option value="high">High (Secure industry, tenured role)</option>
+                            <option value="medium" selected>Medium (Standard corporate role)</option>
+                            <option value="low">Low (Freelance, volatile industry, startup)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="dependents">Number of Dependents</label>
+                        <select id="dependents">
+                            <option value="0">0 (Single, no dependents)</option>
+                            <option value="1" selected>1+ (Children, spouse, or other dependents)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Your Targets</h2>
+                </div>
+
+                <div class="result-recommended">
+                    <span class="result-label">Recommended Target (<span id="rec-months">6</span> Months)</span>
+                    <div class="result-value">
+                        <span id="rec-amount">$0</span>
+                        <button class="copy-btn" onclick="copyValue('rec-amount', this)">Copy</button>
+                    </div>
+                    <div class="recommendation-note" id="rec-note">Based on medium job stability and having dependents.</div>
+                </div>
+
+                <div class="results">
+                    <div class="result-item">
+                        <span class="result-label">3 Months (Minimum)</span>
+                        <div class="result-value">
+                            <span id="target-3">$0</span>
+                            <button class="copy-btn" onclick="copyValue('target-3', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">6 Months (Standard)</span>
+                        <div class="result-value">
+                            <span id="target-6">$0</span>
+                            <button class="copy-btn" onclick="copyValue('target-6', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">12 Months (Conservative)</span>
+                        <div class="result-value">
+                            <span id="target-12">$0</span>
+                            <button class="copy-btn" onclick="copyValue('target-12', this)">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>Why Do You Need an Emergency Fund?</h2>
+            <p>An emergency fund is a stash of money set aside to cover the financial surprises life throws your way. These unexpected events can be stressful and costly. Examples include:</p>
+            <ul>
+                <li>Job loss or sudden reduction in income</li>
+                <li>Medical or dental emergencies</li>
+                <li>Unexpected home repairs (e.g., a broken AC or leaky roof)</li>
+                <li>Major car repairs</li>
+            </ul>
+            <p>Without an emergency fund, a financial shock can push you into high-interest debt, such as credit card balances or personal loans, which can set back your long-term financial goals like achieving FIRE (Financial Independence, Retire Early).</p>
+
+            <h2>How Much Should You Save?</h2>
+            <p>The standard rule of thumb is to save enough to cover <strong>3 to 6 months of essential living expenses</strong>. However, the exact amount depends on your personal risk profile:</p>
+            <ul>
+                <li><strong>3 Months:</strong> Best for single individuals with highly stable jobs (e.g., tenured teachers, healthcare workers) and low living expenses.</li>
+                <li><strong>6 Months:</strong> The sweet spot for most people. Recommended for those with a typical corporate job, single-income families, or individuals with dependents.</li>
+                <li><strong>12 Months:</strong> Ideal for freelancers, contractors, those working in volatile industries (like early-stage startups), or those nearing retirement who want extra peace of mind.</li>
+            </ul>
+
+            <h2>Where Should You Keep Your Emergency Fund?</h2>
+            <p>Your emergency fund must be <strong>liquid</strong> and <strong>safe</strong>. It should not be invested in the stock market or locked away in retirement accounts. The best places to keep your emergency fund include:</p>
+            <ul>
+                <li><strong>High-Yield Savings Accounts (HYSA):</strong> These accounts offer significantly higher interest rates than traditional savings accounts while keeping your money easily accessible and FDIC insured.</li>
+                <li><strong>Money Market Accounts:</strong> Similar to HYSAs, these accounts often provide higher interest rates and may come with debit cards or check-writing privileges.</li>
+                <li><strong>No-Penalty Certificates of Deposit (CDs):</strong> These allow you to lock in a guaranteed interest rate without paying a fee if you need to withdraw your money early.</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    // Format currency
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 0
+        }).format(value);
+    };
+
+    // Copy to clipboard
+    window.copyValue = async (elementId, btn) => {
+        const text = document.getElementById(elementId).innerText;
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    const updateCalculator = () => {
+        const expenses = parseFloat(document.getElementById('monthly-expenses').value) || 0;
+        const jobStability = document.getElementById('job-stability').value;
+        const dependents = document.getElementById('dependents').value;
+
+        // Calculate standard targets
+        const target3 = expenses * 3;
+        const target6 = expenses * 6;
+        const target12 = expenses * 12;
+
+        document.getElementById('target-3').innerText = formatCurrency(target3);
+        document.getElementById('target-6').innerText = formatCurrency(target6);
+        document.getElementById('target-12').innerText = formatCurrency(target12);
+
+        // Calculate recommended months
+        let recMonths = 3; // Base
+        let noteParts = [];
+
+        if (jobStability === 'high') {
+            noteParts.push("high job stability");
+        } else if (jobStability === 'medium') {
+            recMonths += 3;
+            noteParts.push("medium job stability");
+        } else if (jobStability === 'low') {
+            recMonths += 6;
+            noteParts.push("low job stability (higher risk)");
+        }
+
+        if (dependents === '1') {
+            recMonths += 3;
+            noteParts.push("having dependents");
+        } else {
+            noteParts.push("no dependents");
+        }
+
+        // Cap at 12 months
+        recMonths = Math.min(12, recMonths);
+
+        // Ensure at least 6 months if low stability
+        if (jobStability === 'low' && recMonths < 6) {
+            recMonths = 6;
+        }
+
+        const recAmount = expenses * recMonths;
+
+        document.getElementById('rec-months').innerText = recMonths;
+        document.getElementById('rec-amount').innerText = formatCurrency(recAmount);
+        document.getElementById('rec-note').innerText = `Based on ${noteParts.join(' and ')}.`;
+    };
+
+    // Attach event listeners
+    document.getElementById('monthly-expenses').addEventListener('input', updateCalculator);
+    document.getElementById('job-stability').addEventListener('change', updateCalculator);
+    document.getElementById('dependents').addEventListener('change', updateCalculator);
+
+    // Initial calculation
+    updateCalculator();
+</script>
+
+</body>
+</html>
