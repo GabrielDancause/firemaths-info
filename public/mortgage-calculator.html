@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mortgage Calculator | firemaths.info</title>
+    <meta name="description" content="Calculate your monthly mortgage payments, total interest, and explore amortization schedules. Compare fixed vs variable rates and extra payment scenarios.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Mortgage Calculator",
+      "url": "https://firemaths.info/mortgage-calculator",
+      "description": "Calculate monthly mortgage payments, see amortization schedules, and model fixed vs variable rates and extra payments.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .scenario-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scenario-header h2 {
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"], select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+            appearance: none;
+        }
+
+        select {
+            font-family: var(--font-ui);
+            cursor: pointer;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
+        }
+
+        select option {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .results {
+            margin-top: 1rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(42, 32, 16, 0.5);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.125rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-align: right;
+        }
+
+        .result-final .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .amortization-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 4rem;
+            overflow-x: auto;
+        }
+
+        .amortization-section h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+        }
+
+        th {
+            font-family: var(--font-ui);
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        th:first-child, td:first-child {
+            text-align: left;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .seo-content {
+            margin-bottom: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Mortgage Calculator</h1>
+        <p>Plan your payments, compare rates, and explore extra payment scenarios</p>
+    </header>
+
+    <main>
+        <div class="calculator-grid">
+            <!-- Inputs -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Loan Details</h2>
+                </div>
+
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="homePrice">Home Price</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="homePrice" value="400000" min="0" step="1000">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="downPayment">Down Payment</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="downPayment" value="80000" min="0" step="1000">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="loanTerm">Loan Term</label>
+                        <div class="input-wrapper has-suffix">
+                            <span class="suffix">Yrs</span>
+                            <input type="number" id="loanTerm" value="30" min="1" max="50" step="1">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="loanType">Rate Type</label>
+                        <select id="loanType">
+                            <option value="fixed">Fixed Rate</option>
+                            <option value="variable">Variable Rate (ARM)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group" id="interestRateGroup">
+                        <label for="interestRate">Interest Rate</label>
+                        <div class="input-wrapper has-suffix">
+                            <span class="suffix">%</span>
+                            <input type="number" id="interestRate" value="6.5" min="0" step="0.1" max="30">
+                        </div>
+                    </div>
+
+                    <!-- Variable Rate Fields -->
+                    <div id="variableFields" class="hidden">
+                        <div class="input-group">
+                            <label for="fixedPeriod">Fixed Period</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">Yrs</span>
+                                <input type="number" id="fixedPeriod" value="5" min="1" max="30" step="1">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="adjustedRate">Expected Adjusted Rate</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="adjustedRate" value="7.5" min="0" step="0.1" max="30">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="scenario-header" style="margin-top: 2.5rem;">
+                    <h2>Extra Payments</h2>
+                </div>
+
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="extraMonthly">Extra Monthly Payment</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="extraMonthly" value="0" min="0" step="50">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="extraYearly">Extra Yearly Payment</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="extraYearly" value="0" min="0" step="500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Payment Summary</h2>
+                </div>
+
+                <div class="results">
+                    <div class="result-item result-final">
+                        <span class="result-label" id="monthlyPaymentLabel">Monthly Payment (P&I)</span>
+                        <div class="result-value">
+                            <span id="monthlyPayment">$0</span>
+                            <button class="copy-btn" onclick="copyValue('monthlyPayment', this)">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="result-item hidden" id="adjustedPaymentContainer">
+                        <span class="result-label">Adjusted Monthly Payment (P&I)</span>
+                        <div class="result-value">
+                            <span id="adjustedPayment">$0</span>
+                            <button class="copy-btn" onclick="copyValue('adjustedPayment', this)">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="result-label">Principal Amount</span>
+                        <div class="result-value">
+                            <span id="principalAmount">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="result-label">Total Interest Paid</span>
+                        <div class="result-value">
+                            <span id="totalInterest">$0</span>
+                            <button class="copy-btn" onclick="copyValue('totalInterest', this)">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="result-item result-final" style="margin-top: 1rem; border-top: 1px solid rgba(42, 32, 16, 0.5); padding-top: 1rem; border-bottom: none;">
+                        <span class="result-label">Total Cost of Loan</span>
+                        <div class="result-value">
+                            <span id="totalCost">$0</span>
+                            <button class="copy-btn" onclick="copyValue('totalCost', this)">Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-header" style="margin-top: 2.5rem;">
+                    <h2>Payoff Timeline</h2>
+                </div>
+
+                <div class="results">
+                    <div class="result-item">
+                        <span class="result-label">Original Payoff Time</span>
+                        <span class="result-value" id="originalPayoffTime">30 Years</span>
+                    </div>
+                    <div class="result-item result-final" style="border-bottom: none;">
+                        <span class="result-label">Actual Payoff Time</span>
+                        <div class="result-value">
+                            <span id="actualPayoffTime" style="font-size: 1.125rem;">30 Years</span>
+                        </div>
+                    </div>
+                    <div class="result-item" id="timeSavedContainer" style="border-bottom: none; display: none;">
+                        <span class="result-label" style="color: var(--accent-color);">Time Saved</span>
+                        <span class="result-value" id="timeSaved" style="color: var(--accent-color);">0 Years</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="amortization-section">
+            <h2>Yearly Amortization Schedule</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Interest Paid</th>
+                        <th>Principal Paid</th>
+                        <th>Extra Payments</th>
+                        <th>Remaining Balance</th>
+                    </tr>
+                </thead>
+                <tbody id="amortizationBody">
+                    <!-- Rows generated by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="seo-content">
+            <h2>Understanding Your Mortgage Options</h2>
+            <p>Choosing the right mortgage is one of the biggest financial decisions you'll make. A <strong>Fixed-Rate Mortgage</strong> guarantees that your interest rate and monthly principal and interest (P&I) payments will remain the same for the entire life of the loan. This provides predictability and protects you from rising interest rates.</p>
+            <p>An <strong>Adjustable-Rate Mortgage (ARM)</strong> typically offers a lower initial interest rate for a fixed period (such as 5 or 7 years), after which the rate adjusts periodically based on market conditions. This can be a smart choice if you plan to sell the home or refinance before the fixed period ends, but it carries the risk of higher payments if rates rise.</p>
+
+            <h2>The Power of Extra Payments</h2>
+            <p>Making extra payments toward your mortgage principal can drastically reduce the total amount of interest you pay over the life of the loan and help you become debt-free years sooner. Because interest is calculated on your remaining balance, every extra dollar you pay reduces the principal, which in turn reduces the interest charged in all subsequent months.</p>
+            <ul>
+                <li><strong>Bi-weekly Payments:</strong> Paying half your monthly mortgage every two weeks results in 26 half-payments, or 13 full payments a year—effectively adding one extra monthly payment annually.</li>
+                <li><strong>Extra Monthly Payments:</strong> Even adding $50 or $100 extra to your regular monthly payment can shave years off your loan term and save thousands in interest.</li>
+                <li><strong>Lump Sum Payments:</strong> Using tax refunds, bonuses, or other windfalls to make a single extra yearly payment is an excellent way to accelerate your payoff timeline without affecting your monthly budget.</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    // Format currency
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 0
+        }).format(value);
+    };
+
+    // Copy to clipboard
+    window.copyValue = async (elementId, btn) => {
+        const text = document.getElementById(elementId).innerText;
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    // Toggle variable fields
+    const loanTypeSelect = document.getElementById('loanType');
+    const variableFields = document.getElementById('variableFields');
+    const interestRateLabel = document.querySelector('label[for="interestRate"]');
+
+    loanTypeSelect.addEventListener('change', (e) => {
+        if (e.target.value === 'variable') {
+            variableFields.classList.remove('hidden');
+            interestRateLabel.innerText = 'Initial Interest Rate';
+        } else {
+            variableFields.classList.add('hidden');
+            interestRateLabel.innerText = 'Interest Rate';
+        }
+        updateCalculator();
+    });
+
+    // Main calculation logic
+    const updateCalculator = () => {
+        const homePrice = parseFloat(document.getElementById('homePrice').value) || 0;
+        const downPayment = parseFloat(document.getElementById('downPayment').value) || 0;
+        const loanTermYears = parseInt(document.getElementById('loanTerm').value) || 0;
+        const loanType = document.getElementById('loanType').value;
+        const interestRate = parseFloat(document.getElementById('interestRate').value) || 0;
+
+        const fixedPeriodYears = parseInt(document.getElementById('fixedPeriod').value) || 0;
+        const adjustedRate = parseFloat(document.getElementById('adjustedRate').value) || 0;
+
+        const extraMonthly = parseFloat(document.getElementById('extraMonthly').value) || 0;
+        const extraYearly = parseFloat(document.getElementById('extraYearly').value) || 0;
+
+        let principal = Math.max(0, homePrice - downPayment);
+        const totalMonths = loanTermYears * 12;
+
+        if (principal <= 0 || totalMonths <= 0) {
+            resetUI();
+            return;
+        }
+
+        let balance = principal;
+        let totalInterestPaid = 0;
+        let monthsElapsed = 0;
+
+        // Amortization data array
+        let yearlyData = [];
+        let currentYearInterest = 0;
+        let currentYearPrincipal = 0;
+        let currentYearExtra = 0;
+
+        // Helper to calc monthly payment
+        const calcMonthlyPayment = (bal, rate, remainingMonths) => {
+            if (rate === 0) return bal / remainingMonths;
+            const r = (rate / 100) / 12;
+            return bal * (r * Math.pow(1 + r, remainingMonths)) / (Math.pow(1 + r, remainingMonths) - 1);
+        };
+
+        const initialMonthlyPayment = calcMonthlyPayment(principal, interestRate, totalMonths);
+        let currentMonthlyPayment = initialMonthlyPayment;
+
+        let adjustedMonthlyPayment = 0;
+        let adjustedPaymentOccurred = false;
+
+        while (balance > 0.01 && monthsElapsed < totalMonths * 2) { // safety limit
+            let currentRate = interestRate;
+
+            // Apply variable rate logic
+            if (loanType === 'variable' && monthsElapsed >= (fixedPeriodYears * 12)) {
+                currentRate = adjustedRate;
+                if (!adjustedPaymentOccurred) {
+                    currentMonthlyPayment = calcMonthlyPayment(balance, currentRate, totalMonths - monthsElapsed);
+                    adjustedMonthlyPayment = currentMonthlyPayment;
+                    adjustedPaymentOccurred = true;
+                }
+            }
+
+            const monthlyRate = (currentRate / 100) / 12;
+            let interestPayment = balance * monthlyRate;
+            let principalPayment = currentMonthlyPayment - interestPayment;
+
+            // If the standard payment exceeds balance
+            if (principalPayment + interestPayment > balance + interestPayment) {
+                principalPayment = balance;
+                currentMonthlyPayment = principalPayment + interestPayment;
+            }
+
+            balance -= principalPayment;
+            totalInterestPaid += interestPayment;
+
+            currentYearInterest += interestPayment;
+            currentYearPrincipal += principalPayment;
+
+            // Apply extra payments
+            let extraPaymentThisMonth = extraMonthly;
+            if ((monthsElapsed + 1) % 12 === 0) {
+                extraPaymentThisMonth += extraYearly;
+            }
+
+            if (extraPaymentThisMonth > 0 && balance > 0) {
+                if (extraPaymentThisMonth > balance) {
+                    extraPaymentThisMonth = balance;
+                }
+                balance -= extraPaymentThisMonth;
+                currentYearExtra += extraPaymentThisMonth;
+            }
+
+            monthsElapsed++;
+
+            // Record yearly data
+            if (monthsElapsed % 12 === 0 || balance <= 0.01) {
+                yearlyData.push({
+                    year: Math.ceil(monthsElapsed / 12),
+                    interest: currentYearInterest,
+                    principal: currentYearPrincipal,
+                    extra: currentYearExtra,
+                    balance: Math.max(0, balance)
+                });
+
+                currentYearInterest = 0;
+                currentYearPrincipal = 0;
+                currentYearExtra = 0;
+            }
+        }
+
+        // Output formatting
+        const formatTime = (totalMonthsVal) => {
+            const years = Math.floor(totalMonthsVal / 12);
+            const months = Math.ceil(totalMonthsVal % 12);
+            let result = [];
+            if (years > 0) result.push(`${years} Year${years > 1 ? 's' : ''}`);
+            if (months > 0) result.push(`${months} Month${months > 1 ? 's' : ''}`);
+            return result.length > 0 ? result.join(' and ') : '0 Months';
+        };
+
+        // Update UI
+        document.getElementById('monthlyPayment').innerText = formatCurrency(initialMonthlyPayment);
+        document.getElementById('principalAmount').innerText = formatCurrency(principal);
+        document.getElementById('totalInterest').innerText = formatCurrency(totalInterestPaid);
+        document.getElementById('totalCost').innerText = formatCurrency(principal + totalInterestPaid);
+
+        document.getElementById('originalPayoffTime').innerText = formatTime(totalMonths);
+        document.getElementById('actualPayoffTime').innerText = formatTime(monthsElapsed);
+
+        const adjustedContainer = document.getElementById('adjustedPaymentContainer');
+        if (loanType === 'variable' && adjustedPaymentOccurred) {
+            document.getElementById('adjustedPayment').innerText = formatCurrency(adjustedMonthlyPayment);
+            adjustedContainer.classList.remove('hidden');
+            document.getElementById('monthlyPaymentLabel').innerText = 'Initial Monthly Payment (P&I)';
+        } else {
+            adjustedContainer.classList.add('hidden');
+            document.getElementById('monthlyPaymentLabel').innerText = 'Monthly Payment (P&I)';
+        }
+
+        const timeSavedContainer = document.getElementById('timeSavedContainer');
+        if (monthsElapsed < totalMonths) {
+            document.getElementById('timeSaved').innerText = formatTime(totalMonths - monthsElapsed);
+            timeSavedContainer.style.display = 'flex';
+        } else {
+            timeSavedContainer.style.display = 'none';
+        }
+
+        // Render Amortization Table
+        const tbody = document.getElementById('amortizationBody');
+        tbody.innerHTML = '';
+        yearlyData.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>Year ${row.year}</td>
+                <td>${formatCurrency(row.interest)}</td>
+                <td>${formatCurrency(row.principal)}</td>
+                <td>${formatCurrency(row.extra)}</td>
+                <td>${formatCurrency(row.balance)}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    };
+
+    const resetUI = () => {
+        document.getElementById('monthlyPayment').innerText = '$0';
+        document.getElementById('principalAmount').innerText = '$0';
+        document.getElementById('totalInterest').innerText = '$0';
+        document.getElementById('totalCost').innerText = '$0';
+        document.getElementById('originalPayoffTime').innerText = '0 Years';
+        document.getElementById('actualPayoffTime').innerText = '0 Years';
+        document.getElementById('adjustedPaymentContainer').classList.add('hidden');
+        document.getElementById('timeSavedContainer').style.display = 'none';
+        document.getElementById('amortizationBody').innerHTML = '';
+    };
+
+    // Attach event listeners
+    const inputs = document.querySelectorAll('input[type="number"], select');
+    inputs.forEach(input => {
+        input.addEventListener('input', updateCalculator);
+    });
+
+    // Initial calculation
+    updateCalculator();
+</script>
+
+</body>
+</html>
