@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Bracket Calculator | firemaths.info</title>
+    <meta name="description" content="Calculate your effective and marginal tax rates based on 2024 US federal tax brackets. Compare single vs married filing statuses with a detailed breakdown.">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Tax Bracket Calculator",
+      "url": "https://firemaths.info/tax-bracket",
+      "description": "Calculate your effective and marginal tax rates based on US federal tax brackets.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --chart-color-a: #D4A017;
+            --chart-color-b: #4A90E2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .scenario-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scenario-header h2 {
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"], select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+        }
+
+        select {
+            font-family: var(--font-ui);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        .results {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.125rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-final .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .seo-content {
+            margin-bottom: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+
+        /* Bracket Breakdown Table Styles */
+        .bracket-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .bracket-table th, .bracket-table td {
+            padding: 0.75rem 0.5rem;
+            text-align: right;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .bracket-table th:first-child, .bracket-table td:first-child {
+            text-align: left;
+        }
+
+        .bracket-table th {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .bracket-table td {
+            font-family: var(--font-mono);
+        }
+
+        .bracket-table tr.active {
+            background-color: rgba(212, 160, 23, 0.1);
+        }
+
+        .bracket-table tr.active td {
+            color: var(--accent-color);
+        }
+
+        .bracket-table tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Tax Bracket Calculator</h1>
+        <p>Calculate your effective and marginal tax rates for 2024</p>
+    </header>
+
+    <main>
+        <div class="calculator-grid">
+            <!-- Input Section -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Tax Details</h2>
+                </div>
+
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="income">Gross Annual Income</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="income" value="100000" min="0" step="1000">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="filing-status">Filing Status</label>
+                        <div class="input-wrapper">
+                            <select id="filing-status">
+                                <option value="single">Single</option>
+                                <option value="married">Married Filing Jointly</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results">
+                    <div class="result-item result-final">
+                        <span class="result-label">Estimated Taxes</span>
+                        <div class="result-value">
+                            <span id="total-tax">$0</span>
+                            <button class="copy-btn" onclick="copyValue('total-tax', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Take-Home Pay</span>
+                        <span class="result-value" id="take-home-pay">$0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Effective Tax Rate</span>
+                        <span class="result-value" id="effective-rate">0%</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Marginal Tax Rate</span>
+                        <span class="result-value" id="marginal-rate">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breakdown Section -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Tax Bracket Breakdown</h2>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="bracket-table">
+                        <thead>
+                            <tr>
+                                <th>Tax Rate</th>
+                                <th>Bracket Range</th>
+                                <th>Income in Bracket</th>
+                                <th>Tax Owed</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bracket-body">
+                            <!-- Filled via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>Understanding Marginal vs. Effective Tax Rates</h2>
+            <p>One of the most common misconceptions about taxes is how tax brackets work. When you move into a higher tax bracket, you don't pay that higher rate on your <em>entire</em> income. Instead, the US uses a progressive tax system.</p>
+            <p>Your <strong>marginal tax rate</strong> is the rate paid on your last dollar of income (the highest bracket your income reaches). Your <strong>effective tax rate</strong> is the actual percentage of your total income paid in taxes. For example, even if your marginal rate is 24%, your effective rate might only be 15% because portions of your income were taxed at lower 10%, 12%, and 22% rates.</p>
+
+            <h2>2024 US Federal Tax Brackets</h2>
+            <p>For the 2024 tax year (taxes filed in early 2025), the IRS slightly adjusted the tax brackets to account for inflation. The seven federal income tax rates remain 10%, 12%, 22%, 24%, 32%, 35%, and 37%.</p>
+            <ul>
+                <li><strong>Single Filers:</strong> The top 37% rate applies to individuals earning over $609,350.</li>
+                <li><strong>Married Filing Jointly:</strong> The top 37% rate applies to couples earning over $731,200.</li>
+            </ul>
+            <p>Our calculator automatically segments your income into these respective buckets to show you exactly how your final tax bill is calculated, dollar by dollar.</p>
+
+            <h2>How to Use This Calculator</h2>
+            <p>Using the Tax Bracket Calculator is simple and all computations run securely in your browser. Enter your gross annual income before deductions and select your filing status. The calculator instantly breaks down your estimated federal tax liability, your total take-home pay, and your effective and marginal rates.</p>
+            <p><em>Note: This calculator estimates federal income tax based on standard brackets. It does not account for the standard deduction, itemized deductions, state taxes, FICA (Social Security and Medicare), or specific tax credits.</em></p>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    // 2024 US Federal Tax Brackets
+    const taxBrackets = {
+        single: [
+            { rate: 0.10, max: 11600 },
+            { rate: 0.12, max: 47150 },
+            { rate: 0.22, max: 100525 },
+            { rate: 0.24, max: 191950 },
+            { rate: 0.32, max: 243725 },
+            { rate: 0.35, max: 609350 },
+            { rate: 0.37, max: Infinity }
+        ],
+        married: [
+            { rate: 0.10, max: 23200 },
+            { rate: 0.12, max: 94300 },
+            { rate: 0.22, max: 201050 },
+            { rate: 0.24, max: 383900 },
+            { rate: 0.32, max: 487450 },
+            { rate: 0.35, max: 731200 },
+            { rate: 0.37, max: Infinity }
+        ]
+    };
+
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 0
+        }).format(value);
+    };
+
+    const formatPercent = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'percent',
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 2
+        }).format(value);
+    };
+
+    window.copyValue = async (elementId, btn) => {
+        const text = document.getElementById(elementId).innerText;
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    const updateCalculator = () => {
+        const income = parseFloat(document.getElementById('income').value) || 0;
+        const filingStatus = document.getElementById('filing-status').value;
+        const brackets = taxBrackets[filingStatus];
+
+        let remainingIncome = income;
+        let totalTax = 0;
+        let previousMax = 0;
+        let marginalRate = 0;
+
+        const breakdownHTML = [];
+
+        for (let i = 0; i < brackets.length; i++) {
+            const bracket = brackets[i];
+            const rate = bracket.rate;
+            const max = bracket.max;
+
+            // The size of this bracket
+            const bracketSize = max === Infinity ? Infinity : max - previousMax;
+
+            // How much of the income falls into this bracket
+            const incomeInBracket = Math.min(remainingIncome, bracketSize);
+
+            if (incomeInBracket > 0) {
+                const taxForBracket = incomeInBracket * rate;
+                totalTax += taxForBracket;
+                marginalRate = rate;
+
+                const rangeText = max === Infinity
+                    ? `Over ${formatCurrency(previousMax)}`
+                    : `${formatCurrency(previousMax)} - ${formatCurrency(max)}`;
+
+                breakdownHTML.push(`
+                    <tr class="active">
+                        <td>${(rate * 100).toFixed(0)}%</td>
+                        <td>${rangeText}</td>
+                        <td>${formatCurrency(incomeInBracket)}</td>
+                        <td>${formatCurrency(taxForBracket)}</td>
+                    </tr>
+                `);
+            } else {
+                // Bracket not reached
+                const rangeText = max === Infinity
+                    ? `Over ${formatCurrency(previousMax)}`
+                    : `${formatCurrency(previousMax)} - ${formatCurrency(max)}`;
+
+                breakdownHTML.push(`
+                    <tr>
+                        <td>${(rate * 100).toFixed(0)}%</td>
+                        <td>${rangeText}</td>
+                        <td>$0</td>
+                        <td>$0</td>
+                    </tr>
+                `);
+            }
+
+            remainingIncome -= incomeInBracket;
+            previousMax = max;
+        }
+
+        const effectiveRate = income > 0 ? totalTax / income : 0;
+        const takeHomePay = income - totalTax;
+
+        // Update UI
+        document.getElementById('total-tax').innerText = formatCurrency(totalTax);
+        document.getElementById('take-home-pay').innerText = formatCurrency(takeHomePay);
+        document.getElementById('effective-rate').innerText = formatPercent(effectiveRate);
+        document.getElementById('marginal-rate').innerText = formatPercent(marginalRate);
+        document.getElementById('bracket-body').innerHTML = breakdownHTML.join('');
+    };
+
+    // Event listeners
+    document.getElementById('income').addEventListener('input', updateCalculator);
+    document.getElementById('filing-status').addEventListener('change', updateCalculator);
+
+    // Initial calc
+    updateCalculator();
+</script>
+
+</body>
+</html>
