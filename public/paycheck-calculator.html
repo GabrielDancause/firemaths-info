@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paycheck Calculator | firemaths.info</title>
+    <meta name="description" content="Estimate your net paycheck after deductions. Calculate federal tax, state tax, and benefits to find your true take-home pay.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Paycheck Calculator",
+      "url": "https://firemaths.info/paycheck-calculator",
+      "description": "Estimate your net paycheck after deductions. Calculate federal tax, state tax, and benefits to find your true take-home pay.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Understanding Your Paycheck and Deductions",
+      "description": "Learn how to calculate your net paycheck by factoring in federal tax, state tax, and benefit deductions.",
+      "author": {
+        "@type": "Organization",
+        "name": "firemaths.info"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .scenario-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .scenario-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scenario-header h2 {
+            font-size: 1.25rem;
+            color: var(--accent-color);
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"], select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+            font-family: var(--font-ui);
+        }
+
+        input[type="number"] {
+            font-family: var(--font-mono);
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        .results {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .result-item.deduction .result-value {
+            color: #ff6b6b;
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.125rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-recommended {
+            background-color: rgba(212, 160, 23, 0.1);
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .result-recommended .result-label {
+            color: var(--accent-color);
+            font-size: 1rem;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-recommended .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-recommended .recommendation-note {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-family: var(--font-ui);
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .seo-content {
+            margin-bottom: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Paycheck Calculator</h1>
+        <p>Estimate your net paycheck after taxes and deductions</p>
+    </header>
+
+    <main>
+        <div class="calculator-grid">
+            <!-- Inputs -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Income & Frequency</h2>
+                </div>
+
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="gross-pay">Gross Pay (Annual)</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="gross-pay" value="80000" min="0" step="100">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="pay-frequency">Pay Frequency</label>
+                        <select id="pay-frequency">
+                            <option value="annual" selected>Annual</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="semimonthly">Semi-monthly (twice a month)</option>
+                            <option value="biweekly">Bi-weekly (every 2 weeks)</option>
+                            <option value="weekly">Weekly</option>
+                        </select>
+                    </div>
+
+                    <div class="scenario-header" style="margin-top: 2rem;">
+                        <h2>Taxes & Deductions</h2>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="federal-tax">Federal Tax Rate (Effective)</label>
+                        <div class="input-wrapper has-suffix">
+                            <input type="number" id="federal-tax" value="12" min="0" max="100" step="0.1">
+                            <span class="suffix">%</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="state-tax">State Tax Rate (Effective)</label>
+                        <div class="input-wrapper has-suffix">
+                            <input type="number" id="state-tax" value="4" min="0" max="100" step="0.1">
+                            <span class="suffix">%</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="fica-tax">FICA Tax (Social Security & Medicare)</label>
+                        <div class="input-wrapper has-suffix">
+                            <input type="number" id="fica-tax" value="7.65" min="0" max="100" step="0.01">
+                            <span class="suffix">%</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="benefits-deduction">Benefits & Other Deductions (per paycheck)</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="benefits-deduction" value="150" min="0" step="10">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Paycheck Breakdown</h2>
+                </div>
+
+                <div class="result-recommended">
+                    <span class="result-label">Estimated Net Paycheck</span>
+                    <div class="result-value">
+                        <span id="res-net-pay">$0.00</span>
+                        <button class="copy-btn" onclick="copyValue('res-net-pay', this)">Copy</button>
+                    </div>
+                    <div class="recommendation-note" id="res-frequency-note">Per pay period</div>
+                </div>
+
+                <div class="results">
+                    <div class="result-item">
+                        <span class="result-label">Gross Paycheck</span>
+                        <div class="result-value">
+                            <span id="res-gross-pay">$0.00</span>
+                            <button class="copy-btn" onclick="copyValue('res-gross-pay', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item deduction">
+                        <span class="result-label">Federal Tax</span>
+                        <div class="result-value">
+                            <span id="res-federal-tax">-$0.00</span>
+                            <button class="copy-btn" onclick="copyValue('res-federal-tax', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item deduction">
+                        <span class="result-label">State Tax</span>
+                        <div class="result-value">
+                            <span id="res-state-tax">-$0.00</span>
+                            <button class="copy-btn" onclick="copyValue('res-state-tax', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item deduction">
+                        <span class="result-label">FICA Tax</span>
+                        <div class="result-value">
+                            <span id="res-fica-tax">-$0.00</span>
+                            <button class="copy-btn" onclick="copyValue('res-fica-tax', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item deduction">
+                        <span class="result-label">Benefits & Deductions</span>
+                        <div class="result-value">
+                            <span id="res-benefits">-$0.00</span>
+                            <button class="copy-btn" onclick="copyValue('res-benefits', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label" style="font-weight: 600; color: var(--text-primary);">Total Deductions</span>
+                        <div class="result-value deduction">
+                            <span id="res-total-deductions">-$0.00</span>
+                            <button class="copy-btn" onclick="copyValue('res-total-deductions', this)">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>Understanding Your Paycheck and Deductions</h2>
+            <p>A paycheck calculator is a vital tool for understanding exactly how much money you will take home after taxes and other deductions. The difference between your <strong>gross pay</strong> (the total amount you earn) and your <strong>net pay</strong> (the amount that actually hits your bank account) can be substantial, depending on your tax bracket and benefit elections.</p>
+            <p>By simulating different gross income amounts, tax rates, and pay frequencies, you can better plan your personal finances, budget for expenses, and prepare for tax season.</p>
+
+            <h2>Common Paycheck Deductions Explained</h2>
+            <p>Several standard deductions usually come out of your gross paycheck before you receive your net pay:</p>
+            <ul>
+                <li><strong>Federal Income Tax:</strong> The largest deduction for most workers. It is based on your income level, filing status, and information provided on your W-4 form. The tax system is progressive, meaning higher income portions are taxed at higher rates.</li>
+                <li><strong>State Income Tax:</strong> Most U.S. states impose an income tax, though the rates and structures vary widely. A few states have no income tax at all.</li>
+                <li><strong>FICA Taxes (Social Security & Medicare):</strong> These are mandatory payroll taxes. Generally, employees pay 6.2% for Social Security (up to a certain wage base limit) and 1.45% for Medicare. Your employer matches these contributions.</li>
+                <li><strong>Benefits and Pre-tax Deductions:</strong> Contributions to health insurance premiums, retirement accounts (like a 401(k)), and flexible spending accounts (FSAs) often come out of your paycheck. These are often deducted <em>before</em> income taxes are calculated, which can lower your taxable income.</li>
+            </ul>
+
+            <h2>How Often Should I Be Paid?</h2>
+            <p>Pay frequency affects the size of your individual paychecks, but not your total annual earnings. Common pay schedules include:</p>
+            <ul>
+                <li><strong>Weekly:</strong> 52 paychecks per year.</li>
+                <li><strong>Bi-weekly:</strong> Every two weeks, resulting in 26 paychecks per year. This is the most common schedule in the U.S.</li>
+                <li><strong>Semi-monthly:</strong> Twice a month (e.g., on the 15th and the last day of the month), resulting in 24 paychecks per year.</li>
+                <li><strong>Monthly:</strong> 12 paychecks per year.</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    // Format currency
+    const formatCurrency = (value, isNegative = false) => {
+        const formatted = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(Math.abs(value));
+        return isNegative ? `-${formatted}` : formatted;
+    };
+
+    // Copy to clipboard
+    window.copyValue = async (elementId, btn) => {
+        const textElement = document.getElementById(elementId);
+        let text = textElement.innerText;
+        // Clean up text if it starts with minus for copying (optional, but usually helpful to keep minus)
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    const updateCalculator = () => {
+        const grossPayInput = parseFloat(document.getElementById('gross-pay').value) || 0;
+        const payFreq = document.getElementById('pay-frequency').value;
+        const fedTaxRate = parseFloat(document.getElementById('federal-tax').value) || 0;
+        const stateTaxRate = parseFloat(document.getElementById('state-tax').value) || 0;
+        const ficaTaxRate = parseFloat(document.getElementById('fica-tax').value) || 0;
+        const benefitsDeduction = parseFloat(document.getElementById('benefits-deduction').value) || 0;
+
+        let payPeriods = 1;
+
+        switch (payFreq) {
+            case 'annual':
+                payPeriods = 1;
+                document.getElementById('res-frequency-note').innerText = 'Per year';
+                break;
+            case 'monthly':
+                payPeriods = 12;
+                document.getElementById('res-frequency-note').innerText = 'Per month';
+                break;
+            case 'semimonthly':
+                payPeriods = 24;
+                document.getElementById('res-frequency-note').innerText = 'Per pay period (twice a month)';
+                break;
+            case 'biweekly':
+                payPeriods = 26;
+                document.getElementById('res-frequency-note').innerText = 'Per pay period (every 2 weeks)';
+                break;
+            case 'weekly':
+                payPeriods = 52;
+                document.getElementById('res-frequency-note').innerText = 'Per week';
+                break;
+        }
+
+        // Treat Gross Pay input as Annual Gross
+        const annualGross = grossPayInput;
+        const grossPerPeriod = annualGross / payPeriods;
+
+        const fedTax = grossPerPeriod * (fedTaxRate / 100);
+        const stateTax = grossPerPeriod * (stateTaxRate / 100);
+        const ficaTax = grossPerPeriod * (ficaTaxRate / 100);
+
+        const totalDeductions = fedTax + stateTax + ficaTax + benefitsDeduction;
+        const netPay = grossPerPeriod - totalDeductions;
+
+        // Update UI
+        document.getElementById('res-gross-pay').innerText = formatCurrency(grossPerPeriod);
+        document.getElementById('res-federal-tax').innerText = formatCurrency(fedTax, true);
+        document.getElementById('res-state-tax').innerText = formatCurrency(stateTax, true);
+        document.getElementById('res-fica-tax').innerText = formatCurrency(ficaTax, true);
+        document.getElementById('res-benefits').innerText = formatCurrency(benefitsDeduction, true);
+        document.getElementById('res-total-deductions').innerText = formatCurrency(totalDeductions, true);
+        document.getElementById('res-net-pay').innerText = formatCurrency(netPay);
+    };
+
+    // Attach event listeners
+    const inputs = ['gross-pay', 'pay-frequency', 'federal-tax', 'state-tax', 'fica-tax', 'benefits-deduction'];
+    inputs.forEach(id => {
+        document.getElementById(id).addEventListener('input', updateCalculator);
+        if(id === 'pay-frequency') {
+            document.getElementById(id).addEventListener('change', updateCalculator);
+        }
+    });
+
+    // Initial calculation
+    updateCalculator();
+</script>
+
+</body>
+</html>
