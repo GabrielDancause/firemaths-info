@@ -1,0 +1,23 @@
+{
+  "slug": "",
+  "title": "firemaths.info — Personal finance calculators, FIRE tools & real estate analysis",
+  "description": "Personal finance calculators, FIRE tools & real estate analysis",
+  "ogTitle": "firemaths.info",
+  "ogDescription": "Personal finance calculators, FIRE tools & real estate analysis",
+  "heroGradient": "linear-gradient(135deg, #B8430B 0%, #D4A017 100%)",
+  "accentColor": "#B8430B",
+  "heroLocation": null,
+  "h1": "firemaths 🚀",
+  "tagline": "Personal finance calculators, FIRE tools & real estate analysis",
+  "backLink": null,
+  "pageType": "guide",
+  "quickFacts": [],
+  "sections": [
+    {
+      "title": "Coming Soon",
+      "paragraphs": ["We're building something useful. Check back soon."]
+    }
+  ],
+  "ctaBanner": null,
+  "footer": "© 2025 firemaths.info"
+}
