@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Return Calculator | firemaths.info</title>
+    <meta name="description" content="Calculate your total stock return including dividends. Find out your total return percentage and annualized CAGR based on buy/sell price and holding period.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Stock Return Calculator",
+      "url": "https://firemaths.info/stock-return",
+      "description": "Calculate total stock return, including capital gains and dividends, to determine ROI and CAGR.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --danger-color: #ff4a4a;
+            --success-color: #4aff8a;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1.5fr 1fr;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-header h2 {
+            font-size: 1.25rem;
+        }
+
+        /* Input Grid */
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .input-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 0.75rem; }
+        .suffix { right: 0.75rem; }
+
+        input[type="number"] {
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 1.75rem; }
+        .has-suffix input { padding-right: 2rem; }
+
+        /* Summary Panel */
+        .summary-panel .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .summary-panel .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-final .result-value {
+            font-size: 1.75rem;
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .val-positive {
+            color: var(--success-color);
+        }
+
+        .val-negative {
+            color: var(--danger-color);
+        }
+
+        /* Buttons */
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        /* SEO Content */
+        .seo-content {
+            margin-top: 4rem;
+            margin-bottom: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul, .seo-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Stock Return Calculator</h1>
+        <p>Calculate total return and annualized performance including dividends</p>
+    </header>
+
+    <main>
+        <div class="dashboard">
+            <!-- Inputs Column -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Investment Details</h2>
+                </div>
+
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="buy-price">Buy Price (Per Share)</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="buy-price" value="150.00" min="0.01" step="0.01">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="sell-price">Sell / Current Price</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="sell-price" value="210.00" min="0" step="0.01">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="shares">Number of Shares</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="shares" value="100" min="0.0001" step="1">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="dividends">Total Dividends Received</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="dividends" value="500.00" min="0" step="0.01">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="years">Holding Period</label>
+                        <div class="input-wrapper has-suffix">
+                            <span class="suffix">Yrs</span>
+                            <input type="number" id="years" value="3" min="0.01" step="0.1">
+                        </div>
+                    </div>
+                </div>
+
+                <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 1.5rem; line-height: 1.4;">
+                    <strong>Tip:</strong> If you are still holding the stock, enter the current market price in the "Sell / Current Price" field to see your unrealized return.
+                </p>
+            </div>
+
+            <!-- Summary Column -->
+            <div class="card summary-panel" style="align-self: start;">
+                <div class="card-header">
+                    <h2>Return Summary</h2>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Initial Investment</span>
+                    <div class="result-value">
+                        <span id="res-invested">$0</span>
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Final Value</span>
+                    <div class="result-value">
+                        <span id="res-final">$0</span>
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Total Profit / Loss</span>
+                    <div class="result-value">
+                        <span id="res-profit">$0</span>
+                    </div>
+                </div>
+
+                <div class="result-item result-final" style="margin-top: 1rem;">
+                    <span class="result-label" style="color: var(--text-primary);">Total Return (ROI)</span>
+                    <div class="result-value">
+                        <span id="res-roi">0.00%</span>
+                        <button class="copy-btn" onclick="copyValue('res-roi', this)">Copy</button>
+                    </div>
+                </div>
+
+                <div class="result-item result-final">
+                    <span class="result-label" style="color: var(--text-primary);">Annualized (CAGR)</span>
+                    <div class="result-value">
+                        <span id="res-cagr">0.00%</span>
+                        <button class="copy-btn" onclick="copyValue('res-cagr', this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>Understanding Stock Returns</h2>
+            <p>A stock's total return encompasses both capital appreciation (the increase in the stock's price) and income generated from dividends. When evaluating an investment, many beginners only look at the price difference between buying and selling, ignoring the significant impact dividends can have over long periods.</p>
+            <p>Our Stock Return Calculator factors in all these elements to give you a true picture of your investment's performance, expressing the result as both a flat percentage (ROI) and an annualized rate (CAGR).</p>
+
+            <h2>Total Return vs. Price Return</h2>
+            <p><strong>Price Return</strong> is simply the change in the stock's price over time. If you buy a stock at $100 and it grows to $110, the price return is 10%.</p>
+            <p><strong>Total Return</strong> includes both the price change and any dividends received. If that same stock also paid $5 in dividends while you held it, your total profit is $15, making your total return 15%. Over decades, reinvested dividends often account for a massive portion of the stock market's overall historical return.</p>
+
+            <h2>How to Use the Stock Return Calculator</h2>
+            <ol>
+                <li><strong>Buy Price:</strong> Enter the price you originally paid per share.</li>
+                <li><strong>Sell / Current Price:</strong> Enter the price you sold it for, or the current market price if you still own the shares.</li>
+                <li><strong>Number of Shares:</strong> The total amount of shares you hold or traded.</li>
+                <li><strong>Total Dividends Received:</strong> The total absolute dollar amount of dividends you received during your holding period.</li>
+                <li><strong>Holding Period:</strong> The amount of time you owned the stock, measured in years (e.g., use 1.5 for 18 months).</li>
+            </ol>
+
+            <h2>Why CAGR is Important</h2>
+            <p>The Compound Annual Growth Rate (CAGR) tells you what the stock's return would be if it had grown at a steady, consistent rate every single year. A 50% total return sounds great, but if it took 15 years to achieve, the CAGR is only 2.7%, meaning your money might have grown faster in a simple high-yield savings account or index fund.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    // Format currency
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(value);
+    };
+
+    // Format percentage
+    const formatPercent = (value) => {
+        if (!isFinite(value)) return 'N/A';
+        return new Intl.NumberFormat('en-US', {
+            style: 'percent',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(value / 100);
+    };
+
+    // Copy to clipboard
+    window.copyValue = async (elementId, btn) => {
+        const text = document.getElementById(elementId).innerText;
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    // Set color class based on value
+    const setColorClass = (element, value) => {
+        element.classList.remove('val-positive', 'val-negative');
+        if (value > 0) element.classList.add('val-positive');
+        else if (value < 0) element.classList.add('val-negative');
+    };
+
+    // Calculation logic
+    const calculateReturns = () => {
+        const buyPrice = parseFloat(document.getElementById('buy-price').value) || 0;
+        const sellPrice = parseFloat(document.getElementById('sell-price').value) || 0;
+        const shares = parseFloat(document.getElementById('shares').value) || 0;
+        const dividends = parseFloat(document.getElementById('dividends').value) || 0;
+        const years = parseFloat(document.getElementById('years').value) || 0;
+
+        // Core calculations
+        const initialInvestment = buyPrice * shares;
+        const finalStockValue = sellPrice * shares;
+        const totalFinalValue = finalStockValue + dividends;
+
+        const totalProfit = totalFinalValue - initialInvestment;
+
+        // ROI
+        let roi = 0;
+        if (initialInvestment > 0) {
+            roi = (totalProfit / initialInvestment) * 100;
+        }
+
+        // CAGR
+        let cagr = 0;
+        if (initialInvestment > 0 && totalFinalValue > 0 && years > 0) {
+            cagr = (Math.pow(totalFinalValue / initialInvestment, 1 / years) - 1) * 100;
+        } else if (initialInvestment > 0 && totalFinalValue === 0 && years > 0) {
+            cagr = -100;
+        }
+
+        // Update UI Summary
+        document.getElementById('res-invested').textContent = formatCurrency(initialInvestment);
+        document.getElementById('res-final').textContent = formatCurrency(totalFinalValue);
+
+        const elProfit = document.getElementById('res-profit');
+        elProfit.textContent = formatCurrency(totalProfit);
+        setColorClass(elProfit, totalProfit);
+
+        const elRoi = document.getElementById('res-roi');
+        elRoi.textContent = formatPercent(roi);
+        setColorClass(elRoi, roi);
+
+        const elCagr = document.getElementById('res-cagr');
+        elCagr.textContent = formatPercent(cagr);
+        setColorClass(elCagr, cagr);
+    };
+
+    // Attach event listeners to inputs
+    const inputs = document.querySelectorAll('input[type="number"]');
+    inputs.forEach(input => {
+        input.addEventListener('input', calculateReturns);
+    });
+
+    // Initial calculation on load
+    calculateReturns();
+</script>
+
+</body>
+</html>
