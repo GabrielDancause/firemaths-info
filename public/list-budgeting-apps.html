@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Free Budgeting Apps: YNAB vs Mint vs Others</title>
+    <meta name="description" content="Compare the best free budgeting apps: YNAB, Mint, PocketGuard, and Goodbudget. Features, privacy, platforms, pros and cons to help you choose the right financial tool.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Best Free Budgeting Apps: YNAB vs Mint vs Others",
+      "description": "Compare the best free budgeting apps: YNAB, Mint, PocketGuard, and Goodbudget.",
+      "url": "https://firemaths.info/list-budgeting-apps.html",
+      "author": {
+        "@type": "Organization",
+        "name": "firemaths.info"
+      }
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0c0a00;
+            color: #e0d8c8;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 24px 40px;
+            background: linear-gradient(180deg, #1a0f00 0%, #0c0a00 100%);
+            position: relative;
+            border-bottom: 1px solid #2a2010;
+        }
+        .header-content { position: relative; z-index: 1; }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, #D4A017 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p {
+            color: #888;
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Section Headings */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2010;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        /* Cards */
+        .card {
+            background: #141008;
+            border: 1px solid #2a2010;
+            border-radius: 16px;
+            padding: 24px;
+            transition: transform 0.2s, border-color 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            border-color: #D4A017;
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #D4A017;
+            margin-bottom: 4px;
+        }
+
+        .score {
+            background: #0c0a00;
+            border: 1px solid #2a2010;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #D4A017;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .app-type {
+            color: #888;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .features-list {
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .features-list strong {
+            color: #fff;
+        }
+
+        .features-list ul {
+            list-style: none;
+            margin-top: 12px;
+        }
+
+        .features-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #e0d8c8;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #D4A017;
+            font-weight: bold;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+            border-top: 1px solid #2a2010;
+            padding-top: 16px;
+        }
+
+        .pros-cons h4 {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pros h4 { color: #4ade80; }
+        .cons h4 { color: #f87171; }
+
+        .pros-cons ul {
+            list-style: none;
+        }
+
+        .pros-cons li {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 6px;
+            position: relative;
+            padding-left: 12px;
+        }
+
+        .pros li::before {
+            content: "+";
+            position: absolute;
+            left: 0;
+            color: #4ade80;
+        }
+
+        .cons li::before {
+            content: "-";
+            position: absolute;
+            left: 0;
+            color: #f87171;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px dashed #2a2010;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .meta-info span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Copyable Code/Values */
+        .code-block {
+            background: #0c0a00;
+            border: 1px solid #2a2010;
+            border-radius: 8px;
+            padding: 12px;
+            position: relative;
+            margin-top: 12px;
+        }
+        .code-block code {
+            font-family: 'JetBrains Mono', monospace;
+            color: #e0d8c8;
+            font-size: 0.9rem;
+            display: block;
+            padding-right: 60px; /* Space for button */
+            word-break: break-all;
+        }
+
+        /* Table */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: #141008;
+            border: 1px solid #2a2010;
+            border-radius: 16px;
+            margin-bottom: 60px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th, td {
+            padding: 16px 24px;
+            border-bottom: 1px solid #2a2010;
+        }
+        th {
+            background: #0c0a00;
+            color: #888;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        td {
+            color: #e0d8c8;
+            font-size: 1rem;
+        }
+        td.highlight {
+            font-family: 'JetBrains Mono', monospace;
+            color: #D4A017;
+            font-weight: 600;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover td {
+            background: rgba(212, 160, 23, 0.05);
+        }
+
+        /* SEO Content Section */
+        .content-section {
+            max-width: 760px;
+            margin: 0 auto 80px;
+            padding-top: 40px;
+            border-top: 1px solid #2a2010;
+        }
+        .content-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 40px 0 16px;
+        }
+        .content-section h2:first-child {
+            margin-top: 0;
+        }
+        .content-section p {
+            color: #888;
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+        .content-section ul {
+            color: #888;
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+        .content-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid #2a2010;
+            background: #141008;
+        }
+        .footer a { color: #D4A017; text-decoration: none; font-weight: 500;}
+        .footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .grid { grid-template-columns: 1fr; }
+            th, td { padding: 12px 16px; }
+            .pros-cons { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <h1>Best Budgeting Apps</h1>
+        <p>A curated comparison of top budgeting tools. Find the right app to manage your finances, track expenses, and boost your savings rate.</p>
+    </div>
+</header>
+
+<main class="container">
+
+    <h2 class="section-title">Top Budgeting Tools Compared</h2>
+    <div class="grid">
+        <!-- YNAB -->
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3>YNAB</h3>
+                    <div class="app-type">Zero-Based Budgeting</div>
+                </div>
+                <div class="score">9.5/10</div>
+            </div>
+
+            <div class="features-list">
+                <p><strong>Best for:</strong> Serious budgeters wanting to change financial habits.</p>
+                <ul>
+                    <li>Zero-based "give every dollar a job" system</li>
+                    <li>Excellent educational resources</li>
+                    <li>Goal tracking and loan planner</li>
+                    <li>Bank syncing and manual entry</li>
+                </ul>
+            </div>
+
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>Pros</h4>
+                    <ul>
+                        <li>Changes spending behavior</li>
+                        <li>Proactive budgeting approach</li>
+                        <li>Great customer support</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>Cons</h4>
+                    <ul>
+                        <li>Steep learning curve</li>
+                        <li>No free tier (34-day trial)</li>
+                        <li>Paid subscription required</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="meta-info">
+                <span>📱 Web, iOS, Android</span>
+                <span>🔒 Bank-level Encryption</span>
+            </div>
+        </div>
+
+        <!-- Mint Alternative / Monarch -->
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3>Monarch Money</h3>
+                    <div class="app-type">Comprehensive Dashboard</div>
+                </div>
+                <div class="score">9.0/10</div>
+            </div>
+
+            <div class="features-list">
+                <p><strong>Best for:</strong> Former Mint users seeking a premium replacement.</p>
+                <ul>
+                    <li>Customizable dashboard & reporting</li>
+                    <li>Collaborative features for couples</li>
+                    <li>Investment tracking & net worth</li>
+                    <li>No ads or data selling</li>
+                </ul>
+            </div>
+
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>Pros</h4>
+                    <ul>
+                        <li>Beautiful, modern interface</li>
+                        <li>Great multi-user support</li>
+                        <li>Strong investment tools</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>Cons</h4>
+                    <ul>
+                        <li>Paid only (no free tier)</li>
+                        <li>Complex for simple needs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="meta-info">
+                <span>📱 Web, iOS, Android</span>
+                <span>🔒 SOC 2 Certified</span>
+            </div>
+        </div>
+
+        <!-- PocketGuard -->
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3>PocketGuard</h3>
+                    <div class="app-type">Automated Tracking</div>
+                </div>
+                <div class="score">8.5/10</div>
+            </div>
+
+            <div class="features-list">
+                <p><strong>Best for:</strong> People who want to know "how much is safe to spend".</p>
+                <ul>
+                    <li>"In My Pocket" spending limit</li>
+                    <li>Bill tracking & negotiation</li>
+                    <li>Automated expense categorization</li>
+                    <li>Debt payoff planning</li>
+                </ul>
+            </div>
+
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>Pros</h4>
+                    <ul>
+                        <li>Simplifies spending limits</li>
+                        <li>Has a free basic version</li>
+                        <li>Identifies unwanted subs</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>Cons</h4>
+                    <ul>
+                        <li>Free version is limited</li>
+                        <li>Less control over categories</li>
+                        <li>Cluttered interface sometimes</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="meta-info">
+                <span>📱 iOS, Android</span>
+                <span>🔒 256-bit Encryption</span>
+            </div>
+        </div>
+
+        <!-- Goodbudget -->
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3>Goodbudget</h3>
+                    <div class="app-type">Envelope Budgeting</div>
+                </div>
+                <div class="score">8.0/10</div>
+            </div>
+
+            <div class="features-list">
+                <p><strong>Best for:</strong> Envelope system traditionalists & manual trackers.</p>
+                <ul>
+                    <li>Digital envelope system</li>
+                    <li>Manual transaction entry</li>
+                    <li>Sync across multiple devices</li>
+                    <li>Debt tracking features</li>
+                </ul>
+            </div>
+
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>Pros</h4>
+                    <ul>
+                        <li>Generous free tier</li>
+                        <li>Great for couples</li>
+                        <li>Forces manual awareness</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>Cons</h4>
+                    <ul>
+                        <li>No automatic bank syncing</li>
+                        <li>Basic reporting tools</li>
+                        <li>Dated interface</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="meta-info">
+                <span>📱 Web, iOS, Android</span>
+                <span>🔒 Standard Privacy</span>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="section-title">Quick Comparison Matrix</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>App Name</th>
+                    <th>Best Feature</th>
+                    <th>Free Tier</th>
+                    <th>Sync Style</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight">YNAB</td>
+                    <td>Behavior change & goal tracking</td>
+                    <td>No (34-day trial)</td>
+                    <td>Auto + Manual</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Monarch Money</td>
+                    <td>Net worth & couples syncing</td>
+                    <td>No</td>
+                    <td>Auto</td>
+                </tr>
+                <tr>
+                    <td class="highlight">PocketGuard</td>
+                    <td>"In My Pocket" daily limit</td>
+                    <td>Yes (Limited)</td>
+                    <td>Auto</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Goodbudget</td>
+                    <td>Digital envelope system</td>
+                    <td>Yes (10 envelopes)</td>
+                    <td>Manual Only</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SEO Content Section -->
+    <article class="content-section">
+        <h2>Why Use a Budgeting App?</h2>
+        <p>Budgeting apps are essential tools for taking control of your personal finances. Whether you're tracking towards Financial Independence (FIRE) or simply trying to build an emergency fund, a budgeting app provides the visibility needed to understand your spending habits.</p>
+        <p>Instead of manually reconciling spreadsheets, modern apps sync directly with your bank accounts, categorize transactions automatically, and give you real-time insights into your financial health.</p>
+
+        <h2>Zero-Based vs. Tracking Approaches</h2>
+        <p>When choosing an app, it's crucial to understand the two main philosophies:</p>
+        <ul>
+            <li><strong>Zero-Based Budgeting (e.g., YNAB, Goodbudget):</strong> This proactive approach requires you to assign every dollar you earn to a specific category (or "envelope") before you spend it. It's highly effective for changing spending behavior and aggressive saving.</li>
+            <li><strong>Expense Tracking (e.g., Monarch, PocketGuard):</strong> These apps passively track your spending against pre-set limits. They are better for people who already have good financial habits and simply want a dashboard to monitor their net worth and cash flow.</li>
+        </ul>
+
+        <h2>Privacy and Security Considerations</h2>
+        <p>Connecting your bank accounts to third-party apps requires trust. Look for apps that use secure, read-only connections via aggregators like Plaid or MX. Most reputable budgeting apps utilize 256-bit encryption and never store your actual bank credentials.</p>
+        <p>Additionally, consider how the company makes money. Free apps often monetize by showing targeted financial ads or, in some cases, anonymizing and selling transaction data. Paid apps generally offer a more private, ad-free experience focused entirely on the user.</p>
+    </article>
+
+</main>
+
+<footer class="footer">
+    <div class="container" style="padding:0">
+        © 2025 <a href="https://firemaths.info">firemaths.info</a> · A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property
+    </div>
+</footer>
+
+</body>
+</html>
