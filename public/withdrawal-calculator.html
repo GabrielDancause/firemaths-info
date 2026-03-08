@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retirement Withdrawal Calculator — Safe Withdrawal Rates & 4% Rule</title>
+    <meta name="description" content="Calculate your safe retirement withdrawal rate using the 4% rule. See how long your portfolio will last with inflation, social security, and investment returns.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Retirement Withdrawal Calculator",
+      "description": "Calculate retirement safe withdrawal rates, portfolio longevity, and the impact of the 4% rule, inflation, and social security.",
+      "url": "https://firemaths.info/withdrawal-calculator.html",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any"
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0c0a00;
+            color: #e0d8c8;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 24px 40px;
+            background: linear-gradient(180deg, #1a0f00 0%, #0c0a00 100%);
+            position: relative;
+            border-bottom: 1px solid #2a2010;
+        }
+        .header-content { position: relative; z-index: 1; }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, #D4A017 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p {
+            color: #888;
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: #141008;
+            border: 2px solid #2a2010;
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #e0d8c8;
+            margin-bottom: 8px;
+        }
+        .input-group .hint {
+            display: block;
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 8px;
+            margin-top: -4px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: #888;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            pointer-events: none;
+        }
+        .prefix { left: 16px; }
+        .suffix { right: 16px; }
+
+        input[type="number"] {
+            width: 100%;
+            background: #0c0a00;
+            border: 1px solid #2a2010;
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #D4A017;
+        }
+
+        .input-wrapper.has-prefix input { padding-left: 32px; }
+        .input-wrapper.has-suffix input { padding-right: 32px; }
+
+        .results {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .result-box {
+            background: #0c0a00;
+            border: 1px solid #2a2010;
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .result-box.highlight {
+            border-color: #D4A017;
+            background: linear-gradient(180deg, rgba(212,160,23,0.05) 0%, transparent 100%);
+        }
+
+        .result-box.danger {
+            border-color: #ff4d4d;
+            background: linear-gradient(180deg, rgba(255,77,77,0.05) 0%, transparent 100%);
+        }
+
+        .result-box.danger .result-value {
+            color: #ff4d4d;
+        }
+
+        .result-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .result-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .result-box.highlight .result-value {
+            color: #D4A017;
+        }
+
+        .result-sub {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: transparent;
+            border: 1px solid #2a2010;
+            color: #888;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .copy-btn:hover {
+            border-color: #D4A017;
+            color: #D4A017;
+        }
+
+        .copy-btn.copied {
+            background: #D4A017;
+            color: #0c0a00;
+            border-color: #D4A017;
+        }
+
+        .content-section {
+            max-width: 760px;
+            margin: 0 auto 80px;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 40px 0 16px;
+        }
+
+        .content-section p {
+            color: #888;
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+
+        .content-section ul {
+            color: #888;
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .content-section li {
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid #2a2010;
+            background: #141008;
+        }
+        .footer a { color: #D4A017; text-decoration: none; font-weight: 500;}
+        .footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .calculator-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2rem; }
+            .card { padding: 24px; }
+            .result-value { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <h1>Retirement Withdrawal Calculator</h1>
+        <p>Test your safe withdrawal rate against inflation, social security, and market returns to see if your portfolio will last through retirement.</p>
+    </div>
+</header>
+
+<main class="container">
+    <div class="calculator-grid">
+        <!-- Inputs -->
+        <div class="card">
+            <div class="input-group">
+                <label for="portfolio">Starting Portfolio Value</label>
+                <div class="input-wrapper has-prefix">
+                    <span class="prefix">$</span>
+                    <input type="number" id="portfolio" value="1000000" min="0" step="10000">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="withdrawalRate">Initial Withdrawal Rate</label>
+                <span class="hint">The famous "4% Rule" suggests starting here.</span>
+                <div class="input-wrapper has-suffix">
+                    <input type="number" id="withdrawalRate" value="4" min="0" max="100" step="0.1">
+                    <span class="suffix">%</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="returns">Expected Annual Returns (Nominal)</label>
+                <span class="hint">Average stock market return is ~7-10% before inflation.</span>
+                <div class="input-wrapper has-suffix">
+                    <input type="number" id="returns" value="7" min="0" max="30" step="0.1">
+                    <span class="suffix">%</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="inflation">Expected Inflation</label>
+                <span class="hint">Historical average is around 2.5-3%.</span>
+                <div class="input-wrapper has-suffix">
+                    <input type="number" id="inflation" value="3" min="0" max="20" step="0.1">
+                    <span class="suffix">%</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="years">Years in Retirement</label>
+                <div class="input-wrapper has-suffix">
+                    <input type="number" id="years" value="30" min="1" max="100" step="1">
+                    <span class="suffix">Yrs</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="socialSecurity">Annual Social Security / Pension</label>
+                <span class="hint">Optional. Fixed income that reduces portfolio withdrawals.</span>
+                <div class="input-wrapper has-prefix">
+                    <span class="prefix">$</span>
+                    <input type="number" id="socialSecurity" value="0" min="0" step="1000">
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="card results">
+            <div class="result-box highlight">
+                <div class="result-label">Initial Annual Withdrawal</div>
+                <div class="result-value" id="res-initial-withdrawal">$40,000</div>
+                <div class="result-sub">Your target spending for Year 1</div>
+                <button class="copy-btn" data-copy="res-initial-withdrawal" aria-label="Copy Withdrawal">Copy</button>
+            </div>
+
+            <div class="result-box" id="res-status-box">
+                <div class="result-label">Portfolio Longevity</div>
+                <div class="result-value" id="res-status">Lasts 30+ Years</div>
+                <div class="result-sub" id="res-status-sub">Your money survives the simulation</div>
+            </div>
+
+            <div class="result-box">
+                <div class="result-label">Final Portfolio Value</div>
+                <div class="result-value" id="res-final-value">$1,234,567</div>
+                <div class="result-sub" id="res-final-sub">After 30 years (Nominal value)</div>
+                <button class="copy-btn" data-copy="res-final-value" aria-label="Copy Final Value">Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <article class="content-section">
+        <h2>What is a Safe Withdrawal Rate (SWR)?</h2>
+        <p>A Safe Withdrawal Rate (SWR) is the percentage of your initial retirement portfolio that you can withdraw in your first year of retirement, adjusting that amount for inflation in subsequent years, without running out of money before you die. The most famous benchmark for SWR is the <strong>4% Rule</strong>.</p>
+        <p>The 4% Rule originates from the 1998 Trinity Study, which tested various withdrawal rates against historical stock and bond market data. It concluded that a retiree with a 50/50 or 75/25 stock-to-bond allocation could withdraw 4% initially, adjusted for inflation annually, and have a near 100% success rate over a 30-year retirement period.</p>
+
+        <h2>How Inflation Impacts Your Portfolio</h2>
+        <p>Inflation is the silent killer of retirement portfolios. If your initial spending target is $40,000 and inflation averages 3%, your spending target in year 10 will need to be over $53,000 just to maintain the exact same purchasing power.</p>
+        <p>This calculator adjusts your desired income up by your estimated inflation rate each year. Your investment returns must work hard not just to fund your withdrawals, but to keep the remaining principal growing fast enough to offset this compounding inflation.</p>
+
+        <h2>Factoring in Social Security & Pensions</h2>
+        <p>The 4% Rule traditionally assumes your entire lifestyle is funded by your portfolio. In reality, many retirees have fixed income sources like Social Security, pensions, or rental income.</p>
+        <ul>
+            <li><strong>Reduced Reliance:</strong> If your target spending is $60,000 and you receive $20,000 from Social Security, you only need to withdraw $40,000 from your investments.</li>
+            <li><strong>Lower Required Portfolio:</strong> By reducing the withdrawal burden on your portfolio, Social Security drastically lowers the total amount you need to save to achieve financial independence.</li>
+        </ul>
+        <p>Note: In this calculator's model, we assume your Social Security or Pension benefits will also scale with inflation (like Cost of Living Adjustments, or COLAs).</p>
+    </article>
+</main>
+
+<footer class="footer">
+    <div class="container" style="padding:0">
+        © 2025 <a href="https://firemaths.info">firemaths.info</a> · A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const inputs = {
+            portfolio: document.getElementById('portfolio'),
+            withdrawalRate: document.getElementById('withdrawalRate'),
+            returns: document.getElementById('returns'),
+            inflation: document.getElementById('inflation'),
+            years: document.getElementById('years'),
+            socialSecurity: document.getElementById('socialSecurity')
+        };
+
+        const outputs = {
+            initialWithdrawal: document.getElementById('res-initial-withdrawal'),
+            statusBox: document.getElementById('res-status-box'),
+            status: document.getElementById('res-status'),
+            statusSub: document.getElementById('res-status-sub'),
+            finalValue: document.getElementById('res-final-value'),
+            finalSub: document.getElementById('res-final-sub')
+        };
+
+        const copyButtons = document.querySelectorAll('.copy-btn');
+
+        const formatCurrency = (value) => {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            }).format(value);
+        };
+
+        const calculateWithdrawal = () => {
+            const portfolio = parseFloat(inputs.portfolio.value) || 0;
+            const withdrawalRate = parseFloat(inputs.withdrawalRate.value) || 0;
+            const returns = parseFloat(inputs.returns.value) || 0;
+            const inflation = parseFloat(inputs.inflation.value) || 0;
+            const years = parseInt(inputs.years.value) || 0;
+            const socialSecurity = parseFloat(inputs.socialSecurity.value) || 0;
+
+            const rateDecimal = withdrawalRate / 100;
+            const returnDecimal = returns / 100;
+            const inflationDecimal = inflation / 100;
+
+            // Year 1 Target Income
+            const initialTargetIncome = portfolio * rateDecimal;
+
+            outputs.initialWithdrawal.textContent = formatCurrency(initialTargetIncome);
+
+            let currentPortfolio = portfolio;
+            let currentTargetIncome = initialTargetIncome;
+            let currentSocialSecurity = socialSecurity;
+            let failedYear = -1;
+
+            for (let i = 1; i <= years; i++) {
+                // Calculate how much we need to pull from portfolio
+                // If SS covers the target income entirely, we pull 0
+                const requiredWithdrawal = Math.max(0, currentTargetIncome - currentSocialSecurity);
+
+                // Withdraw at beginning of year (conservative approach)
+                currentPortfolio -= requiredWithdrawal;
+
+                // Did we run out of money?
+                if (currentPortfolio < 0) {
+                    failedYear = i;
+                    currentPortfolio = 0;
+                    break;
+                }
+
+                // Grow remaining portfolio over the year
+                currentPortfolio *= (1 + returnDecimal);
+
+                // Adjust for next year's inflation
+                currentTargetIncome *= (1 + inflationDecimal);
+                currentSocialSecurity *= (1 + inflationDecimal);
+            }
+
+            // Update UI based on success/failure
+            if (failedYear !== -1) {
+                outputs.statusBox.classList.remove('highlight');
+                outputs.statusBox.classList.add('danger');
+                outputs.status.textContent = `Depleted Year ${failedYear}`;
+                outputs.statusSub.textContent = "Portfolio ran out of money";
+                outputs.finalValue.textContent = "$0";
+                outputs.finalSub.textContent = `After ${failedYear} years`;
+            } else {
+                outputs.statusBox.classList.remove('danger');
+                outputs.statusBox.classList.add('highlight');
+                outputs.status.textContent = `Lasts ${years} Years`;
+                outputs.statusSub.textContent = "Your money survives the simulation";
+                outputs.finalValue.textContent = formatCurrency(currentPortfolio);
+                outputs.finalSub.textContent = `After ${years} years (Nominal value)`;
+            }
+        };
+
+        // Attach event listeners
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', calculateWithdrawal);
+        });
+
+        // Copy functionality
+        copyButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const targetId = e.target.getAttribute('data-copy');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    navigator.clipboard.writeText(targetElement.textContent).then(() => {
+                        const originalText = e.target.textContent;
+                        e.target.textContent = 'Copied!';
+                        e.target.classList.add('copied');
+                        setTimeout(() => {
+                            e.target.textContent = originalText;
+                            e.target.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                }
+            });
+        });
+
+        // Initial calculation
+        calculateWithdrawal();
+    });
+</script>
+
+</body>
+</html>
