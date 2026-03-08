@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dollar Cost Averaging (DCA) vs Lump Sum Calculator | firemaths.info</title>
+    <meta name="description" content="Compare Dollar Cost Averaging (DCA) against Lump Sum investing. Calculate final portfolio value, average cost basis, and see which strategy wins.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "DCA vs Lump Sum Calculator",
+      "url": "https://firemaths.info/dca-calculator.html",
+      "description": "Compare Dollar Cost Averaging (DCA) vs Lump Sum investing strategies.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Understanding Dollar Cost Averaging vs Lump Sum Investing",
+      "author": {
+        "@type": "Organization",
+        "name": "firemaths.info"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "firemaths.info",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://firemaths.info/logo.png"
+        }
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --chart-color-a: #D4A017;
+            --chart-color-b: #4A90E2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-top: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff 0%, #D4A017 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 350px 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"] {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .results-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .result-card {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .result-card.highlight {
+            border-color: var(--accent-color);
+            background: linear-gradient(180deg, rgba(212,160,23,0.05) 0%, transparent 100%);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .indicator-lump { background-color: var(--chart-color-b); }
+        .indicator-dca { background-color: var(--chart-color-a); }
+
+        .result-item {
+            margin-bottom: 1rem;
+        }
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-value.small {
+            font-size: 1.125rem;
+        }
+
+        .result-card.highlight .result-value.main-val {
+            color: var(--accent-color);
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+        .copy-btn.copied {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            border-color: var(--accent-color);
+        }
+
+        .comparison-banner {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: rgba(212,160,23,0.1);
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .seo-content {
+            margin-top: 4rem;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>DCA vs Lump Sum Calculator</h1>
+        <p>Compare Dollar Cost Averaging against Lump Sum investing. See how your final portfolio value and average cost basis change.</p>
+    </header>
+
+    <main>
+        <div class="calculator-grid">
+            <!-- Inputs -->
+            <div class="card">
+                <div class="input-group">
+                    <label for="totalAmount">Total Investment Amount</label>
+                    <div class="input-wrapper has-prefix">
+                        <span class="prefix">$</span>
+                        <input type="number" id="totalAmount" value="12000" min="0" step="1000">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="dcaMonths">DCA Duration (Months)</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="dcaMonths" value="12" min="1" step="1">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="years">Total Time Horizon (Years)</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="years" value="10" min="1" max="50" step="1">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="returnRate">Expected Annual Return</label>
+                    <div class="input-wrapper has-suffix">
+                        <input type="number" id="returnRate" value="7" min="-100" max="100" step="0.1">
+                        <span class="suffix">%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="card">
+                <div class="results-grid">
+                    <!-- Lump Sum Result -->
+                    <div class="result-card" id="card-lump">
+                        <div class="result-header">
+                            <span class="indicator indicator-lump"></span> Lump Sum
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Final Portfolio Value</span>
+                            <div class="result-value main-val">
+                                <span id="res-lump-val">$23,605</span>
+                                <button class="copy-btn" data-copy="res-lump-val">Copy</button>
+                            </div>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Average Cost Basis</span>
+                            <div class="result-value small" id="res-lump-cost">$100.00</div>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Total Shares</span>
+                            <div class="result-value small" id="res-lump-shares">120.00</div>
+                        </div>
+                    </div>
+
+                    <!-- DCA Result -->
+                    <div class="result-card" id="card-dca">
+                        <div class="result-header">
+                            <span class="indicator indicator-dca"></span> DCA
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Final Portfolio Value</span>
+                            <div class="result-value main-val">
+                                <span id="res-dca-val">$22,810</span>
+                                <button class="copy-btn" data-copy="res-dca-val">Copy</button>
+                            </div>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Average Cost Basis</span>
+                            <div class="result-value small" id="res-dca-cost">$103.54</div>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Total Shares</span>
+                            <div class="result-value small" id="res-dca-shares">115.89</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-banner" id="comparison-banner">
+                    Lump Sum outperforms DCA by $795
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>Dollar Cost Averaging (DCA) vs Lump Sum</h2>
+            <p>When you have a large sum of money to invest, you typically face a common dilemma: should you invest it all at once (Lump Sum) or spread it out over time (Dollar Cost Averaging)?</p>
+            <p><strong>Lump Sum Investing</strong> means taking your entire available capital and investing it immediately. This approach maximizes your "time in the market," allowing your money to start compounding and earning returns right away.</p>
+            <p><strong>Dollar Cost Averaging (DCA)</strong> involves dividing your total investment amount into smaller, equal chunks and investing them at regular intervals (e.g., monthly). This strategy reduces the risk of investing right before a market drop and can lower your average cost basis during volatile periods.</p>
+
+            <h2>Which Strategy is Better?</h2>
+            <p>Historically, because markets tend to go up over time, <strong>Lump Sum investing outperforms DCA about 66% to 75% of the time</strong>. By investing everything upfront, you benefit from upward market trends earlier.</p>
+            <p>However, DCA offers significant psychological benefits. If the market drops shortly after a lump sum investment, it can be stressful. DCA minimizes this regret risk. If the market falls during your DCA period, your subsequent investments will purchase shares at lower prices, effectively reducing your average cost basis.</p>
+
+            <h2>Understanding Average Cost Basis</h2>
+            <p>Your average cost basis is the total amount invested divided by the total number of shares purchased. Our calculator simulates an initial share price of $100 that grows steadily at your expected annual return rate. In a steadily rising market, DCA will result in a higher average cost basis compared to a Lump Sum investment because you are buying shares at progressively higher prices over your DCA duration.</p>
+
+            <h2>Tips for Your Strategy</h2>
+            <ul>
+                <li><strong>Have the cash?</strong> If you already have the cash available (e.g., from a windfall or bonus), statistically, investing it as a lump sum yields the best expected return.</li>
+                <li><strong>Investing from paycheck?</strong> If you are investing a portion of your monthly income, you are technically already doing DCA! Keep making consistent contributions regardless of market conditions.</li>
+                <li><strong>Fear of regret?</strong> If a 20% market drop immediately after a lump sum investment would cause you to panic sell, DCA is the better choice for your peace of mind.</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const inputs = {
+            totalAmount: document.getElementById('totalAmount'),
+            dcaMonths: document.getElementById('dcaMonths'),
+            years: document.getElementById('years'),
+            returnRate: document.getElementById('returnRate')
+        };
+
+        const outputs = {
+            lumpVal: document.getElementById('res-lump-val'),
+            lumpCost: document.getElementById('res-lump-cost'),
+            lumpShares: document.getElementById('res-lump-shares'),
+            dcaVal: document.getElementById('res-dca-val'),
+            dcaCost: document.getElementById('res-dca-cost'),
+            dcaShares: document.getElementById('res-dca-shares'),
+            banner: document.getElementById('comparison-banner'),
+            cardLump: document.getElementById('card-lump'),
+            cardDca: document.getElementById('card-dca')
+        };
+
+        const copyButtons = document.querySelectorAll('.copy-btn');
+
+        const formatCurrency = (value) => {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            }).format(value);
+        };
+
+        const formatNumber = (value) => {
+            return new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(value);
+        };
+
+        const calculate = () => {
+            const totalAmount = parseFloat(inputs.totalAmount.value) || 0;
+            const dcaMonths = parseInt(inputs.dcaMonths.value) || 1;
+            const years = parseFloat(inputs.years.value) || 0;
+            const returnRate = parseFloat(inputs.returnRate.value) || 0;
+
+            const totalMonths = years * 12;
+            const monthlyRate = (returnRate / 100) / 12;
+            const initialPrice = 100; // arbitrary starting price
+
+            // --- Lump Sum Calculation ---
+            const lumpShares = totalAmount / initialPrice;
+            const lumpCostBasis = initialPrice;
+            const lumpFinalPrice = initialPrice * Math.pow(1 + monthlyRate, totalMonths);
+            const lumpFinalValue = lumpShares * lumpFinalPrice;
+
+            // --- DCA Calculation ---
+            let dcaShares = 0;
+            const validDcaMonths = Math.max(1, dcaMonths);
+            const monthlyInvestment = totalAmount / validDcaMonths;
+
+            for (let m = 0; m < validDcaMonths; m++) {
+                // Price at month m
+                const priceAtMonth = initialPrice * Math.pow(1 + monthlyRate, m);
+                dcaShares += monthlyInvestment / priceAtMonth;
+            }
+
+            // The remaining months after DCA period
+            // (Final price is the same for both strategies, evaluated at totalMonths)
+            const dcaFinalValue = dcaShares * lumpFinalPrice;
+            const dcaCostBasis = dcaShares > 0 ? (totalAmount / dcaShares) : 0;
+
+            // Update UI
+            outputs.lumpVal.textContent = formatCurrency(lumpFinalValue);
+            outputs.lumpCost.textContent = formatCurrency(lumpCostBasis);
+            outputs.lumpShares.textContent = formatNumber(lumpShares);
+
+            outputs.dcaVal.textContent = formatCurrency(dcaFinalValue);
+            outputs.dcaCost.textContent = formatCurrency(dcaCostBasis);
+            outputs.dcaShares.textContent = formatNumber(dcaShares);
+
+            // Comparison
+            const diff = lumpFinalValue - dcaFinalValue;
+            outputs.cardLump.classList.remove('highlight');
+            outputs.cardDca.classList.remove('highlight');
+
+            if (diff > 0) {
+                outputs.cardLump.classList.add('highlight');
+                outputs.banner.textContent = `Lump Sum outperforms DCA by ${formatCurrency(diff)}`;
+                outputs.banner.style.color = 'var(--chart-color-b)';
+                outputs.banner.style.borderColor = 'var(--chart-color-b)';
+                outputs.banner.style.backgroundColor = 'rgba(74, 144, 226, 0.1)';
+            } else if (diff < 0) {
+                outputs.cardDca.classList.add('highlight');
+                outputs.banner.textContent = `DCA outperforms Lump Sum by ${formatCurrency(Math.abs(diff))}`;
+                outputs.banner.style.color = 'var(--chart-color-a)';
+                outputs.banner.style.borderColor = 'var(--chart-color-a)';
+                outputs.banner.style.backgroundColor = 'rgba(212, 160, 23, 0.1)';
+            } else {
+                outputs.banner.textContent = `Both strategies yield the same result`;
+                outputs.banner.style.color = 'var(--text-primary)';
+                outputs.banner.style.borderColor = 'var(--border-color)';
+                outputs.banner.style.backgroundColor = 'transparent';
+            }
+        };
+
+        // Attach event listeners
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', calculate);
+        });
+
+        // Copy functionality
+        copyButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const targetId = e.target.getAttribute('data-copy');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    navigator.clipboard.writeText(targetElement.textContent).then(() => {
+                        const originalText = e.target.textContent;
+                        e.target.textContent = 'Copied!';
+                        e.target.classList.add('copied');
+                        setTimeout(() => {
+                            e.target.textContent = originalText;
+                            e.target.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                }
+            });
+        });
+
+        // Initial calculation
+        calculate();
+    });
+</script>
+
+</body>
+</html>
