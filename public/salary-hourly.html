@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary to Hourly Converter | firemaths.info</title>
+    <meta name="description" content="Convert your annual salary to an hourly wage, or vice versa. Adjust for work hours and paid time off (PTO) to find your real hourly rate.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Salary to Hourly Converter",
+      "url": "https://firemaths.info/salary-hourly",
+      "description": "Convert your annual salary to an hourly wage, or vice versa. Adjust for work hours and paid time off (PTO) to find your real hourly rate.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Understanding Salary to Hourly Conversion",
+      "description": "Learn how to calculate your true hourly wage by factoring in work hours and paid time off (PTO).",
+      "author": {
+        "@type": "Organization",
+        "name": "firemaths.info"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .scenario-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .scenario-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scenario-header h2 {
+            font-size: 1.25rem;
+            color: var(--accent-color);
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"], select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+            font-family: var(--font-ui);
+        }
+
+        input[type="number"] {
+            font-family: var(--font-mono);
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        .results {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.125rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-recommended {
+            background-color: rgba(212, 160, 23, 0.1);
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .result-recommended .result-label {
+            color: var(--accent-color);
+            font-size: 1rem;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .result-recommended .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-recommended .recommendation-note {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-family: var(--font-ui);
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .seo-content {
+            margin-bottom: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Salary to Hourly Converter</h1>
+        <p>Convert your pay rate and discover your real hourly wage</p>
+    </header>
+
+    <main>
+        <div class="calculator-grid">
+            <!-- Inputs -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Income Details</h2>
+                </div>
+
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="pay-amount">Pay Amount</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="pay-amount" value="80000" min="0" step="100">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="pay-frequency">Pay Frequency</label>
+                        <select id="pay-frequency">
+                            <option value="annual" selected>Annual (per year)</option>
+                            <option value="monthly">Monthly (per month)</option>
+                            <option value="biweekly">Bi-weekly (every 2 weeks)</option>
+                            <option value="weekly">Weekly (per week)</option>
+                            <option value="daily">Daily (per day)</option>
+                            <option value="hourly">Hourly (per hour)</option>
+                        </select>
+                    </div>
+
+                    <div class="scenario-header" style="margin-top: 2rem;">
+                        <h2>Work Schedule</h2>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="hours-week">Hours per Week</label>
+                        <div class="input-wrapper has-suffix">
+                            <input type="number" id="hours-week" value="40" min="1" max="168" step="1">
+                            <span class="suffix">hrs</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="pto-days">Paid Time Off (PTO) Days per Year</label>
+                        <div class="input-wrapper has-suffix">
+                            <input type="number" id="pto-days" value="15" min="0" max="365" step="1">
+                            <span class="suffix">days</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Conversion Results</h2>
+                </div>
+
+                <div class="result-recommended">
+                    <span class="result-label" id="main-result-label">Hourly Rate</span>
+                    <div class="result-value">
+                        <span id="main-result-value">$0.00</span>
+                        <button class="copy-btn" onclick="copyValue('main-result-value', this)">Copy</button>
+                    </div>
+                    <div class="recommendation-note" id="main-result-note">Based on 40 hours per week.</div>
+                </div>
+
+                <div class="results">
+                    <div class="result-item">
+                        <span class="result-label">Annual</span>
+                        <div class="result-value">
+                            <span id="res-annual">$0</span>
+                            <button class="copy-btn" onclick="copyValue('res-annual', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Monthly</span>
+                        <div class="result-value">
+                            <span id="res-monthly">$0</span>
+                            <button class="copy-btn" onclick="copyValue('res-monthly', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Bi-weekly</span>
+                        <div class="result-value">
+                            <span id="res-biweekly">$0</span>
+                            <button class="copy-btn" onclick="copyValue('res-biweekly', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Weekly</span>
+                        <div class="result-value">
+                            <span id="res-weekly">$0</span>
+                            <button class="copy-btn" onclick="copyValue('res-weekly', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Daily</span>
+                        <div class="result-value">
+                            <span id="res-daily">$0</span>
+                            <button class="copy-btn" onclick="copyValue('res-daily', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Hourly</span>
+                        <div class="result-value">
+                            <span id="res-hourly">$0.00</span>
+                            <button class="copy-btn" onclick="copyValue('res-hourly', this)">Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-header" style="margin-top: 2rem;">
+                    <h2>PTO Analysis</h2>
+                </div>
+
+                <div class="results" style="margin-top: 1rem; border-top: none; padding-top: 0;">
+                    <div class="result-item">
+                        <span class="result-label">Real Hourly Wage (Adjusted for PTO)</span>
+                        <div class="result-value" style="color: var(--accent-color);">
+                            <span id="res-real-hourly">$0.00</span>
+                            <button class="copy-btn" onclick="copyValue('res-real-hourly', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Total Work Hours / Year</span>
+                        <div class="result-value">
+                            <span id="res-work-hours">0</span>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">PTO Value</span>
+                        <div class="result-value">
+                            <span id="res-pto-value">$0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>Salary vs. Hourly: What's the Difference?</h2>
+            <p>Understanding the difference between being a salaried employee and an hourly worker is crucial for financial planning. A <strong>salaried employee</strong> generally receives a fixed amount of money per year, regardless of the exact number of hours worked. An <strong>hourly employee</strong> is paid a specific rate for every hour they work.</p>
+            <p>When comparing job offers, converting an annual salary to an hourly wage (or vice versa) helps you evaluate the true value of your time. For example, a $80,000 salary might seem great, but if you're working 60 hours a week, your equivalent hourly rate is much lower than someone making $70,000 but only working 40 hours.</p>
+
+            <h2>How Paid Time Off (PTO) Affects Your Real Hourly Wage</h2>
+            <p>Many standard salary calculators divide your annual pay by 2,080 hours (52 weeks × 40 hours). However, this assumes you work every single weekday of the year, including holidays and vacation time.</p>
+            <p>If you get Paid Time Off (PTO), including vacation days, sick leave, and paid holidays, you are actually working fewer hours for the same annual salary. By subtracting your PTO hours from the standard 2,080 hours, you can calculate your <strong>Real Hourly Wage</strong>—the actual amount you earn for every hour you physically work. The more PTO you have, the higher your real hourly wage becomes.</p>
+
+            <h2>Standard Work Hour Assumptions</h2>
+            <p>When calculating pay conversions, certain standard assumptions are typically used:</p>
+            <ul>
+                <li><strong>Work Weeks:</strong> There are 52 weeks in a standard year.</li>
+                <li><strong>Work Days:</strong> A typical full-time job consists of 5 days per week (260 work days per year).</li>
+                <li><strong>Work Hours:</strong> Full-time is generally considered 40 hours per week (2,080 hours per year).</li>
+                <li><strong>Months:</strong> Monthly pay is calculated by dividing annual salary by 12, not by multiplying weekly pay by 4 (since most months have more than 28 days).</li>
+                <li><strong>Bi-weekly:</strong> Being paid every two weeks results in 26 paychecks per year.</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    // Format currency
+    const formatCurrency = (value, isHourly = false) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: isHourly ? 2 : 0,
+            maximumFractionDigits: isHourly ? 2 : 0
+        }).format(value);
+    };
+
+    // Format number
+    const formatNumber = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            maximumFractionDigits: 1
+        }).format(value);
+    };
+
+    // Copy to clipboard
+    window.copyValue = async (elementId, btn) => {
+        const text = document.getElementById(elementId).innerText;
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    const updateCalculator = () => {
+        const payAmount = parseFloat(document.getElementById('pay-amount').value) || 0;
+        const payFreq = document.getElementById('pay-frequency').value;
+        const hoursWeek = parseFloat(document.getElementById('hours-week').value) || 40;
+        const ptoDays = parseFloat(document.getElementById('pto-days').value) || 0;
+
+        let annualSalary = 0;
+        const weeksPerYear = 52;
+        const standardHoursPerYear = weeksPerYear * hoursWeek;
+        const hoursPerDay = hoursWeek / 5; // Assuming 5-day work week for daily calc
+
+        // 1. Normalize input to Annual Salary
+        switch (payFreq) {
+            case 'annual':
+                annualSalary = payAmount;
+                break;
+            case 'monthly':
+                annualSalary = payAmount * 12;
+                break;
+            case 'biweekly':
+                annualSalary = payAmount * 26;
+                break;
+            case 'weekly':
+                annualSalary = payAmount * 52;
+                break;
+            case 'daily':
+                annualSalary = payAmount * 5 * 52;
+                break;
+            case 'hourly':
+                annualSalary = payAmount * hoursWeek * 52;
+                break;
+        }
+
+        // 2. Calculate standard frequencies
+        const monthly = annualSalary / 12;
+        const biweekly = annualSalary / 26;
+        const weekly = annualSalary / 52;
+        const daily = weekly / 5;
+        const hourly = weekly / hoursWeek;
+
+        // 3. Update standard results
+        document.getElementById('res-annual').innerText = formatCurrency(annualSalary);
+        document.getElementById('res-monthly').innerText = formatCurrency(monthly);
+        document.getElementById('res-biweekly').innerText = formatCurrency(biweekly);
+        document.getElementById('res-weekly').innerText = formatCurrency(weekly);
+        document.getElementById('res-daily').innerText = formatCurrency(daily, true);
+        document.getElementById('res-hourly').innerText = formatCurrency(hourly, true);
+
+        // 4. Update Main Result depending on input frequency
+        const mainLabelEl = document.getElementById('main-result-label');
+        const mainValueEl = document.getElementById('main-result-value');
+        const mainNoteEl = document.getElementById('main-result-note');
+
+        if (payFreq === 'hourly') {
+            mainLabelEl.innerText = 'Annual Salary';
+            mainValueEl.innerText = formatCurrency(annualSalary);
+            mainNoteEl.innerText = `Based on ${hoursWeek} hours per week.`;
+        } else {
+            mainLabelEl.innerText = 'Hourly Rate';
+            mainValueEl.innerText = formatCurrency(hourly, true);
+            mainNoteEl.innerText = `Based on ${hoursWeek} hours per week.`;
+        }
+
+        // 5. PTO Analysis
+        const ptoHours = ptoDays * hoursPerDay;
+        const actualWorkHours = standardHoursPerYear - ptoHours;
+
+        let realHourlyWage = 0;
+        if (actualWorkHours > 0) {
+            realHourlyWage = annualSalary / actualWorkHours;
+        }
+
+        const ptoValue = ptoHours * hourly; // Value of the PTO based on standard hourly rate
+
+        document.getElementById('res-real-hourly').innerText = formatCurrency(realHourlyWage, true);
+        document.getElementById('res-work-hours').innerText = formatNumber(actualWorkHours);
+        document.getElementById('res-pto-value').innerText = formatCurrency(ptoValue);
+    };
+
+    // Attach event listeners
+    document.getElementById('pay-amount').addEventListener('input', updateCalculator);
+    document.getElementById('pay-frequency').addEventListener('change', updateCalculator);
+    document.getElementById('hours-week').addEventListener('input', updateCalculator);
+    document.getElementById('pto-days').addEventListener('input', updateCalculator);
+
+    // Initial calculation
+    updateCalculator();
+</script>
+
+</body>
+</html>
