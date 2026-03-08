@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Fund Investing 101 — Complete Guide & Cheat Sheet</title>
+    <meta name="description" content="A complete guide and reference cheat sheet to index fund investing. Learn about Total Market, S&P 500, International funds, how to choose, and tax-efficient strategies.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Index Fund Investing 101",
+      "description": "A complete guide and reference cheat sheet to index fund investing. Learn about Total Market, S&P 500, International funds, how to choose, and tax-efficient strategies.",
+      "url": "https://firemaths.info/guide-index-funds.html",
+      "author": {
+        "@type": "Organization",
+        "name": "firemaths.info",
+        "url": "https://firemaths.info"
+      }
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0c0a00;
+            color: #e0d8c8;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 24px 40px;
+            background: linear-gradient(180deg, #1a0f00 0%, #0c0a00 100%);
+            position: relative;
+            border-bottom: 1px solid #2a2010;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, #D4A017 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p {
+            color: #888;
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            background: #141008;
+            border: 2px solid #2a2010;
+            border-radius: 12px;
+            padding: 16px 24px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #D4A017;
+        }
+        .search-input::placeholder {
+            color: #888;
+        }
+
+        /* Cards Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: #141008;
+            border: 2px solid #2a2010;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+        .card.hidden {
+            display: none;
+        }
+
+        .card-header {
+            margin-bottom: 16px;
+            border-bottom: 1px solid #2a2010;
+            padding-bottom: 12px;
+        }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #D4A017;
+            margin-bottom: 4px;
+        }
+        .card-subtitle {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .card-content {
+            flex-grow: 1;
+        }
+        .card-content p {
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            color: #e0d8c8;
+        }
+        .card-content ul {
+            padding-left: 20px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: #e0d8c8;
+        }
+        .card-content li {
+            margin-bottom: 4px;
+        }
+
+        .ticker-group {
+            margin-top: 16px;
+            background: #0c0a00;
+            border: 1px solid #2a2010;
+            border-radius: 8px;
+            padding: 12px;
+        }
+        .ticker-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #2a2010;
+        }
+        .ticker-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .ticker-item:first-child {
+            padding-top: 0;
+        }
+        .ticker-name {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .ticker-symbol {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: #fff;
+            background: #2a2010;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid #888;
+            color: #888;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+        }
+        .copy-btn:hover {
+            border-color: #D4A017;
+            color: #D4A017;
+        }
+        .copy-btn.copied {
+            background: #D4A017;
+            color: #0c0a00;
+            border-color: #D4A017;
+        }
+
+        /* Expandable Sections */
+        details {
+            margin-bottom: 12px;
+            background: #0c0a00;
+            border: 1px solid #2a2010;
+            border-radius: 8px;
+            padding: 12px;
+        }
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            color: #e0d8c8;
+            outline: none;
+            user-select: none;
+        }
+        summary::-webkit-details-marker {
+            display: none;
+        }
+        summary::before {
+            content: '►';
+            font-size: 0.8em;
+            margin-right: 8px;
+            color: #D4A017;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        details[open] summary::before {
+            transform: rotate(90deg);
+        }
+        details > div {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #2a2010;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Table */
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 0.85rem;
+        }
+        .info-table th {
+            text-align: left;
+            color: #D4A017;
+            padding: 8px;
+            border-bottom: 1px solid #2a2010;
+        }
+        .info-table td {
+            padding: 8px;
+            border-bottom: 1px solid #2a2010;
+            color: #e0d8c8;
+        }
+        .info-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* SEO Content */
+        .content-section {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            padding-top: 40px;
+            border-top: 1px solid #2a2010;
+        }
+        .content-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 40px 0 16px;
+        }
+        .content-section p {
+            color: #888;
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+        .content-section ul {
+            color: #888;
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+        .content-section li {
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid #2a2010;
+            background: #141008;
+        }
+        .footer a { color: #D4A017; text-decoration: none; font-weight: 500;}
+        .footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2rem; }
+            .card { padding: 20px; }
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 1.1rem;
+            display: none;
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <h1>Index Fund Investing 101</h1>
+        <p>Your comprehensive cheat sheet for index fund investing, asset allocation, and tax-efficient strategies.</p>
+    </div>
+</header>
+
+<main class="container">
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search for funds, strategies, tickers (e.g. VTI, S&P 500)..." autocomplete="off">
+    </div>
+
+    <div class="grid" id="cardsGrid">
+
+        <!-- Card 1: Total Market -->
+        <div class="card" data-tags="total market us equity domestic vti itot schb fskax">
+            <div class="card-header">
+                <div class="card-title">Total US Stock Market</div>
+                <div class="card-subtitle">Broadest exposure to the US economy</div>
+            </div>
+            <div class="card-content">
+                <p>Tracks the entire investable US equity market, including large, mid, small, and micro-cap stocks.</p>
+                <details>
+                    <summary>Why choose this?</summary>
+                    <div>Maximum diversification within the US. You own a piece of almost every publicly traded US company, capturing the total market return.</div>
+                </details>
+                <div class="ticker-group">
+                    <div class="ticker-item">
+                        <span class="ticker-name">Vanguard (ETF)</span>
+                        <div class="ticker-symbol">VTI <button class="copy-btn" data-copy="VTI">Copy</button></div>
+                    </div>
+                    <div class="ticker-item">
+                        <span class="ticker-name">iShares (ETF)</span>
+                        <div class="ticker-symbol">ITOT <button class="copy-btn" data-copy="ITOT">Copy</button></div>
+                    </div>
+                    <div class="ticker-item">
+                        <span class="ticker-name">Fidelity (Mutual Fund)</span>
+                        <div class="ticker-symbol">FSKAX <button class="copy-btn" data-copy="FSKAX">Copy</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: S&P 500 -->
+        <div class="card" data-tags="s&p 500 large cap us equity voo spy ivv fxaix">
+            <div class="card-header">
+                <div class="card-title">S&P 500 Index</div>
+                <div class="card-subtitle">The 500 largest US companies</div>
+            </div>
+            <div class="card-content">
+                <p>Tracks the performance of 500 of the largest companies listed on stock exchanges in the US.</p>
+                <details>
+                    <summary>Total Market vs. S&P 500</summary>
+                    <div>The S&P 500 makes up about 80% of the Total Market index. Their performance is highly correlated, so holding both is generally redundant.</div>
+                </details>
+                <div class="ticker-group">
+                    <div class="ticker-item">
+                        <span class="ticker-name">Vanguard (ETF)</span>
+                        <div class="ticker-symbol">VOO <button class="copy-btn" data-copy="VOO">Copy</button></div>
+                    </div>
+                    <div class="ticker-item">
+                        <span class="ticker-name">State Street (ETF)</span>
+                        <div class="ticker-symbol">SPY <button class="copy-btn" data-copy="SPY">Copy</button></div>
+                    </div>
+                    <div class="ticker-item">
+                        <span class="ticker-name">Fidelity (Mutual Fund)</span>
+                        <div class="ticker-symbol">FXAIX <button class="copy-btn" data-copy="FXAIX">Copy</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3: International -->
+        <div class="card" data-tags="international global ex-us foreign vxus ixus ftihx">
+            <div class="card-header">
+                <div class="card-title">Total International</div>
+                <div class="card-subtitle">Global exposure outside the US</div>
+            </div>
+            <div class="card-content">
+                <p>Tracks both developed and emerging markets excluding the United States.</p>
+                <details>
+                    <summary>Why choose this?</summary>
+                    <div>Protects against a single-country risk. The US market goes through cycles of outperforming and underperforming international markets.</div>
+                </details>
+                <div class="ticker-group">
+                    <div class="ticker-item">
+                        <span class="ticker-name">Vanguard (ETF)</span>
+                        <div class="ticker-symbol">VXUS <button class="copy-btn" data-copy="VXUS">Copy</button></div>
+                    </div>
+                    <div class="ticker-item">
+                        <span class="ticker-name">iShares (ETF)</span>
+                        <div class="ticker-symbol">IXUS <button class="copy-btn" data-copy="IXUS">Copy</button></div>
+                    </div>
+                    <div class="ticker-item">
+                        <span class="ticker-name">Fidelity (Mutual Fund)</span>
+                        <div class="ticker-symbol">FTIHX <button class="copy-btn" data-copy="FTIHX">Copy</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4: Global/World -->
+        <div class="card" data-tags="global world all-world vt urth">
+            <div class="card-header">
+                <div class="card-title">Total World Stock Market</div>
+                <div class="card-subtitle">The entire globe in one fund</div>
+            </div>
+            <div class="card-content">
+                <p>Combines US and International stocks by global market capitalization weights.</p>
+                <details>
+                    <summary>Why choose this?</summary>
+                    <div>The ultimate "set it and forget it" equity fund. You don't have to rebalance between US and international as global market caps shift.</div>
+                </details>
+                <div class="ticker-group">
+                    <div class="ticker-item">
+                        <span class="ticker-name">Vanguard (ETF)</span>
+                        <div class="ticker-symbol">VT <button class="copy-btn" data-copy="VT">Copy</button></div>
+                    </div>
+                    <div class="ticker-item">
+                        <span class="ticker-name">iShares (ETF)</span>
+                        <div class="ticker-symbol">URTH <button class="copy-btn" data-copy="URTH">Copy</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 5: Bonds -->
+        <div class="card" data-tags="bonds fixed income bnd agg fxnax">
+            <div class="card-header">
+                <div class="card-title">Total Bond Market</div>
+                <div class="card-subtitle">Fixed income for stability</div>
+            </div>
+            <div class="card-content">
+                <p>Broad exposure to US investment-grade bonds, including government, corporate, and international dollar-denominated bonds.</p>
+                <details>
+                    <summary>Role in Portfolio</summary>
+                    <div>Bonds reduce portfolio volatility. While long-term returns are lower than equities, bonds typically hold value or rise during stock market crashes.</div>
+                </details>
+                <div class="ticker-group">
+                    <div class="ticker-item">
+                        <span class="ticker-name">Vanguard (ETF)</span>
+                        <div class="ticker-symbol">BND <button class="copy-btn" data-copy="BND">Copy</button></div>
+                    </div>
+                    <div class="ticker-item">
+                        <span class="ticker-name">iShares (ETF)</span>
+                        <div class="ticker-symbol">AGG <button class="copy-btn" data-copy="AGG">Copy</button></div>
+                    </div>
+                    <div class="ticker-item">
+                        <span class="ticker-name">Fidelity (Mutual Fund)</span>
+                        <div class="ticker-symbol">FXNAX <button class="copy-btn" data-copy="FXNAX">Copy</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 6: Bogleheads 3-Fund Portfolio -->
+        <div class="card" data-tags="bogleheads 3-fund three fund portfolio allocation strategy">
+            <div class="card-header">
+                <div class="card-title">The 3-Fund Portfolio</div>
+                <div class="card-subtitle">The classic lazy portfolio</div>
+            </div>
+            <div class="card-content">
+                <p>A simple strategy using only three broad-market index funds to cover the entire global financial market.</p>
+                <table class="info-table">
+                    <tr>
+                        <th>Asset Class</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <td>US Total Market</td>
+                        <td>VTI</td>
+                    </tr>
+                    <tr>
+                        <td>Int'l Total Market</td>
+                        <td>VXUS</td>
+                    </tr>
+                    <tr>
+                        <td>Total Bond Market</td>
+                        <td>BND</td>
+                    </tr>
+                </table>
+                <details>
+                    <summary>Allocation Example</summary>
+                    <div>For a moderately aggressive investor: 60% VTI, 20% VXUS, 20% BND. Adjust bonds based on your risk tolerance and age.</div>
+                </details>
+            </div>
+        </div>
+
+        <!-- Card 7: ETF vs Mutual Fund -->
+        <div class="card" data-tags="etf mutual fund differences comparison">
+            <div class="card-header">
+                <div class="card-title">ETF vs. Mutual Fund</div>
+                <div class="card-subtitle">Which vehicle is better?</div>
+            </div>
+            <div class="card-content">
+                <p>Both are great, but have slight structural differences.</p>
+                <table class="info-table">
+                    <tr>
+                        <th>Feature</th>
+                        <th>ETF</th>
+                        <th>Mutual Fund</th>
+                    </tr>
+                    <tr>
+                        <td>Trading</td>
+                        <td>Intraday</td>
+                        <td>End of day</td>
+                    </tr>
+                    <tr>
+                        <td>Minimums</td>
+                        <td>1 Share</td>
+                        <td>Often $1k-$3k</td>
+                    </tr>
+                    <tr>
+                        <td>Portability</td>
+                        <td>High</td>
+                        <td>Can be limited</td>
+                    </tr>
+                </table>
+                <details>
+                    <summary>Tax Efficiency</summary>
+                    <div>In taxable accounts, ETFs are generally more tax-efficient due to the "creation/redemption" mechanism that prevents capital gains distributions. Note: Vanguard has a patent (expired 2023) that made their mutual funds just as tax-efficient.</div>
+                </details>
+            </div>
+        </div>
+
+        <!-- Card 8: Tax-Efficient Placement -->
+        <div class="card" data-tags="tax tax-efficient placement strategy accounts ira 401k brokerage">
+            <div class="card-header">
+                <div class="card-title">Tax-Efficient Placement</div>
+                <div class="card-subtitle">Where to put which asset</div>
+            </div>
+            <div class="card-content">
+                <p>Optimizing which accounts hold which funds can save you thousands in taxes over a lifetime.</p>
+                <ul style="margin-top:12px;">
+                    <li><strong>Taxable Brokerage:</strong> US & Int'l Equities (ETFs are best)</li>
+                    <li><strong>Tax-Deferred (Traditional 401k/IRA):</strong> Bonds, REITs</li>
+                    <li><strong>Tax-Free (Roth IRA):</strong> Highest growth equities</li>
+                </ul>
+                <details>
+                    <summary>Foreign Tax Credit</summary>
+                    <div>Holding International Index Funds (like VXUS) in a taxable account allows you to claim the Foreign Tax Credit, whereas you lose this credit in an IRA.</div>
+                </details>
+            </div>
+        </div>
+
+        <!-- Card 9: Expense Ratios -->
+        <div class="card" data-tags="expense ratio fees costs choosing">
+            <div class="card-header">
+                <div class="card-title">Understanding Fees</div>
+                <div class="card-subtitle">The Expense Ratio (ER)</div>
+            </div>
+            <div class="card-content">
+                <p>The Expense Ratio is the annual fee that all funds charge their shareholders.</p>
+                <p>Index funds are famous for their rock-bottom ERs. Aim for an ER below <strong>0.10%</strong> (or $10 per $10,000 invested per year).</p>
+                <details>
+                    <summary>Impact of Fees</summary>
+                    <div>A 1% fee might sound small, but over 30 years it can eat up nearly 30% of your total portfolio returns due to lost compounding.</div>
+                </details>
+            </div>
+        </div>
+
+        <div class="no-results" id="noResults">
+            No matching cards found. Try a different search term.
+        </div>
+
+    </div>
+
+    <!-- SEO Content Section -->
+    <article class="content-section">
+        <h2>What is an Index Fund?</h2>
+        <p>An index fund is a type of mutual fund or exchange-traded fund (ETF) with a portfolio constructed to match or track the components of a financial market index, such as the Standard & Poor's 500 Index (S&P 500). Unlike actively managed funds, where a manager attempts to pick winning stocks to beat the market, an index fund simply buys all the stocks in the index.</p>
+        <p>This passive investment strategy provides broad market exposure, low operating expenses, and low portfolio turnover. These advantages make index funds an ideal core holding for long-term investors, retirement accounts, and anyone following the FIRE (Financial Independence, Retire Early) movement.</p>
+
+        <h2>Why Invest in Index Funds?</h2>
+        <p>Index funds have become the gold standard for long-term wealth building for several compelling reasons:</p>
+        <ul>
+            <li><strong>Low Costs:</strong> Because they simply track an index, they don't require highly paid research analysts or frequent trading. This results in expense ratios that are often fractions of a percent (e.g., 0.03%).</li>
+            <li><strong>Diversification:</strong> Buying a single share of a Total Market Index Fund instantly makes you a part-owner of thousands of companies across various sectors, significantly reducing single-stock risk.</li>
+            <li><strong>Consistent Returns:</strong> Over long periods, the stock market has historically trended upwards. By owning the entire market, you capture that return without the risk of picking the "wrong" stocks.</li>
+        </ul>
+
+        <h2>Index Funds vs. Actively Managed Funds</h2>
+        <p>The debate between passive (index) and active management is effectively settled for the average retail investor. Decades of data, including the famous SPIVA (S&P Indices Versus Active) scorecards, consistently show that over a 10-year period, 85% to 90% of actively managed funds underperform their benchmark index after fees are accounted for.</p>
+        <p>Actively managed funds charge higher fees (often 0.75% to 1.5%+) and incur higher trading costs and taxes. By choosing low-cost index funds, you guarantee that you will receive the market return minus a minuscule fee, which historically outpaces the vast majority of highly paid professionals trying to beat the market.</p>
+    </article>
+</main>
+
+<footer class="footer">
+    <div class="container" style="padding:0">
+        © 2025 <a href="https://firemaths.info">firemaths.info</a> · A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Search Functionality
+        const searchInput = document.getElementById('searchInput');
+        const cards = document.querySelectorAll('.card');
+        const noResults = document.getElementById('noResults');
+
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const tags = card.getAttribute('data-tags') || '';
+                const text = card.textContent.toLowerCase();
+
+                if (tags.includes(searchTerm) || text.includes(searchTerm)) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        });
+
+        // Copy functionality
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        copyButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const textToCopy = e.target.getAttribute('data-copy');
+                if (textToCopy) {
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        const originalText = e.target.textContent;
+                        e.target.textContent = 'COPIED';
+                        e.target.classList.add('copied');
+                        setTimeout(() => {
+                            e.target.textContent = originalText;
+                            e.target.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
