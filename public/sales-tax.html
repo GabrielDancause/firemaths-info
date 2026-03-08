@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Tax Calculator | firemaths.info</title>
+    <meta name="description" content="Easily calculate sales tax for US states and Canadian provinces. Find the exact tax amount and total price with our free, offline-ready calculator.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Sales Tax Calculator",
+      "url": "https://firemaths.info/sales-tax",
+      "description": "Calculate sales tax for US states and Canadian provinces. Find the exact tax amount and total price.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .scenario-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scenario-header h2 {
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"], select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+            appearance: none;
+        }
+
+        select {
+            font-family: var(--font-ui);
+            cursor: pointer;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
+        }
+
+        select option {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .results {
+            margin-top: 1rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(42, 32, 16, 0.5);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.125rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-align: right;
+        }
+
+        .result-final .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .seo-content {
+            margin-bottom: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+
+        optgroup {
+            background-color: var(--card-bg);
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Sales Tax Calculator</h1>
+        <p>Instantly calculate sales tax for US states and Canadian provinces</p>
+    </header>
+
+    <main>
+        <div class="calculator-grid">
+            <!-- Inputs -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Tax Details</h2>
+                </div>
+
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="calcMode">Calculation Mode</label>
+                        <select id="calcMode">
+                            <option value="add">Add Tax to Price (Before Tax)</option>
+                            <option value="extract">Extract Tax from Price (After Tax)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="amount" id="amountLabel">Amount (Before Tax)</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="amount" value="100" min="0" step="0.01">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="location">Location</label>
+                        <select id="location">
+                            <option value="custom">Custom Rate</option>
+                            <optgroup label="United States (State Rate)">
+                                <option value="4.00" data-state="AL">Alabama (4.00%)</option>
+                                <option value="0.00" data-state="AK">Alaska (0.00%)</option>
+                                <option value="5.60" data-state="AZ">Arizona (5.60%)</option>
+                                <option value="6.50" data-state="AR">Arkansas (6.50%)</option>
+                                <option value="7.25" data-state="CA">California (7.25%)</option>
+                                <option value="2.90" data-state="CO">Colorado (2.90%)</option>
+                                <option value="6.35" data-state="CT">Connecticut (6.35%)</option>
+                                <option value="0.00" data-state="DE">Delaware (0.00%)</option>
+                                <option value="6.00" data-state="FL">Florida (6.00%)</option>
+                                <option value="4.00" data-state="GA">Georgia (4.00%)</option>
+                                <option value="4.00" data-state="HI">Hawaii (4.00%)</option>
+                                <option value="6.00" data-state="ID">Idaho (6.00%)</option>
+                                <option value="6.25" data-state="IL">Illinois (6.25%)</option>
+                                <option value="7.00" data-state="IN">Indiana (7.00%)</option>
+                                <option value="6.00" data-state="IA">Iowa (6.00%)</option>
+                                <option value="6.50" data-state="KS">Kansas (6.50%)</option>
+                                <option value="6.00" data-state="KY">Kentucky (6.00%)</option>
+                                <option value="4.45" data-state="LA">Louisiana (4.45%)</option>
+                                <option value="5.50" data-state="ME">Maine (5.50%)</option>
+                                <option value="6.00" data-state="MD">Maryland (6.00%)</option>
+                                <option value="6.25" data-state="MA">Massachusetts (6.25%)</option>
+                                <option value="6.00" data-state="MI">Michigan (6.00%)</option>
+                                <option value="6.875" data-state="MN">Minnesota (6.875%)</option>
+                                <option value="7.00" data-state="MS">Mississippi (7.00%)</option>
+                                <option value="4.225" data-state="MO">Missouri (4.225%)</option>
+                                <option value="0.00" data-state="MT">Montana (0.00%)</option>
+                                <option value="5.50" data-state="NE">Nebraska (5.50%)</option>
+                                <option value="6.85" data-state="NV">Nevada (6.85%)</option>
+                                <option value="0.00" data-state="NH">New Hampshire (0.00%)</option>
+                                <option value="6.625" data-state="NJ">New Jersey (6.625%)</option>
+                                <option value="5.125" data-state="NM">New Mexico (5.125%)</option>
+                                <option value="4.00" data-state="NY">New York (4.00%)</option>
+                                <option value="4.75" data-state="NC">North Carolina (4.75%)</option>
+                                <option value="5.00" data-state="ND">North Dakota (5.00%)</option>
+                                <option value="5.75" data-state="OH">Ohio (5.75%)</option>
+                                <option value="4.50" data-state="OK">Oklahoma (4.50%)</option>
+                                <option value="0.00" data-state="OR">Oregon (0.00%)</option>
+                                <option value="6.00" data-state="PA">Pennsylvania (6.00%)</option>
+                                <option value="7.00" data-state="RI">Rhode Island (7.00%)</option>
+                                <option value="6.00" data-state="SC">South Carolina (6.00%)</option>
+                                <option value="4.50" data-state="SD">South Dakota (4.50%)</option>
+                                <option value="7.00" data-state="TN">Tennessee (7.00%)</option>
+                                <option value="6.25" data-state="TX">Texas (6.25%)</option>
+                                <option value="4.85" data-state="UT">Utah (4.85%)</option>
+                                <option value="6.00" data-state="VT">Vermont (6.00%)</option>
+                                <option value="4.30" data-state="VA">Virginia (4.30%)</option>
+                                <option value="6.50" data-state="WA">Washington (6.50%)</option>
+                                <option value="6.00" data-state="WV">West Virginia (6.00%)</option>
+                                <option value="5.00" data-state="WI">Wisconsin (5.00%)</option>
+                                <option value="4.00" data-state="WY">Wyoming (4.00%)</option>
+                            </optgroup>
+                            <optgroup label="Canada (GST/HST/PST)">
+                                <option value="5.00" data-province="AB">Alberta (5.00%)</option>
+                                <option value="12.00" data-province="BC">British Columbia (12.00%)</option>
+                                <option value="12.00" data-province="MB">Manitoba (12.00%)</option>
+                                <option value="15.00" data-province="NB">New Brunswick (15.00%)</option>
+                                <option value="15.00" data-province="NL">Newfoundland and Labrador (15.00%)</option>
+                                <option value="5.00" data-province="NT">Northwest Territories (5.00%)</option>
+                                <option value="15.00" data-province="NS">Nova Scotia (15.00%)</option>
+                                <option value="5.00" data-province="NU">Nunavut (5.00%)</option>
+                                <option value="13.00" data-province="ON">Ontario (13.00%)</option>
+                                <option value="15.00" data-province="PE">Prince Edward Island (15.00%)</option>
+                                <option value="14.975" data-province="QC">Quebec (14.975%)</option>
+                                <option value="11.00" data-province="SK">Saskatchewan (11.00%)</option>
+                                <option value="5.00" data-province="YT">Yukon (5.00%)</option>
+                            </optgroup>
+                        </select>
+                        <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem;">US rates are state-level only. Local taxes may apply.</p>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="taxRate">Combined Tax Rate</label>
+                        <div class="input-wrapper has-suffix">
+                            <span class="suffix">%</span>
+                            <input type="number" id="taxRate" value="7.25" min="0" step="0.001">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Tax Breakdown</h2>
+                </div>
+
+                <div class="results">
+                    <div class="result-item">
+                        <span class="result-label" id="baseAmountLabel">Amount Before Tax</span>
+                        <div class="result-value">
+                            <span id="baseAmount">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="result-label">Tax Amount</span>
+                        <div class="result-value">
+                            <span id="taxAmount">$0.00</span>
+                            <button class="copy-btn" onclick="copyValue('taxAmount', this)">Copy</button>
+                        </div>
+                    </div>
+
+                    <div class="result-item result-final" style="margin-top: 1rem; border-top: 1px solid rgba(42, 32, 16, 0.5); padding-top: 1rem; border-bottom: none;">
+                        <span class="result-label" id="totalAmountLabel">Total Price (After Tax)</span>
+                        <div class="result-value">
+                            <span id="totalAmount">$0.00</span>
+                            <button class="copy-btn" onclick="copyValue('totalAmount', this)">Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-header" style="margin-top: 2.5rem;">
+                    <h2>Quick Reference</h2>
+                </div>
+                <div class="results">
+                     <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem;">Effective Tax Multiplier:</p>
+                     <p style="font-family: var(--font-mono); font-size: 1.125rem; color: var(--text-primary);" id="taxMultiplier">1.0725</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>Understanding Sales Tax in the US & Canada</h2>
+            <p>Sales tax is a consumption tax imposed by the government on the sale of goods and services. Our calculator helps you quickly determine the exact tax amount and the final price, whether you are shopping, invoicing, or managing business expenses.</p>
+            <p><strong>In the United States:</strong> Sales tax is governed at the state and local levels rather than federally. This means the total sales tax rate you pay is often a combination of the state base rate plus county, city, and district taxes. Our calculator provides the base state rate, but you can enter a custom rate to account for local jurisdictions.</p>
+            <p><strong>In Canada:</strong> The taxation system consists of the federal Goods and Services Tax (GST) and Provincial Sales Tax (PST). Many provinces have combined these into a single Harmonized Sales Tax (HST). The rates in our calculator reflect the total combined tax (GST+PST or HST) for each province.</p>
+
+            <h2>How to Use This Calculator</h2>
+            <p>This tool is designed to work in two different scenarios to meet your needs:</p>
+            <ul>
+                <li><strong>Add Tax to Price:</strong> Use this mode when you know the sticker price (before tax) and need to find out how much tax will be added and what your final total will be. Simply enter the pre-tax amount and your local tax rate.</li>
+                <li><strong>Extract Tax from Price:</strong> Use this mode when you only have the final receipt total (after tax) and need to reverse-calculate to find the original price and exactly how much of that total went to taxes. This is highly useful for business expense reporting and bookkeeping.</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    // Format currency
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(value);
+    };
+
+    // Copy to clipboard
+    window.copyValue = async (elementId, btn) => {
+        const text = document.getElementById(elementId).innerText;
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    const amountInput = document.getElementById('amount');
+    const taxRateInput = document.getElementById('taxRate');
+    const locationSelect = document.getElementById('location');
+    const calcModeSelect = document.getElementById('calcMode');
+
+    const amountLabel = document.getElementById('amountLabel');
+    const baseAmountLabel = document.getElementById('baseAmountLabel');
+    const totalAmountLabel = document.getElementById('totalAmountLabel');
+
+    // Handle location change
+    locationSelect.addEventListener('change', (e) => {
+        if (e.target.value !== 'custom') {
+            taxRateInput.value = e.target.value;
+        }
+        updateCalculator();
+    });
+
+    // Automatically set location to custom if user manually edits tax rate
+    taxRateInput.addEventListener('input', () => {
+        let matchFound = false;
+        const currentRate = parseFloat(taxRateInput.value);
+
+        // Optionally try to match the manually entered rate to a state/province
+        Array.from(locationSelect.options).forEach(option => {
+            if (option.value !== 'custom' && parseFloat(option.value) === currentRate) {
+                locationSelect.value = option.value;
+                matchFound = true;
+            }
+        });
+
+        if (!matchFound) {
+            locationSelect.value = 'custom';
+        }
+        updateCalculator();
+    });
+
+    calcModeSelect.addEventListener('change', () => {
+        if (calcModeSelect.value === 'add') {
+            amountLabel.innerText = 'Amount (Before Tax)';
+            baseAmountLabel.innerText = 'Amount Before Tax';
+            totalAmountLabel.innerText = 'Total Price (After Tax)';
+        } else {
+            amountLabel.innerText = 'Total Amount (After Tax)';
+            baseAmountLabel.innerText = 'Original Price (Before Tax)';
+            totalAmountLabel.innerText = 'Total Price (Input Amount)';
+        }
+        updateCalculator();
+    });
+
+    // Main calculation logic
+    const updateCalculator = () => {
+        const amount = parseFloat(amountInput.value) || 0;
+        const rate = parseFloat(taxRateInput.value) || 0;
+        const mode = calcModeSelect.value;
+
+        let baseAmount = 0;
+        let taxAmount = 0;
+        let totalAmount = 0;
+
+        if (mode === 'add') {
+            baseAmount = amount;
+            taxAmount = amount * (rate / 100);
+            totalAmount = amount + taxAmount;
+        } else if (mode === 'extract') {
+            totalAmount = amount;
+            baseAmount = amount / (1 + (rate / 100));
+            taxAmount = amount - baseAmount;
+        }
+
+        document.getElementById('baseAmount').innerText = formatCurrency(baseAmount);
+        document.getElementById('taxAmount').innerText = formatCurrency(taxAmount);
+        document.getElementById('totalAmount').innerText = formatCurrency(totalAmount);
+
+        document.getElementById('taxMultiplier').innerText = (1 + (rate / 100)).toFixed(5).replace(/\.?0+$/, '') || '1';
+    };
+
+    // Attach event listeners
+    [amountInput, taxRateInput, locationSelect, calcModeSelect].forEach(input => {
+        input.addEventListener('input', updateCalculator);
+    });
+
+    // Initial calculation
+    updateCalculator();
+</script>
+
+</body>
+</html>
