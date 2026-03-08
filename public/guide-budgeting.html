@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budgeting Methods Compared: 50/30/20, Envelope & More</title>
+    <meta name="description" content="Compare budgeting methods: 50/30/20, envelope, zero-based, pay yourself first. A comprehensive reference guide and cheat sheet.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Budgeting Methods Compared: 50/30/20, Envelope & More",
+      "description": "Compare budgeting methods: 50/30/20, envelope, zero-based, pay yourself first. A comprehensive reference guide and cheat sheet.",
+      "url": "https://firemaths.info/guide-budgeting.html",
+      "author": {
+        "@type": "Organization",
+        "name": "firemaths.info"
+      }
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0c0a00;
+            color: #e0d8c8;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 24px 40px;
+            background: linear-gradient(180deg, #1a0f00 0%, #0c0a00 100%);
+            position: relative;
+            border-bottom: 1px solid #2a2010;
+        }
+        .header-content { position: relative; z-index: 1; }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, #D4A017 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p {
+            color: #888;
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .search-container input {
+            width: 100%;
+            background: #141008;
+            border: 2px solid #2a2010;
+            border-radius: 12px;
+            padding: 16px 20px 16px 48px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            transition: border-color 0.2s;
+        }
+        .search-container input:focus {
+            outline: none;
+            border-color: #D4A017;
+        }
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        /* Section Headings */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2010;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        /* Cards */
+        .card {
+            background: #141008;
+            border: 1px solid #2a2010;
+            border-radius: 16px;
+            padding: 24px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .card:hover {
+            border-color: #D4A017;
+            transform: translateY(-2px);
+        }
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #D4A017;
+            margin-bottom: 12px;
+        }
+        .card p {
+            color: #888;
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+        }
+
+        /* Copyable Code/Values */
+        .code-block {
+            background: #0c0a00;
+            border: 1px solid #2a2010;
+            border-radius: 8px;
+            padding: 12px;
+            position: relative;
+            margin-top: 12px;
+        }
+        .code-block code {
+            font-family: 'JetBrains Mono', monospace;
+            color: #e0d8c8;
+            font-size: 0.9rem;
+            display: block;
+            padding-right: 60px; /* Space for button */
+            word-break: break-all;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 50%;
+            right: 8px;
+            transform: translateY(-50%);
+            background: transparent;
+            border: 1px solid #2a2010;
+            color: #888;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .copy-btn:hover {
+            border-color: #D4A017;
+            color: #D4A017;
+        }
+        .copy-btn.copied {
+            background: #D4A017;
+            color: #0c0a00;
+            border-color: #D4A017;
+        }
+
+        /* Accordion (Steps to FI) */
+        .accordion {
+            margin-bottom: 60px;
+        }
+        .accordion-item {
+            background: #141008;
+            border: 1px solid #2a2010;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+        .accordion-header {
+            width: 100%;
+            text-align: left;
+            padding: 20px 24px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .accordion-header:hover {
+            background: rgba(212, 160, 23, 0.05);
+        }
+        .accordion-icon {
+            color: #D4A017;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: #0c0a00;
+            border-top: 1px solid #2a2010;
+        }
+        .accordion-content-inner {
+            padding: 24px;
+            color: #888;
+            font-size: 0.95rem;
+        }
+        .accordion-item.active .accordion-icon {
+            transform: rotate(45deg);
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 500px; /* Arbitrary large number */
+        }
+
+        /* Table (Savings Rate) */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            background: #141008;
+            border: 1px solid #2a2010;
+            border-radius: 16px;
+            margin-bottom: 60px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        th, td {
+            padding: 16px 24px;
+            border-bottom: 1px solid #2a2010;
+        }
+        th {
+            background: #0c0a00;
+            color: #888;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        td {
+            color: #e0d8c8;
+            font-size: 1rem;
+        }
+        td.highlight {
+            font-family: 'JetBrains Mono', monospace;
+            color: #D4A017;
+            font-weight: 600;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover td {
+            background: rgba(212, 160, 23, 0.05);
+        }
+
+        /* SEO Content Section */
+        .content-section {
+            max-width: 760px;
+            margin: 0 auto 80px;
+            padding-top: 40px;
+            border-top: 1px solid #2a2010;
+        }
+        .content-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 40px 0 16px;
+        }
+        .content-section h2:first-child {
+            margin-top: 0;
+        }
+        .content-section p {
+            color: #888;
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+        .content-section ul {
+            color: #888;
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+        .content-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid #2a2010;
+            background: #141008;
+        }
+        .footer a { color: #D4A017; text-decoration: none; font-weight: 500;}
+        .footer a:hover { text-decoration: underline; }
+
+        /* No Results Message */
+        #no-results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .grid { grid-template-columns: 1fr; }
+            th, td { padding: 12px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <h1>Budgeting Methods Compared</h1>
+        <p>Your cheat sheet for personal finance. Compare 50/30/20, Envelope, Zero-Based, and Pay Yourself First.</p>
+    </div>
+</header>
+
+<main class="container">
+
+    <div class="search-container">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search methods, terms, or rules...">
+    </div>
+
+    <div id="no-results">No matching methods found. Try another term.</div>
+
+    <div class="filterable-section" data-tags="50/30/20 rule fifty thirty twenty percentages needs wants savings">
+        <h2 class="section-title">The 50/30/20 Rule</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>50% Needs</h3>
+                <p>Essential living expenses such as rent or mortgage, utilities, groceries, insurance, and minimum debt payments. These are non-negotiable costs.</p>
+                <div class="code-block">
+                    <code id="code-50-needs">Needs = Net Income × 0.50</code>
+                    <button class="copy-btn" data-copy="code-50-needs">Copy</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>30% Wants</h3>
+                <p>Discretionary spending on non-essentials like dining out, entertainment, hobbies, vacations, and shopping for non-essential items.</p>
+                <div class="code-block">
+                    <code id="code-30-wants">Wants = Net Income × 0.30</code>
+                    <button class="copy-btn" data-copy="code-30-wants">Copy</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>20% Savings & Debt</h3>
+                <p>Money set aside for future goals (emergency fund, retirement, investments) and extra payments towards high-interest debt.</p>
+                <div class="code-block">
+                    <code id="code-20-savings">Savings = Net Income × 0.20</code>
+                    <button class="copy-btn" data-copy="code-20-savings">Copy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="filterable-section" data-tags="envelope system cash stuffing categories physical limits">
+        <h2 class="section-title">Envelope System (Cash Stuffing)</h2>
+        <div class="accordion">
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    1. Define Categories & Limits
+                    <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Assign specific spending limits to categories like Groceries, Gas, Dining Out, and Entertainment for the month or pay period.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    2. Stuff the Envelopes
+                    <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>Withdraw cash and place the exact allotted amount into labeled physical envelopes (or use digital envelope budgeting apps).</p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button class="accordion-header">
+                    3. Spend Only What's There
+                    <span class="accordion-icon">+</span>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-content-inner">
+                        <p>When an envelope is empty, you cannot spend any more in that category until the next period. It enforces strict spending discipline.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="filterable-section" data-tags="zero based budgeting every dollar job exact match">
+        <h2 class="section-title">Zero-Based Budgeting</h2>
+        <p style="color: #888; margin-bottom: 20px; font-size: 0.95rem;">Give every single dollar a specific job before the month begins.</p>
+        <div class="grid" style="grid-template-columns: 1fr;">
+            <div class="card">
+                <h3>The Zero-Based Formula</h3>
+                <p>Your income minus your expenses, savings, and debt payments must equal exactly zero. If there is money left over, you must assign it to a category (like extra savings).</p>
+                <div class="code-block">
+                    <code id="code-zero-based">Income - (Expenses + Savings + Debt) = 0</code>
+                    <button class="copy-btn" data-copy="code-zero-based">Copy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="filterable-section" data-tags="pay yourself first reverse budgeting automation priorities">
+        <h2 class="section-title">Pay Yourself First (Reverse Budgeting)</h2>
+        <div class="grid" style="grid-template-columns: 1fr;">
+            <div class="card">
+                <h3>Prioritize Savings Automatically</h3>
+                <p>Instead of saving what is left over after spending, you immediately transfer money to savings and investments the moment you get paid. The rest is free to spend however you like, without tracking every category.</p>
+                <div class="code-block">
+                    <code id="code-pyf">Spendable = Income - Savings Target</code>
+                    <button class="copy-btn" data-copy="code-pyf">Copy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="filterable-section" data-tags="comparison compare methods differences table">
+        <h2 class="section-title">Comparison Summary</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Best For</th>
+                        <th>Effort Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="highlight">50/30/20 Rule</td>
+                        <td>Beginners needing guidelines</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Envelope System</td>
+                        <td>Over-spenders needing hard limits</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Zero-Based</td>
+                        <td>Detail-oriented, maximizing efficiency</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Pay Yourself First</td>
+                        <td>Hands-off savers, automation lovers</td>
+                        <td>Very Low</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- SEO Content Section -->
+    <article class="content-section">
+        <h2>What is Budgeting?</h2>
+        <p>Budgeting is the process of creating a plan to spend your money. This spending plan is called a budget. Creating this plan allows you to determine in advance whether you will have enough money to do the things you need to do or would like to do.</p>
+        <p>A good budget isn't meant to restrict your freedom; rather, it gives you the freedom to spend without guilt because you know your essential needs and long-term goals are already covered.</p>
+
+        <h2>Why Choose a Specific Method?</h2>
+        <p>Personal finance is highly personal. A method that works flawlessly for a detail-oriented spreadsheet lover might feel suffocating to someone who prefers automation. Understanding different methods like <strong>Zero-Based</strong>, <strong>50/30/20</strong>, <strong>Pay Yourself First</strong>, and the <strong>Envelope System</strong> allows you to find the psychological and practical fit for your lifestyle.</p>
+
+        <h2>How to Get Started</h2>
+        <ul>
+            <li><strong>Track Your Current Spending:</strong> Before choosing a method, look at your last 2-3 months of bank statements to see where your money actually goes.</li>
+            <li><strong>Define Your Goals:</strong> Are you trying to pay off debt, save for a house, or simply stop overspending? Your primary goal will dictate which method is best.</li>
+            <li><strong>Automate Where Possible:</strong> Regardless of the method, setting up automatic transfers for savings and bill payments reduces the chance of human error and fatigue.</li>
+            <li><strong>Be Flexible:</strong> It usually takes 3-4 months to get a budget right. Adjust your categories and expectations as you learn your true spending habits.</li>
+        </ul>
+    </article>
+
+</main>
+
+<footer class="footer">
+    <div class="container" style="padding:0">
+        © 2025 <a href="https://firemaths.info">firemaths.info</a> · A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- Copy Buttons ---
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        copyButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Prevent accordion from toggling if button is inside header
+                e.stopPropagation();
+
+                const targetId = e.target.getAttribute('data-copy');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    navigator.clipboard.writeText(targetElement.textContent).then(() => {
+                        const originalText = e.target.textContent;
+                        e.target.textContent = 'Copied!';
+                        e.target.classList.add('copied');
+                        setTimeout(() => {
+                            e.target.textContent = originalText;
+                            e.target.classList.remove('copied');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                }
+            });
+        });
+
+        // --- Accordion ---
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+
+                // Close others (optional, remove if you want multiple open)
+                // document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                //     if(otherItem !== item) otherItem.classList.remove('active');
+                // });
+
+                item.classList.toggle('active');
+            });
+        });
+
+        // --- Search/Filter ---
+        const searchInput = document.getElementById('searchInput');
+        const sections = document.querySelectorAll('.filterable-section');
+        const noResultsMsg = document.getElementById('no-results');
+
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            sections.forEach(section => {
+                const tags = section.getAttribute('data-tags').toLowerCase();
+                const textContent = section.textContent.toLowerCase();
+
+                if (term === '' || tags.includes(term) || textContent.includes(term)) {
+                    section.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+
+            if (visibleCount === 0 && term !== '') {
+                noResultsMsg.style.display = 'block';
+            } else {
+                noResultsMsg.style.display = 'none';
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
