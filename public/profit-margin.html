@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profit Margin Calculator | firemaths.info</title>
+    <meta name="description" content="Calculate gross, operating, and net profit margins. Easily determine your markup percentage based on revenue and costs.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Profit Margin Calculator",
+      "url": "https://firemaths.info/profit-margin",
+      "description": "Calculate gross, operating, and net profit margins. Easily determine your markup percentage based on revenue and costs.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --danger-color: #ff4a4a;
+            --success-color: #4aff8a;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-header h2 {
+            font-size: 1.25rem;
+        }
+
+        /* Form Inputs */
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .input-group .helper-text {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 0.75rem; }
+        .suffix { right: 0.75rem; }
+
+        input[type="number"] {
+            width: 100%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 1.75rem; }
+        .has-suffix input { padding-right: 2rem; }
+
+        /* Summary Panel */
+        .summary-panel .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .summary-panel .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-sublabel {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-final .result-value {
+            font-size: 1.25rem;
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .result-main .result-value {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .val-positive {
+            color: var(--success-color);
+        }
+
+        .val-negative {
+            color: var(--danger-color);
+        }
+
+        /* Copy Button */
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        /* SEO Content */
+        .seo-content {
+            margin-top: 4rem;
+            margin-bottom: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content h3 {
+            font-size: 1.25rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul, .seo-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Profit Margin Calculator</h1>
+        <p>Analyze revenue, costs, and calculate gross, operating, and net margins</p>
+    </header>
+
+    <main>
+        <div class="dashboard">
+            <!-- Inputs Column -->
+            <div class="card" style="align-self: start;">
+                <div class="card-header">
+                    <h2>Financial Details</h2>
+                </div>
+
+                <div class="input-group">
+                    <label>Total Revenue</label>
+                    <div class="input-wrapper has-prefix">
+                        <span class="prefix">$</span>
+                        <input type="number" id="input-revenue" value="100000" min="0" step="100">
+                    </div>
+                    <div class="helper-text">Total sales before any deductions</div>
+                </div>
+
+                <div class="input-group">
+                    <label>Cost of Goods Sold (COGS)</label>
+                    <div class="input-wrapper has-prefix">
+                        <span class="prefix">$</span>
+                        <input type="number" id="input-cogs" value="40000" min="0" step="100">
+                    </div>
+                    <div class="helper-text">Direct costs attributable to the production of the goods sold</div>
+                </div>
+
+                <div class="input-group">
+                    <label>Operating Expenses (OPEX)</label>
+                    <div class="input-wrapper has-prefix">
+                        <span class="prefix">$</span>
+                        <input type="number" id="input-opex" value="30000" min="0" step="100">
+                    </div>
+                    <div class="helper-text">Rent, payroll, marketing, overhead, etc.</div>
+                </div>
+
+                <div class="input-group">
+                    <label>Other Expenses</label>
+                    <div class="input-wrapper has-prefix">
+                        <span class="prefix">$</span>
+                        <input type="number" id="input-other" value="10000" min="0" step="100">
+                    </div>
+                    <div class="helper-text">Taxes, interest, one-time items, etc.</div>
+                </div>
+            </div>
+
+            <!-- Summary Column -->
+            <div class="card summary-panel" style="align-self: start;">
+                <div class="card-header">
+                    <h2>Margin Analysis</h2>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Gross Profit
+                        <span class="result-sublabel">Revenue - COGS</span>
+                    </span>
+                    <div class="result-value">
+                        <span id="gross-profit">$0</span>
+                    </div>
+                </div>
+
+                <div class="result-item result-final">
+                    <span class="result-label" style="color: var(--text-primary);">Gross Margin</span>
+                    <div class="result-value">
+                        <span id="gross-margin">0.00%</span>
+                        <button class="copy-btn" onclick="copyValue('gross-margin', this)">Copy</button>
+                    </div>
+                </div>
+
+                <div class="result-item result-final" style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color);">
+                    <span class="result-label" style="color: var(--text-primary);">Markup
+                        <span class="result-sublabel">Gross Profit / COGS</span>
+                    </span>
+                    <div class="result-value">
+                        <span id="markup">0.00%</span>
+                        <button class="copy-btn" onclick="copyValue('markup', this)">Copy</button>
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Operating Profit
+                        <span class="result-sublabel">Gross Profit - OPEX</span>
+                    </span>
+                    <div class="result-value">
+                        <span id="operating-profit">$0</span>
+                    </div>
+                </div>
+
+                <div class="result-item result-final" style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color);">
+                    <span class="result-label" style="color: var(--text-primary);">Operating Margin</span>
+                    <div class="result-value">
+                        <span id="operating-margin">0.00%</span>
+                        <button class="copy-btn" onclick="copyValue('operating-margin', this)">Copy</button>
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <span class="result-label">Net Profit
+                        <span class="result-sublabel">Operating Profit - Other Expenses</span>
+                    </span>
+                    <div class="result-value">
+                        <span id="net-profit">$0</span>
+                    </div>
+                </div>
+
+                <div class="result-item result-main">
+                    <span class="result-label" style="color: var(--text-primary); font-size: 1rem;">Net Margin</span>
+                    <div class="result-value">
+                        <span id="net-margin">0.00%</span>
+                        <button class="copy-btn" onclick="copyValue('net-margin', this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>Understanding Profit Margins</h2>
+            <p>Profit margin is one of the most commonly used financial ratios in corporate finance. It represents what percentage of sales has turned into profits. Simply put, the percentage figure indicates how many cents of profit the business has generated for each dollar of sale.</p>
+            <p>There are three primary types of profit margin, and they each tell a different story about a company's financial health and efficiency.</p>
+
+            <h3>1. Gross Profit Margin</h3>
+            <p>The gross profit margin shows the proportion of money left over from revenues after accounting for the cost of goods sold (COGS). COGS encompasses the direct costs attributable to the production of the goods sold in a company. This margin highlights the financial success and viability of a product or service before deducting administrative or other expenses.</p>
+            <ul>
+                <li><strong>Formula:</strong> <code>(Total Revenue - Cost of Goods Sold) / Total Revenue</code></li>
+                <li><strong>What it means:</strong> How efficiently a company uses its labor and supplies in producing goods or services.</li>
+            </ul>
+
+            <h3>2. Operating Profit Margin</h3>
+            <p>By subtracting operating expenses (like selling, general, and administrative expenses) from the gross profit, you arrive at the operating profit margin. This metric is closely watched because it reflects the earning power of a company from its ongoing core business operations, ignoring the effects of financing and taxes.</p>
+            <ul>
+                <li><strong>Formula:</strong> <code>Operating Profit / Total Revenue</code></li>
+                <li><strong>What it means:</strong> How efficiently a company manages its overall operations and overhead.</li>
+            </ul>
+
+            <h3>3. Net Profit Margin</h3>
+            <p>Net profit margin is the "bottom line" of a company. It is the percentage of revenue remaining after all operating expenses, interest, taxes, and preferred stock dividends have been deducted from a company's total revenue. This is the most comprehensive measure of a company's overall profitability.</p>
+            <ul>
+                <li><strong>Formula:</strong> <code>Net Profit / Total Revenue</code></li>
+                <li><strong>What it means:</strong> The overall financial health of a company after all expenses have been paid.</li>
+            </ul>
+
+            <h2>Margin vs. Markup</h2>
+            <p>While often used interchangeably, margin and markup are two different concepts. Margin refers to sales minus the cost of goods sold (gross profit) divided by sales. Markup is the amount by which the cost of a product is increased in order to derive the selling price.</p>
+            <ul>
+                <li><strong>Margin:</strong> Shows profit as a percentage of your selling price. A 50% margin means half of your selling price is profit.</li>
+                <li><strong>Markup:</strong> Shows profit as a percentage of your cost. To achieve a 50% margin, you need a 100% markup on your cost.</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    // Format currency
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 0
+        }).format(value);
+    };
+
+    // Format percentage
+    const formatPercent = (value) => {
+        if (!isFinite(value) || isNaN(value)) return '0.00%';
+        const formatted = new Intl.NumberFormat('en-US', {
+            style: 'percent',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(value / 100);
+        return formatted;
+    };
+
+    // Copy to clipboard
+    window.copyValue = async (elementId, btn) => {
+        const text = document.getElementById(elementId).innerText;
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    // Set color class based on value
+    const setColorClass = (element, value) => {
+        element.classList.remove('val-positive', 'val-negative');
+        if (value > 0) element.classList.add('val-positive');
+        else if (value < 0) element.classList.add('val-negative');
+    };
+
+    // Calculation logic
+    const calculateMetrics = () => {
+        const revenue = parseFloat(document.getElementById('input-revenue').value) || 0;
+        const cogs = parseFloat(document.getElementById('input-cogs').value) || 0;
+        const opex = parseFloat(document.getElementById('input-opex').value) || 0;
+        const other = parseFloat(document.getElementById('input-other').value) || 0;
+
+        // Calculations
+        const grossProfit = revenue - cogs;
+        const grossMargin = revenue > 0 ? (grossProfit / revenue) * 100 : 0;
+        const markup = cogs > 0 ? (grossProfit / cogs) * 100 : 0;
+
+        const operatingProfit = grossProfit - opex;
+        const operatingMargin = revenue > 0 ? (operatingProfit / revenue) * 100 : 0;
+
+        const netProfit = operatingProfit - other;
+        const netMargin = revenue > 0 ? (netProfit / revenue) * 100 : 0;
+
+        // Update UI - Gross
+        const elGrossProfit = document.getElementById('gross-profit');
+        elGrossProfit.textContent = formatCurrency(grossProfit);
+        setColorClass(elGrossProfit, grossProfit);
+
+        const elGrossMargin = document.getElementById('gross-margin');
+        elGrossMargin.textContent = formatPercent(grossMargin);
+        setColorClass(elGrossMargin, grossMargin);
+
+        const elMarkup = document.getElementById('markup');
+        elMarkup.textContent = formatPercent(markup);
+        setColorClass(elMarkup, markup);
+
+        // Update UI - Operating
+        const elOperatingProfit = document.getElementById('operating-profit');
+        elOperatingProfit.textContent = formatCurrency(operatingProfit);
+        setColorClass(elOperatingProfit, operatingProfit);
+
+        const elOperatingMargin = document.getElementById('operating-margin');
+        elOperatingMargin.textContent = formatPercent(operatingMargin);
+        setColorClass(elOperatingMargin, operatingMargin);
+
+        // Update UI - Net
+        const elNetProfit = document.getElementById('net-profit');
+        elNetProfit.textContent = formatCurrency(netProfit);
+        setColorClass(elNetProfit, netProfit);
+
+        const elNetMargin = document.getElementById('net-margin');
+        elNetMargin.textContent = formatPercent(netMargin);
+        setColorClass(elNetMargin, netMargin);
+    };
+
+    // Attach event listeners
+    const inputs = document.querySelectorAll('input[type="number"]');
+    inputs.forEach(input => {
+        input.addEventListener('input', calculateMetrics);
+    });
+
+    // Initial calculation
+    calculateMetrics();
+
+</script>
+
+</body>
+</html>
