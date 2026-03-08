@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best High-Yield Savings Accounts (HYSA) - Updated Monthly</title>
+    <meta name="description" content="Compare the best High-Yield Savings Accounts (HYSAs): rates, minimums, features, and FDIC insurance. Find the perfect savings account to maximize your interest.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Best High-Yield Savings Accounts (HYSA)",
+      "description": "Compare top HYSAs: rates, minimums, features, FDIC insurance.",
+      "url": "https://firemaths.info/list-savings-accounts.html",
+      "author": {
+        "@type": "Organization",
+        "name": "firemaths.info"
+      }
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0c0a00;
+            color: #e0d8c8;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 24px 40px;
+            background: linear-gradient(180deg, #1a0f00 0%, #0c0a00 100%);
+            position: relative;
+            border-bottom: 1px solid #2a2010;
+        }
+        .header-content { position: relative; z-index: 1; }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, #D4A017 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p {
+            color: #888;
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 30px;
+            align-items: center;
+            justify-content: space-between;
+            background: #141008;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #2a2010;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .control-group select {
+            background: #0c0a00;
+            color: #e0d8c8;
+            border: 1px solid #2a2010;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .control-group select:focus {
+            border-color: #D4A017;
+        }
+
+
+        /* Section Headings */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #2a2010;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        /* Cards */
+        .card {
+            background: #141008;
+            border: 1px solid #2a2010;
+            border-radius: 16px;
+            padding: 24px;
+            transition: transform 0.2s, border-color 0.2s, opacity 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .card.hidden {
+            display: none;
+        }
+        .card:hover {
+            border-color: #D4A017;
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #D4A017;
+            margin-bottom: 4px;
+        }
+
+        .score {
+            background: #0c0a00;
+            border: 1px solid #2a2010;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #D4A017;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: right;
+        }
+        .score span {
+            display: block;
+            font-size: 0.7rem;
+            color: #888;
+            font-family: 'Inter', sans-serif;
+            margin-top: 2px;
+        }
+
+        .rate-display {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .app-type {
+            color: #888;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .features-list {
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .features-list strong {
+            color: #fff;
+        }
+
+        .features-list ul {
+            list-style: none;
+            margin-top: 12px;
+        }
+
+        .features-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #e0d8c8;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #D4A017;
+            font-weight: bold;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+            border-top: 1px solid #2a2010;
+            padding-top: 16px;
+        }
+
+        .pros-cons h4 {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pros h4 { color: #4ade80; }
+        .cons h4 { color: #f87171; }
+
+        .pros-cons ul {
+            list-style: none;
+        }
+
+        .pros-cons li {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 6px;
+            position: relative;
+            padding-left: 12px;
+        }
+
+        .pros li::before {
+            content: "+";
+            position: absolute;
+            left: 0;
+            color: #4ade80;
+        }
+
+        .cons li::before {
+            content: "-";
+            position: absolute;
+            left: 0;
+            color: #f87171;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px dashed #2a2010;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .meta-info span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-style: italic;
+            display: none;
+            width: 100%;
+            grid-column: 1 / -1;
+        }
+
+        /* SEO Content Section */
+        .content-section {
+            max-width: 760px;
+            margin: 0 auto 80px;
+            padding-top: 40px;
+            border-top: 1px solid #2a2010;
+        }
+        .content-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 40px 0 16px;
+        }
+        .content-section h2:first-child {
+            margin-top: 0;
+        }
+        .content-section p {
+            color: #888;
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+        .content-section ul {
+            color: #888;
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+        .content-section li {
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid #2a2010;
+            background: #141008;
+        }
+        .footer a { color: #D4A017; text-decoration: none; font-weight: 500;}
+        .footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .grid { grid-template-columns: 1fr; }
+            .pros-cons { grid-template-columns: 1fr; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .control-group { justify-content: space-between; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <h1>Best High-Yield Savings Accounts</h1>
+        <p>Compare top HYSAs to maximize your interest earnings. Rates, minimums, and features reviewed to help you grow your savings faster.</p>
+    </div>
+</header>
+
+<main class="container">
+
+    <div class="controls">
+        <div class="control-group">
+            <label for="sort-select">Sort By:</label>
+            <select id="sort-select">
+                <option value="score-desc">Overall Score (Highest First)</option>
+                <option value="rate-desc">APY (Highest First)</option>
+                <option value="min-asc">Min. Balance (Lowest First)</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="filter-select">Filter:</label>
+            <select id="filter-select">
+                <option value="all">All Accounts</option>
+                <option value="no-min">No Minimum Balance</option>
+                <option value="no-fees">No Monthly Fees</option>
+            </select>
+        </div>
+    </div>
+
+    <h2 class="section-title" style="border-bottom:none; margin-bottom: 0;">Top HYSAs Compared</h2>
+
+    <div class="grid" id="hysa-grid">
+        <div class="no-results" id="no-results-msg">No accounts match your current filters.</div>
+
+        <!-- SoFi -->
+        <div class="card" data-rate="4.60" data-min="0" data-score="9.5" data-fees="false">
+            <div class="card-header">
+                <div>
+                    <h3>SoFi Checking & Savings</h3>
+                    <div class="rate-display">4.60% APY</div>
+                    <div class="app-type">Online Bank</div>
+                </div>
+                <div class="score">9.5/10<span>Overall</span></div>
+            </div>
+
+            <div class="features-list">
+                <p><strong>Best for:</strong> All-in-one banking with high rates and no hidden fees.</p>
+                <ul>
+                    <li>No minimum balance required</li>
+                    <li>No monthly maintenance fees</li>
+                    <li>Up to $2M FDIC insurance (via sweep network)</li>
+                    <li>Requires direct deposit for highest APY</li>
+                </ul>
+            </div>
+
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>Pros</h4>
+                    <ul>
+                        <li>High APY on savings</li>
+                        <li>Excellent mobile app</li>
+                        <li>Cashback on debit purchases</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>Cons</h4>
+                    <ul>
+                        <li>Requires direct deposit for top tier</li>
+                        <li>No physical branches</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="meta-info">
+                <span>🏦 Member FDIC</span>
+                <span>$0 Min. Balance</span>
+            </div>
+        </div>
+
+        <!-- Marcus -->
+        <div class="card" data-rate="4.40" data-min="0" data-score="9.2" data-fees="false">
+            <div class="card-header">
+                <div>
+                    <h3>Marcus by Goldman Sachs</h3>
+                    <div class="rate-display">4.40% APY</div>
+                    <div class="app-type">Online Bank</div>
+                </div>
+                <div class="score">9.2/10<span>Overall</span></div>
+            </div>
+
+            <div class="features-list">
+                <p><strong>Best for:</strong> Simple, fee-free savings from a trusted financial institution.</p>
+                <ul>
+                    <li>No minimum deposit required</li>
+                    <li>No monthly fees whatsoever</li>
+                    <li>Same-day transfers to other banks</li>
+                    <li>$250k FDIC insurance</li>
+                </ul>
+            </div>
+
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>Pros</h4>
+                    <ul>
+                        <li>Consistently competitive rates</li>
+                        <li>Clean, easy-to-use app</li>
+                        <li>No direct deposit required</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>Cons</h4>
+                    <ul>
+                        <li>No checking account option</li>
+                        <li>No ATM access or debit card</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="meta-info">
+                <span>🏦 Member FDIC</span>
+                <span>$0 Min. Balance</span>
+            </div>
+        </div>
+
+        <!-- Wealthfront -->
+        <div class="card" data-rate="5.00" data-min="1" data-score="9.4" data-fees="false">
+            <div class="card-header">
+                <div>
+                    <h3>Wealthfront Cash Account</h3>
+                    <div class="rate-display">5.00% APY</div>
+                    <div class="app-type">Cash Management</div>
+                </div>
+                <div class="score">9.4/10<span>Overall</span></div>
+            </div>
+
+            <div class="features-list">
+                <p><strong>Best for:</strong> Highest yield seekers comfortable with a cash management account.</p>
+                <ul>
+                    <li>$1 minimum opening deposit</li>
+                    <li>No monthly account fees</li>
+                    <li>Up to $8M FDIC insurance (via partner banks)</li>
+                    <li>Automated investing integration</li>
+                </ul>
+            </div>
+
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>Pros</h4>
+                    <ul>
+                        <li>Industry-leading APY</li>
+                        <li>Massive FDIC insurance limit</li>
+                        <li>Free early direct deposit</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>Cons</h4>
+                    <ul>
+                        <li>Not a traditional bank</li>
+                        <li>Cash deposits have a fee</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="meta-info">
+                <span>🏦 FDIC via Partners</span>
+                <span>$1 Min. Balance</span>
+            </div>
+        </div>
+
+        <!-- Ally -->
+        <div class="card" data-rate="4.20" data-min="0" data-score="9.0" data-fees="false">
+            <div class="card-header">
+                <div>
+                    <h3>Ally Bank Savings</h3>
+                    <div class="rate-display">4.20% APY</div>
+                    <div class="app-type">Online Bank</div>
+                </div>
+                <div class="score">9.0/10<span>Overall</span></div>
+            </div>
+
+            <div class="features-list">
+                <p><strong>Best for:</strong> Excellent customer service and intuitive savings buckets.</p>
+                <ul>
+                    <li>No minimum balance required</li>
+                    <li>No monthly maintenance fees</li>
+                    <li>Savings "Buckets" for goal tracking</li>
+                    <li>$250k FDIC insurance</li>
+                </ul>
+            </div>
+
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>Pros</h4>
+                    <ul>
+                        <li>Buckets make organizing easy</li>
+                        <li>24/7 customer service</li>
+                        <li>Surprise Savings feature</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>Cons</h4>
+                    <ul>
+                        <li>Rates often lag slightly behind top tier</li>
+                        <li>No physical branches</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="meta-info">
+                <span>🏦 Member FDIC</span>
+                <span>$0 Min. Balance</span>
+            </div>
+        </div>
+
+        <!-- Discover -->
+        <div class="card" data-rate="4.25" data-min="0" data-score="8.8" data-fees="false">
+            <div class="card-header">
+                <div>
+                    <h3>Discover Online Savings</h3>
+                    <div class="rate-display">4.25% APY</div>
+                    <div class="app-type">Online Bank</div>
+                </div>
+                <div class="score">8.8/10<span>Overall</span></div>
+            </div>
+
+            <div class="features-list">
+                <p><strong>Best for:</strong> Current Discover customers wanting a solid savings add-on.</p>
+                <ul>
+                    <li>No minimum balance required</li>
+                    <li>No monthly fees</li>
+                    <li>Highly rated mobile app</li>
+                    <li>$250k FDIC insurance</li>
+                </ul>
+            </div>
+
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>Pros</h4>
+                    <ul>
+                        <li>No fees for insufficient funds</li>
+                        <li>Great 24/7 US-based support</li>
+                        <li>Frequent sign-up bonuses</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>Cons</h4>
+                    <ul>
+                        <li>Rates aren't the absolute highest</li>
+                        <li>No ATM card for savings alone</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="meta-info">
+                <span>🏦 Member FDIC</span>
+                <span>$0 Min. Balance</span>
+            </div>
+        </div>
+
+        <!-- Capital One -->
+        <div class="card" data-rate="4.25" data-min="0" data-score="8.7" data-fees="false">
+            <div class="card-header">
+                <div>
+                    <h3>Capital One 360 Performance</h3>
+                    <div class="rate-display">4.25% APY</div>
+                    <div class="app-type">Online & Retail Bank</div>
+                </div>
+                <div class="score">8.7/10<span>Overall</span></div>
+            </div>
+
+            <div class="features-list">
+                <p><strong>Best for:</strong> Those who want high yields but occasional physical branch access.</p>
+                <ul>
+                    <li>No minimum balance required</li>
+                    <li>No monthly fees</li>
+                    <li>Access to Capital One Cafes & branches</li>
+                    <li>$250k FDIC insurance</li>
+                </ul>
+            </div>
+
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>Pros</h4>
+                    <ul>
+                        <li>Physical branches available (some areas)</li>
+                        <li>Top-tier mobile app</li>
+                        <li>No balance tiers for APY</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>Cons</h4>
+                    <ul>
+                        <li>Lower rates than pure online banks</li>
+                        <li>Cafes are limited to major cities</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="meta-info">
+                <span>🏦 Member FDIC</span>
+                <span>$0 Min. Balance</span>
+            </div>
+        </div>
+
+        <!-- Betterment -->
+        <div class="card" data-rate="4.75" data-min="10" data-score="8.9" data-fees="false">
+            <div class="card-header">
+                <div>
+                    <h3>Betterment Cash Reserve</h3>
+                    <div class="rate-display">4.75% APY</div>
+                    <div class="app-type">Cash Management</div>
+                </div>
+                <div class="score">8.9/10<span>Overall</span></div>
+            </div>
+
+            <div class="features-list">
+                <p><strong>Best for:</strong> Investors already using Betterment's robo-advisor platform.</p>
+                <ul>
+                    <li>$10 minimum deposit</li>
+                    <li>No monthly fees</li>
+                    <li>Up to $2M FDIC insurance (via partner banks)</li>
+                    <li>New customer APY boosts available</li>
+                </ul>
+            </div>
+
+            <div class="pros-cons">
+                <div class="pros">
+                    <h4>Pros</h4>
+                    <ul>
+                        <li>High baseline APY</li>
+                        <li>Seamless integration with investments</li>
+                        <li>High FDIC limits</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <h4>Cons</h4>
+                    <ul>
+                        <li>Slower transfer times</li>
+                        <li>Not a direct bank account</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="meta-info">
+                <span>🏦 FDIC via Partners</span>
+                <span>$10 Min. Balance</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SEO Content Section -->
+    <article class="content-section">
+        <h2>What is a High-Yield Savings Account (HYSA)?</h2>
+        <p>A High-Yield Savings Account (HYSA) is a type of deposit account that typically pays a significantly higher interest rate than a traditional savings account. Online banks are usually able to offer these higher rates because they have lower overhead costs compared to brick-and-mortar banks.</p>
+        <p>HYSAs are an essential tool for personal finance, especially for storing your emergency fund, saving for a down payment, or holding cash you plan to need in the short term. They offer the perfect balance of earning a return while keeping your money liquid and safe.</p>
+
+        <h2>How to Choose the Best HYSA</h2>
+        <p>When comparing high-yield savings accounts, consider the following factors:</p>
+        <ul>
+            <li><strong>Annual Percentage Yield (APY):</strong> This is the most critical metric. The higher the APY, the more your money will grow over time through compound interest. Rates are variable and can change with the Federal Reserve's target rate.</li>
+            <li><strong>Fees and Minimums:</strong> Look for accounts with no monthly maintenance fees and low or zero minimum balance requirements. Fees will quickly eat into any interest you earn.</li>
+            <li><strong>FDIC Insurance:</strong> Ensure the bank is a Member FDIC (or uses partner banks that are). This protects your deposits up to $250,000 per depositor, per institution, in the event of a bank failure.</li>
+            <li><strong>Access and Features:</strong> Consider how quickly you can transfer money to your primary checking account. Some accounts offer "buckets" or sub-accounts to help you save for specific goals, which can be highly motivating.</li>
+        </ul>
+
+        <h2>Cash Management Accounts vs. Traditional HYSAs</h2>
+        <p>You might notice some options on our list (like Wealthfront and Betterment) are labeled as "Cash Management Accounts" rather than traditional bank accounts. These are typically offered by non-bank financial institutions (like brokerages or robo-advisors).</p>
+        <p>They work similarly to an HYSA and often offer higher APYs and massively expanded FDIC coverage by sweeping your deposits into multiple partner banks behind the scenes. However, they may not offer the same exact features as a traditional bank account, so it's important to understand the structure before depositing funds.</p>
+    </article>
+
+</main>
+
+<footer class="footer">
+    <div class="container" style="padding:0">
+        © 2025 <a href="https://firemaths.info">firemaths.info</a> · A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sortSelect = document.getElementById('sort-select');
+        const filterSelect = document.getElementById('filter-select');
+        const grid = document.getElementById('hysa-grid');
+        const cards = Array.from(grid.querySelectorAll('.card'));
+        const noResultsMsg = document.getElementById('no-results-msg');
+
+        function updateGrid() {
+            const filterValue = filterSelect.value;
+            const sortValue = sortSelect.value;
+
+            // 1. Filter
+            let visibleCount = 0;
+            cards.forEach(card => {
+                const min = parseFloat(card.dataset.min);
+                const hasFees = card.dataset.fees === 'true';
+
+                let show = true;
+                if (filterValue === 'no-min' && min > 0) show = false;
+                if (filterValue === 'no-fees' && hasFees) show = false;
+
+                if (show) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            if (visibleCount === 0) {
+                noResultsMsg.style.display = 'block';
+            } else {
+                noResultsMsg.style.display = 'none';
+            }
+
+            // 2. Sort
+            const visibleCards = cards.filter(card => !card.classList.contains('hidden'));
+
+            visibleCards.sort((a, b) => {
+                const rateA = parseFloat(a.dataset.rate);
+                const rateB = parseFloat(b.dataset.rate);
+                const minA = parseFloat(a.dataset.min);
+                const minB = parseFloat(b.dataset.min);
+                const scoreA = parseFloat(a.dataset.score);
+                const scoreB = parseFloat(b.dataset.score);
+
+                if (sortValue === 'rate-desc') {
+                    return rateB - rateA;
+                } else if (sortValue === 'min-asc') {
+                    if (minA !== minB) return minA - minB;
+                    return rateB - rateA; // Secondary sort
+                } else if (sortValue === 'score-desc') {
+                    return scoreB - scoreA;
+                }
+                return 0;
+            });
+
+            // Re-append to DOM to apply sort
+            visibleCards.forEach(card => grid.appendChild(card));
+        }
+
+        sortSelect.addEventListener('change', updateGrid);
+        filterSelect.addEventListener('change', updateGrid);
+
+        // Initial sort based on default select value
+        updateGrid();
+    });
+</script>
+
+</body>
+</html>
