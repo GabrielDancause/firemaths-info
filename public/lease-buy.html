@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lease vs Buy Calculator | firemaths.info</title>
+    <meta name="description" content="Compare the true cost of leasing vs. buying a vehicle. Calculate depreciation, interest, tax benefits, and find your break-even point.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Lease vs Buy Calculator",
+      "url": "https://firemaths.info/lease-buy",
+      "description": "Compare the true cost of leasing vs. buying a vehicle. Calculate depreciation, interest, tax benefits, and find your break-even point.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --danger-color: #ff4a4a;
+            --success-color: #4aff8a;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 1024px) {
+            .dashboard {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .inputs-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .inputs-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-header h2 {
+            font-size: 1.25rem;
+            color: var(--accent-color);
+        }
+
+        .card-header h3 {
+            font-size: 1.15rem;
+        }
+
+        /* Form Inputs */
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .input-group label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .input-hint {
+            text-transform: none;
+            letter-spacing: normal;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 0.75rem; }
+        .suffix { right: 0.75rem; }
+
+        input[type="number"], select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+            appearance: none;
+        }
+
+        select {
+            font-family: var(--font-ui);
+            cursor: pointer;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
+        }
+
+        select option {
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 1.75rem; }
+        .has-suffix input { padding-right: 2rem; }
+
+        /* Summary Panel */
+        .summary-panel {
+            position: sticky;
+            top: 2rem;
+        }
+
+        .result-section {
+            margin-bottom: 2rem;
+        }
+
+        .result-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-section h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-sublabel {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 0.1rem;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-final .result-value {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .winner-card {
+            background-color: rgba(212, 160, 23, 0.1);
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .winner-title {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .winner-result {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .winner-diff {
+            font-size: 0.875rem;
+            font-family: var(--font-mono);
+            margin-top: 0.5rem;
+            color: var(--success-color);
+        }
+
+        /* Buttons */
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        /* SEO Content */
+        .seo-content {
+            margin-top: 4rem;
+            margin-bottom: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul, .seo-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+
+        /* Tabs for Mobile */
+        .mobile-tabs {
+            display: none;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: var(--font-ui);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+        }
+
+        @media (max-width: 767px) {
+            .mobile-tabs {
+                display: flex;
+            }
+            .tab-content {
+                display: none;
+            }
+            .tab-content.active {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Lease vs Buy Calculator</h1>
+        <p>Compare the true, out-of-pocket costs of leasing versus buying a vehicle</p>
+    </header>
+
+    <main>
+        <div class="dashboard">
+            <!-- Inputs Area -->
+            <div>
+                <!-- Common Variables -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <div class="card-header">
+                        <h2>Vehicle Details</h2>
+                    </div>
+
+                    <div class="inputs-section" style="grid-template-columns: 1fr 1fr 1fr;">
+                        <div class="input-group" style="grid-column: 1 / -1;">
+                            <label>Negotiated Price <span class="input-hint">Vehicle price before taxes/fees</span></label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="vehicle-price" value="35000" min="0" step="100">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Term Length</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">Mo</span>
+                                <input type="number" id="term-months" value="36" min="12" step="12">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Sales Tax Rate</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="tax-rate" value="7.0" min="0" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Business Use <span class="input-hint">For Tax Deductions</span></label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="business-use" value="0" min="0" max="100" step="5">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Tabs -->
+                <div class="mobile-tabs">
+                    <button class="tab-btn active" onclick="switchTab(event, 'buy')">Buying</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'lease')">Leasing</button>
+                </div>
+
+                <div class="inputs-section">
+                    <!-- Buy Column -->
+                    <div class="card tab-content active" id="tab-buy">
+                        <div class="card-header">
+                            <h3>Buying (Financing)</h3>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Down Payment</label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="buy-down" value="5000" min="0" step="100">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Interest Rate (APR)</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="buy-rate" value="6.5" min="0" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Expected Depreciation <span class="input-hint">Over the term</span></label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="buy-depreciation" value="45" min="0" max="100" step="1">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Est. Maint. & Repairs <span class="input-hint">Total over term</span></label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="buy-maint" value="1500" min="0" step="100">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Tax Bracket <span class="input-hint">For business use deductions</span></label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="buy-tax-bracket" value="24" min="0" max="50" step="1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lease Column -->
+                    <div class="card tab-content" id="tab-lease">
+                        <div class="card-header">
+                            <h3>Leasing</h3>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Down Payment <span class="input-hint">Cap Cost Reduction</span></label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="lease-down" value="2000" min="0" step="100">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Residual Value <span class="input-hint">At end of lease</span></label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="lease-residual" value="55" min="0" max="100" step="1">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Money Factor <span class="input-hint">E.g., 0.00250</span></label>
+                            <div class="input-wrapper">
+                                <input type="number" id="lease-mf" value="0.0025" min="0" step="0.0001">
+                            </div>
+                            <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 0.25rem; text-align: right;">
+                                Equivalent APR: <span id="lease-apr-display">6.00%</span>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Acquisition Fee <span class="input-hint">Due at signing</span></label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="lease-acq-fee" value="650" min="0" step="50">
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Disposition Fee <span class="input-hint">Due at return</span></label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="lease-disp-fee" value="395" min="0" step="25">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Column -->
+            <div class="card summary-panel">
+                <div class="card-header">
+                    <h2>Comparison Summary</h2>
+                </div>
+
+                <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1.5rem; text-align: center;">
+                    Over a <span id="summary-term" style="font-family: var(--font-mono); font-weight: 600; color: var(--text-primary);">36</span> month period
+                </div>
+
+                <div class="result-section">
+                    <h3>Buying Costs</h3>
+
+                    <div class="result-item">
+                        <span class="result-label">Monthly Payment</span>
+                        <div class="result-value">
+                            <span id="res-buy-monthly">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="result-label">Upfront Costs <span class="result-sublabel">Down payment + Taxes on full price</span></span>
+                        <div class="result-value">
+                            <span id="res-buy-upfront">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="result-label">Est. Value at End <span class="result-sublabel">Equity remaining</span></span>
+                        <div class="result-value">
+                            <span id="res-buy-equity">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="result-item result-final">
+                        <span class="result-label" style="color: var(--text-primary);">Total True Cost <span class="result-sublabel">Total paid + Maint - Equity - Tax Savings</span></span>
+                        <div class="result-value">
+                            <span id="res-buy-total">$0</span>
+                            <button class="copy-btn" onclick="copyValue('res-buy-total', this)">Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <h3>Leasing Costs</h3>
+
+                    <div class="result-item">
+                        <span class="result-label">Monthly Payment</span>
+                        <div class="result-value">
+                            <span id="res-lease-monthly">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="result-item">
+                        <span class="result-label">Upfront Costs <span class="result-sublabel">Down pay + Acq fee + Taxes on down pay</span></span>
+                        <div class="result-value">
+                            <span id="res-lease-upfront">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="result-item result-final">
+                        <span class="result-label" style="color: var(--text-primary);">Total True Cost <span class="result-sublabel">Total paid + Disp fee - Tax Savings</span></span>
+                        <div class="result-value">
+                            <span id="res-lease-total">$0</span>
+                            <button class="copy-btn" onclick="copyValue('res-lease-total', this)">Copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="winner-card" id="winner-box">
+                    <div class="winner-title" id="winner-label">More Cost Effective Option</div>
+                    <div class="winner-result" id="winner-text">Buying</div>
+                    <div class="winner-diff" id="winner-diff">Saves $0 over the term</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>The Great Debate: Leasing vs. Buying a Car</h2>
+            <p>Choosing whether to lease or buy a vehicle is one of the most common financial dilemmas. There isn't a single "right" answer for everyone, as the best choice depends entirely on your cash flow, driving habits, business needs, and how long you plan to keep the car.</p>
+            <p>This calculator breaks down the <strong>Total True Cost</strong> (also known as the Net Out-of-Pocket Cost) for both scenarios over identical timeframes. It factors in hidden costs like depreciation, opportunity costs, fees, and potential tax deductions for business owners.</p>
+
+            <h2>Understanding the Buying Calculation</h2>
+            <p>When you buy a car, your monthly payments will generally be higher because you are paying off the entire value of the vehicle plus interest. However, once the loan is paid off, you own an asset. The "True Cost" of buying over a specific period is calculated as:</p>
+            <ul>
+                <li><strong>Total Cash Outflow:</strong> Down payment + Taxes on the full purchase price + All monthly loan payments + Expected maintenance and repairs.</li>
+                <li><strong>Minus Retained Equity:</strong> The estimated resale value of the car at the end of the term. Even though a car depreciates, it is still worth a significant amount of money when you go to sell it.</li>
+                <li><strong>Minus Tax Benefits (If Applicable):</strong> If you use the car for business, you can often deduct depreciation and interest expenses, lowering your tax burden.</li>
+            </ul>
+
+            <h2>Understanding the Leasing Calculation</h2>
+            <p>Leasing is essentially a long-term rental agreement. You are only paying for the depreciation of the vehicle during the term of your lease, plus a finance charge (the "Money Factor") and administrative fees.</p>
+            <ul>
+                <li><strong>Total Cash Outflow:</strong> Down payment (Capitalized Cost Reduction) + Acquisition fee + All monthly lease payments (which include taxes on the monthly payment amount) + Disposition fee at turn-in.</li>
+                <li><strong>Zero Equity:</strong> At the end of the lease, you return the car. You have no asset to sell, so there is no equity to subtract from your costs.</li>
+                <li><strong>Tax Benefits (If Applicable):</strong> For business owners, lease payments are generally fully deductible based on the percentage of business use, which can make leasing highly attractive for entrepreneurs.</li>
+            </ul>
+
+            <h2>When Does Leasing Make Sense?</h2>
+            <p>Financially speaking, buying a car and keeping it for 10 years is almost always cheaper than leasing three different cars over that same decade. However, leasing might be the right choice if:</p>
+            <ul>
+                <li>You are a business owner who can deduct the lease payments as an operating expense.</li>
+                <li>You absolutely need a new, reliable car every 3 years for work or personal preference and have factored this luxury into your budget.</li>
+                <li>You want lower monthly payments to free up cash flow for higher-yield investments (though you must actually invest the difference to realize this benefit).</li>
+                <li>You drive a very predictable number of miles (usually under 12,000 per year) and won't incur mileage overage penalties.</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    // Formatting Helpers
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 0
+        }).format(Math.round(value));
+    };
+
+    const copyValue = async (elementId, btn) => {
+        const text = document.getElementById(elementId).innerText;
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    // Mobile Tabs
+    window.switchTab = (event, tabId) => {
+        if(window.innerWidth >= 768) return; // Only apply on mobile
+
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+        if (event && event.currentTarget) {
+            event.currentTarget.classList.add('active');
+        }
+        document.getElementById(`tab-${tabId}`).classList.add('active');
+    };
+
+    // Calculation Engine
+    const calculate = () => {
+        // --- 1. Get Base Variables ---
+        const price = parseFloat(document.getElementById('vehicle-price').value) || 0;
+        const term = parseFloat(document.getElementById('term-months').value) || 36;
+        const taxRate = (parseFloat(document.getElementById('tax-rate').value) || 0) / 100;
+        const businessUse = (parseFloat(document.getElementById('business-use').value) || 0) / 100;
+        const taxBracket = (parseFloat(document.getElementById('buy-tax-bracket').value) || 0) / 100;
+
+        document.getElementById('summary-term').innerText = term;
+
+        // --- 2. Buy Calculations ---
+        const buyDown = parseFloat(document.getElementById('buy-down').value) || 0;
+        const buyApr = parseFloat(document.getElementById('buy-rate').value) || 0;
+        const buyDeprRate = (parseFloat(document.getElementById('buy-depreciation').value) || 0) / 100;
+        const buyMaint = parseFloat(document.getElementById('buy-maint').value) || 0;
+
+        // Buy Upfront (Down payment + Taxes on FULL price)
+        const buyTaxes = price * taxRate;
+        const buyUpfront = buyDown + buyTaxes;
+
+        // Buy Loan Amount
+        const buyLoan = price - buyDown;
+
+        // Buy Monthly Payment (Standard Amortization)
+        let buyMonthly = 0;
+        let buyTotalInterest = 0;
+        if (buyLoan > 0) {
+            if (buyApr > 0) {
+                const r = (buyApr / 100) / 12;
+                buyMonthly = buyLoan * (r * Math.pow(1 + r, term)) / (Math.pow(1 + r, term) - 1);
+                buyTotalInterest = (buyMonthly * term) - buyLoan;
+            } else {
+                buyMonthly = buyLoan / term;
+            }
+        }
+
+        // Equity at end
+        const buyEquity = price * (1 - buyDeprRate);
+
+        // Tax Deductions for Buying (Simplified MACRS/Straight-line approximation for standard car)
+        // Deducting depreciation and interest based on business use %
+        const buyTaxDeduction = ((price * buyDeprRate) + buyTotalInterest + buyMaint) * businessUse;
+        const buyTaxSavings = buyTaxDeduction * taxBracket;
+
+        // Total True Cost (Buy)
+        const buyTotalCost = buyUpfront + (buyMonthly * term) + buyMaint - buyEquity - buyTaxSavings;
+
+
+        // --- 3. Lease Calculations ---
+        const leaseDown = parseFloat(document.getElementById('lease-down').value) || 0; // Cap Cost Reduction
+        const leaseResidualRate = (parseFloat(document.getElementById('lease-residual').value) || 0) / 100;
+        const leaseMf = parseFloat(document.getElementById('lease-mf').value) || 0;
+        const leaseAcqFee = parseFloat(document.getElementById('lease-acq-fee').value) || 0;
+        const leaseDispFee = parseFloat(document.getElementById('lease-disp-fee').value) || 0;
+
+        // Update equivalent APR display
+        document.getElementById('lease-apr-display').innerText = (leaseMf * 2400).toFixed(2) + '%';
+
+        // Lease Residual Value
+        const leaseResidualValue = price * leaseResidualRate;
+
+        // Gross Capitalized Cost
+        const grossCapCost = price + leaseAcqFee;
+
+        // Adjusted Capitalized Cost
+        const adjustedCapCost = grossCapCost - leaseDown;
+
+        // Lease Monthly Base Payment
+        const monthlyDepreciation = (adjustedCapCost - leaseResidualValue) / term;
+        const monthlyFinanceCharge = (adjustedCapCost + leaseResidualValue) * leaseMf;
+        const baseMonthlyLease = monthlyDepreciation + monthlyFinanceCharge;
+
+        // Lease Monthly Total (with tax on payment)
+        const leaseMonthly = baseMonthlyLease * (1 + taxRate);
+
+        // Lease Upfront (Down payment + Acq fee usually rolled in, but if paid upfront + Tax on down payment)
+        // Assuming Acq fee is rolled into gross cap cost above.
+        const leaseUpfront = leaseDown + (leaseDown * taxRate);
+
+        // Tax Deductions for Leasing
+        // Deducting actual lease payments based on business use %
+        const leaseTaxDeduction = (leaseUpfront + (leaseMonthly * term) + leaseDispFee) * businessUse;
+        const leaseTaxSavings = leaseTaxDeduction * taxBracket;
+
+        // Total True Cost (Lease)
+        const leaseTotalCost = leaseUpfront + (leaseMonthly * term) + leaseDispFee - leaseTaxSavings;
+
+        // --- 4. Update DOM ---
+        // Buy Output
+        document.getElementById('res-buy-monthly').innerText = formatCurrency(buyMonthly);
+        document.getElementById('res-buy-upfront').innerText = formatCurrency(buyUpfront);
+        document.getElementById('res-buy-equity').innerText = formatCurrency(buyEquity);
+        document.getElementById('res-buy-total').innerText = formatCurrency(buyTotalCost);
+
+        // Lease Output
+        document.getElementById('res-lease-monthly').innerText = formatCurrency(leaseMonthly);
+        document.getElementById('res-lease-upfront').innerText = formatCurrency(leaseUpfront);
+        document.getElementById('res-lease-total').innerText = formatCurrency(leaseTotalCost);
+
+        // Winner Logic
+        const winnerBox = document.getElementById('winner-box');
+        const winnerText = document.getElementById('winner-text');
+        const winnerDiff = document.getElementById('winner-diff');
+
+        if (Math.abs(buyTotalCost - leaseTotalCost) < 50) {
+            winnerText.innerText = "It's a Tie";
+            winnerText.style.color = "var(--text-primary)";
+            winnerBox.style.borderColor = "var(--border-color)";
+            winnerBox.style.backgroundColor = "transparent";
+            winnerDiff.innerText = "Costs are virtually identical";
+            winnerDiff.style.color = "var(--text-secondary)";
+        } else if (buyTotalCost < leaseTotalCost) {
+            winnerText.innerText = "Buying";
+            winnerText.style.color = "var(--accent-color)";
+            winnerBox.style.borderColor = "var(--accent-color)";
+            winnerBox.style.backgroundColor = "rgba(212, 160, 23, 0.1)";
+            const savings = leaseTotalCost - buyTotalCost;
+            winnerDiff.innerText = `Saves ${formatCurrency(savings)} over ${term} months`;
+            winnerDiff.style.color = "var(--success-color)";
+        } else {
+            winnerText.innerText = "Leasing";
+            winnerText.style.color = "var(--accent-color)";
+            winnerBox.style.borderColor = "var(--accent-color)";
+            winnerBox.style.backgroundColor = "rgba(212, 160, 23, 0.1)";
+            const savings = buyTotalCost - leaseTotalCost;
+            winnerDiff.innerText = `Saves ${formatCurrency(savings)} over ${term} months`;
+            winnerDiff.style.color = "var(--success-color)";
+        }
+    };
+
+    // Attach Event Listeners
+    const inputs = document.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        input.addEventListener('input', calculate);
+    });
+
+    // Handle Money Factor specific logic to convert back and forth if needed
+    // (Optional enhancement, keeping it simple for now)
+
+    // Initial Calculation
+    calculate();
+
+    // Resize handler for mobile tabs
+    window.addEventListener('resize', () => {
+        if(window.innerWidth >= 768) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = '';
+                content.classList.remove('active');
+            });
+            document.getElementById('tab-buy').classList.add('active'); // Reset default
+        } else {
+            // Restore active state based on buttons
+            const activeTabBtn = document.querySelector('.tab-btn.active');
+            if(activeTabBtn) {
+                const tabId = activeTabBtn.innerText.toLowerCase().includes('buy') ? 'buy' : 'lease';
+                document.getElementById(`tab-${tabId}`).classList.add('active');
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>
