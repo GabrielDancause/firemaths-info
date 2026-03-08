@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capital Gains Tax Calculator | firemaths.info</title>
+    <meta name="description" content="Calculate your short-term and long-term capital gains tax on stocks, crypto, and real estate based on 2024 US tax brackets.">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Capital Gains Tax Calculator",
+      "url": "https://firemaths.info/capital-gains",
+      "description": "Calculate your short-term and long-term capital gains tax on stocks, crypto, and real estate.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --chart-color-a: #D4A017;
+            --chart-color-b: #4A90E2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .scenario-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scenario-header h2 {
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"], select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+        }
+
+        select {
+            font-family: var(--font-ui);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        .results {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.125rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .result-final .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .seo-content {
+            margin-bottom: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+
+        /* Bracket Breakdown Table Styles */
+        .bracket-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .bracket-table th, .bracket-table td {
+            padding: 0.75rem 0.5rem;
+            text-align: right;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .bracket-table th:first-child, .bracket-table td:first-child {
+            text-align: left;
+        }
+
+        .bracket-table th {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .bracket-table td {
+            font-family: var(--font-mono);
+        }
+
+        .bracket-table tr.active {
+            background-color: rgba(212, 160, 23, 0.1);
+        }
+
+        .bracket-table tr.active td {
+            color: var(--accent-color);
+        }
+
+        .bracket-table tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Capital Gains Tax Calculator</h1>
+        <p>Calculate your short-term and long-term capital gains tax for 2024</p>
+    </header>
+
+    <main>
+        <div class="calculator-grid">
+            <!-- Input Section -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Asset Details</h2>
+                </div>
+
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="purchase-price">Purchase Price</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="purchase-price" value="10000" min="0" step="100">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="sale-price">Sale Price</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="sale-price" value="15000" min="0" step="100">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="holding-period">Holding Period</label>
+                        <div class="input-wrapper">
+                            <select id="holding-period">
+                                <option value="long">Long-term (Over 1 year)</option>
+                                <option value="short">Short-term (1 year or less)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group" style="margin-top: 2rem;">
+                        <label for="filing-status">Filing Status</label>
+                        <div class="input-wrapper">
+                            <select id="filing-status">
+                                <option value="single">Single</option>
+                                <option value="married">Married Filing Jointly</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="ordinary-income">Annual Ordinary Income</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="ordinary-income" value="80000" min="0" step="1000">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results">
+                    <div class="result-item">
+                        <span class="result-label">Total Capital Gain</span>
+                        <span class="result-value" id="capital-gain">$0</span>
+                    </div>
+                    <div class="result-item result-final">
+                        <span class="result-label">Estimated Tax</span>
+                        <div class="result-value">
+                            <span id="estimated-tax">$0</span>
+                            <button class="copy-btn" onclick="copyValue('estimated-tax', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Net Profit After Tax</span>
+                        <span class="result-value" id="net-profit">$0</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Effective Tax Rate (on gain)</span>
+                        <span class="result-value" id="effective-rate">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breakdown Section -->
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h2>Tax Breakdown on Gain</h2>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table class="bracket-table">
+                        <thead>
+                            <tr>
+                                <th>Tax Rate</th>
+                                <th>Bracket Range</th>
+                                <th>Gain in Bracket</th>
+                                <th>Tax Owed</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bracket-body">
+                            <!-- Filled via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <p style="margin-top: 1.5rem; font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5;">
+                    Your capital gain is added to your regular income to determine which tax brackets it falls into. The table above shows how your gain is distributed across the applicable tax brackets.
+                </p>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>Understanding Capital Gains Tax</h2>
+            <p>When you sell an asset—such as stocks, cryptocurrencies, or real estate—for more than you paid for it, the profit is known as a capital gain. The US government taxes this profit, but the rate you pay depends heavily on how long you owned the asset before selling it.</p>
+
+            <h2>Short-Term vs. Long-Term Capital Gains</h2>
+            <p>The holding period of your asset determines the tax brackets used:</p>
+            <ul>
+                <li><strong>Short-Term Capital Gains:</strong> If you hold an asset for one year or less before selling, the profits are considered short-term gains. These are taxed at your ordinary income tax rates (which range from 10% to 37% for 2024).</li>
+                <li><strong>Long-Term Capital Gains:</strong> If you hold an asset for more than one year, you benefit from lower long-term capital gains tax rates (0%, 15%, or 20% for 2024).</li>
+            </ul>
+
+            <h2>How Your Income Affects Your Capital Gains Rate</h2>
+            <p>Your capital gains are "stacked" on top of your ordinary income. This means your regular annual income dictates your starting tax bracket for your capital gains.</p>
+            <p>For example, if you are a Single filer earning $40,000 a year in ordinary income, you fall into the 0% long-term capital gains bracket (which goes up to $47,025 for 2024). If you have a $10,000 long-term capital gain, the first $7,025 is taxed at 0%, and the remaining $2,975 spills over into the 15% bracket.</p>
+
+            <h2>Using This Calculator</h2>
+            <p>Our calculator automatically segments your capital gain into the correct 2024 tax brackets. Enter your purchase and sale prices, select your holding period, and provide your estimated annual income. The calculator will detail exactly how much tax you owe on your profit and what your final take-home amount will be.</p>
+            <p><em>Note: This tool provides federal estimates only. It does not include state capital gains taxes or the Net Investment Income Tax (NIIT).</em></p>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    // 2024 US Federal Tax Brackets (Short-term / Ordinary Income)
+    const ordinaryBrackets = {
+        single: [
+            { rate: 0.10, max: 11600 },
+            { rate: 0.12, max: 47150 },
+            { rate: 0.22, max: 100525 },
+            { rate: 0.24, max: 191950 },
+            { rate: 0.32, max: 243725 },
+            { rate: 0.35, max: 609350 },
+            { rate: 0.37, max: Infinity }
+        ],
+        married: [
+            { rate: 0.10, max: 23200 },
+            { rate: 0.12, max: 94300 },
+            { rate: 0.22, max: 201050 },
+            { rate: 0.24, max: 383900 },
+            { rate: 0.32, max: 487450 },
+            { rate: 0.35, max: 731200 },
+            { rate: 0.37, max: Infinity }
+        ]
+    };
+
+    // 2024 Long-Term Capital Gains Tax Brackets
+    const longTermBrackets = {
+        single: [
+            { rate: 0.00, max: 47025 },
+            { rate: 0.15, max: 518900 },
+            { rate: 0.20, max: Infinity }
+        ],
+        married: [
+            { rate: 0.00, max: 94050 },
+            { rate: 0.15, max: 583750 },
+            { rate: 0.20, max: Infinity }
+        ]
+    };
+
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 0
+        }).format(value);
+    };
+
+    const formatPercent = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'percent',
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 2
+        }).format(value);
+    };
+
+    window.copyValue = async (elementId, btn) => {
+        const text = document.getElementById(elementId).innerText;
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    const updateCalculator = () => {
+        const purchasePrice = parseFloat(document.getElementById('purchase-price').value) || 0;
+        const salePrice = parseFloat(document.getElementById('sale-price').value) || 0;
+        const ordinaryIncome = parseFloat(document.getElementById('ordinary-income').value) || 0;
+        const filingStatus = document.getElementById('filing-status').value;
+        const holdingPeriod = document.getElementById('holding-period').value;
+
+        const capitalGain = Math.max(0, salePrice - purchasePrice);
+
+        let brackets;
+        if (holdingPeriod === 'long') {
+            brackets = longTermBrackets[filingStatus];
+        } else {
+            brackets = ordinaryBrackets[filingStatus];
+        }
+
+        let remainingGain = capitalGain;
+        let baseIncome = ordinaryIncome;
+        let totalTax = 0;
+        let previousMax = 0;
+
+        const breakdownHTML = [];
+
+        for (let i = 0; i < brackets.length; i++) {
+            const bracket = brackets[i];
+            const rate = bracket.rate;
+            const max = bracket.max;
+
+            // Determine if the user's base income puts them past this bracket entirely
+            if (baseIncome >= max) {
+                previousMax = max;
+                continue;
+            }
+
+            // The space available in this bracket on top of the base income
+            const spaceInBracket = max === Infinity ? Infinity : max - Math.max(baseIncome, previousMax);
+
+            // How much of the remaining gain falls into this bracket
+            const gainInBracket = Math.min(remainingGain, spaceInBracket);
+
+            if (gainInBracket > 0) {
+                const taxForBracket = gainInBracket * rate;
+                totalTax += taxForBracket;
+
+                const rangeText = max === Infinity
+                    ? `Over ${formatCurrency(previousMax)}`
+                    : `${formatCurrency(previousMax)} - ${formatCurrency(max)}`;
+
+                breakdownHTML.push(`
+                    <tr class="active">
+                        <td>${(rate * 100).toFixed(0)}%</td>
+                        <td>${rangeText}</td>
+                        <td>${formatCurrency(gainInBracket)}</td>
+                        <td>${formatCurrency(taxForBracket)}</td>
+                    </tr>
+                `);
+            } else if (remainingGain === 0 && capitalGain === 0 && breakdownHTML.length === 0 && i === 0) {
+                // If there's no gain at all, just show the first applicable bracket as $0
+                const rangeText = max === Infinity
+                    ? `Over ${formatCurrency(previousMax)}`
+                    : `${formatCurrency(previousMax)} - ${formatCurrency(max)}`;
+
+                breakdownHTML.push(`
+                    <tr>
+                        <td>${(rate * 100).toFixed(0)}%</td>
+                        <td>${rangeText}</td>
+                        <td>$0</td>
+                        <td>$0</td>
+                    </tr>
+                `);
+            }
+
+            remainingGain -= gainInBracket;
+            previousMax = max;
+            baseIncome = Math.max(baseIncome, max); // Move base income up to the end of the bracket
+
+            if (remainingGain <= 0 && capitalGain > 0) {
+                break; // We've taxed all the gain
+            }
+        }
+
+        const effectiveRate = capitalGain > 0 ? totalTax / capitalGain : 0;
+        const netProfit = capitalGain - totalTax;
+
+        // Update UI
+        document.getElementById('capital-gain').innerText = formatCurrency(capitalGain);
+        document.getElementById('estimated-tax').innerText = formatCurrency(totalTax);
+        document.getElementById('net-profit').innerText = formatCurrency(netProfit);
+        document.getElementById('effective-rate').innerText = formatPercent(effectiveRate);
+        document.getElementById('bracket-body').innerHTML = breakdownHTML.join('');
+    };
+
+    // Event listeners
+    const inputs = ['purchase-price', 'sale-price', 'holding-period', 'filing-status', 'ordinary-income'];
+    inputs.forEach(id => {
+        document.getElementById(id).addEventListener('input', updateCalculator);
+        document.getElementById(id).addEventListener('change', updateCalculator);
+    });
+
+    // Initial calc
+    updateCalculator();
+</script>
+
+</body>
+</html>
