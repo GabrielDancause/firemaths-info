@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Break-Even Calculator | firemaths.info</title>
+    <meta name="description" content="Calculate your break-even point in units and revenue. Understand your fixed and variable costs, and visualize your path to profitability with our free interactive chart.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Break-Even Calculator",
+      "url": "https://firemaths.info/break-even",
+      "description": "Calculate your break-even point in units and revenue. Understand your fixed and variable costs.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #0c0a00;
+            --card-bg: #141008;
+            --border-color: #2a2010;
+            --accent-color: #D4A017;
+            --text-primary: #e0d8c8;
+            --text-secondary: #888888;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --chart-revenue: #4A90E2;
+            --chart-costs: #E24A4A;
+            --chart-fixed: #888888;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .calculator-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"] {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        .results {
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .result-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .result-value-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .error-message {
+            color: var(--chart-costs);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .copy-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: var(--font-ui);
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+
+        .chart-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .chart-header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            position: relative;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        .seo-content {
+            margin-bottom: 4rem;
+        }
+
+        .seo-content h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .seo-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Break-Even Calculator</h1>
+        <p>Determine exactly what it takes to be profitable</p>
+    </header>
+
+    <main>
+        <div class="calculator-card">
+            <div class="calculator-grid">
+                <div class="inputs">
+                    <div class="input-group">
+                        <label for="fixed-costs">Total Fixed Costs</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="fixed-costs" value="10000" min="0" step="100">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="variable-cost">Variable Cost per Unit</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="variable-cost" value="15" min="0" step="0.01">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="selling-price">Selling Price per Unit</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="selling-price" value="40" min="0" step="0.01">
+                        </div>
+                        <div id="error-msg" class="error-message">Selling price must be greater than variable cost.</div>
+                    </div>
+                </div>
+
+                <div class="results">
+                    <div class="result-item">
+                        <span class="result-label">Break-Even Point (Units)</span>
+                        <div class="result-value-container">
+                            <span class="result-value" id="be-units">0</span>
+                            <button class="copy-btn" onclick="copyValue('be-units', this)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Break-Even Revenue</span>
+                        <div class="result-value-container">
+                            <span class="result-value" id="be-revenue">$0</span>
+                            <button class="copy-btn" onclick="copyValue('be-revenue', this)">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <div class="chart-header">
+                <h2>Profitability Visualization</h2>
+            </div>
+            <div class="chart-container">
+                <canvas id="breakEvenChart"></canvas>
+            </div>
+            <div class="chart-legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: var(--chart-revenue)"></div>
+                    <span>Total Revenue</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: var(--chart-costs)"></div>
+                    <span>Total Costs</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: var(--chart-fixed)"></div>
+                    <span>Fixed Costs</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="seo-content">
+            <h2>What is a Break-Even Point?</h2>
+            <p>The break-even point is the exact moment when a business's total revenues equal its total expenses. At this specific point, the business is neither making a profit nor suffering a loss—it has simply "broken even." Understanding this metric is crucial for any business owner, entrepreneur, or manager to set sales targets and price products effectively.</p>
+            <p>Knowing your break-even point helps you answer critical questions like: "How many units do I need to sell to cover my rent and payroll?" or "If I lower my price by 10%, how many more items do I need to sell to maintain the same profitability?"</p>
+
+            <h2>Understanding Fixed and Variable Costs</h2>
+            <p>To calculate your break-even point accurately, you need to understand the difference between fixed and variable costs:</p>
+            <ul>
+                <li><strong>Fixed Costs:</strong> Expenses that remain constant regardless of how much you produce or sell. Examples include rent, insurance, salaries of permanent staff, and software subscriptions.</li>
+                <li><strong>Variable Costs:</strong> Expenses that fluctuate directly in proportion to your production or sales volume. Examples include raw materials, direct labor, packaging, and shipping fees per unit.</li>
+            </ul>
+
+            <h2>How to Calculate Your Break-Even Point</h2>
+            <p>The standard formula for calculating the break-even point in units is straightforward:</p>
+            <p style="font-family: var(--font-mono); background-color: var(--card-bg); padding: 1rem; border-radius: 6px; border: 1px solid var(--border-color); text-align: center; margin: 1.5rem 0;">
+                Break-Even Units = Fixed Costs / (Selling Price - Variable Cost)
+            </p>
+            <p>The difference between the selling price and the variable cost is known as the <strong>contribution margin</strong>. This is the amount of money each sale "contributes" toward paying off your fixed costs. Once fixed costs are fully covered, this margin contributes directly to your profit.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+    </footer>
+</div>
+
+<script>
+    // Format currency
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 2
+        }).format(value);
+    };
+
+    const formatNumber = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            maximumFractionDigits: 1
+        }).format(value);
+    };
+
+    // Copy to clipboard
+    window.copyValue = async (elementId, btn) => {
+        const text = document.getElementById(elementId).innerText;
+        try {
+            await navigator.clipboard.writeText(text);
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => {
+                btn.innerText = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    };
+
+    // Chart logic
+    let chartCanvas = document.getElementById('breakEvenChart');
+    let ctx = chartCanvas.getContext('2d');
+
+    const drawChart = (fixedCost, varCost, price, beUnits) => {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = chartCanvas.parentElement.getBoundingClientRect();
+
+        chartCanvas.width = rect.width * dpr;
+        chartCanvas.height = rect.height * dpr;
+
+        ctx.setTransform(1, 0, 0, 1, 0, 0); // reset transform
+        ctx.scale(dpr, dpr);
+
+        const width = rect.width;
+        const height = rect.height;
+
+        ctx.clearRect(0, 0, width, height);
+
+        const padding = { top: 20, right: 20, bottom: 40, left: 80 };
+        const chartWidth = width - padding.left - padding.right;
+        const chartHeight = height - padding.top - padding.bottom;
+
+        // If data is invalid, don't draw chart
+        if (price <= varCost || beUnits <= 0 || !isFinite(beUnits)) {
+            ctx.fillStyle = '#888888';
+            ctx.font = '14px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Please enter valid data to view the chart', width / 2, height / 2);
+            return;
+        }
+
+        // We want to show 0 to 2x the break-even units to give a good visual
+        const maxUnits = beUnits * 2;
+        const maxRevenue = maxUnits * price;
+        const maxCost = fixedCost + (maxUnits * varCost);
+        const maxVal = Math.max(maxRevenue, maxCost);
+
+        // Draw grid and axes
+        ctx.strokeStyle = '#2a2010';
+        ctx.lineWidth = 1;
+        ctx.font = '12px Inter, sans-serif';
+        ctx.fillStyle = '#888888';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+
+        // Y-axis (Currency)
+        const yTicks = 5;
+        for (let i = 0; i <= yTicks; i++) {
+            const val = maxVal * (i / yTicks);
+            const y = height - padding.bottom - (chartHeight * (i / yTicks));
+
+            ctx.beginPath();
+            ctx.moveTo(padding.left, y);
+            ctx.lineTo(width - padding.right, y);
+            ctx.stroke();
+
+            let label = val >= 1000000 ? '$' + (val / 1000000).toFixed(1) + 'M' :
+                        val >= 1000 ? '$' + (val / 1000).toFixed(0) + 'k' : '$' + val.toFixed(0);
+            ctx.fillText(label, padding.left - 10, y);
+        }
+
+        // X-axis (Units)
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        const xTicks = 5;
+        for (let i = 0; i <= xTicks; i++) {
+            const val = maxUnits * (i / xTicks);
+            const x = padding.left + (chartWidth * (i / xTicks));
+
+            ctx.beginPath();
+            ctx.moveTo(x, height - padding.bottom);
+            ctx.lineTo(x, height - padding.bottom + 5);
+            ctx.stroke();
+
+            ctx.fillText(formatNumber(val), x, height - padding.bottom + 10);
+        }
+
+        const getCoord = (units, val) => ({
+            x: padding.left + (chartWidth * (units / maxUnits)),
+            y: height - padding.bottom - (chartHeight * (val / maxVal))
+        });
+
+        // Fixed Costs Line
+        const fcStyle = getComputedStyle(document.body).getPropertyValue('--chart-fixed').trim() || '#888888';
+        ctx.beginPath();
+        ctx.strokeStyle = fcStyle;
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 5]); // Dashed line
+        const p1FC = getCoord(0, fixedCost);
+        const p2FC = getCoord(maxUnits, fixedCost);
+        ctx.moveTo(p1FC.x, p1FC.y);
+        ctx.lineTo(p2FC.x, p2FC.y);
+        ctx.stroke();
+        ctx.setLineDash([]); // Reset
+
+        // Total Costs Line
+        const tcStyle = getComputedStyle(document.body).getPropertyValue('--chart-costs').trim() || '#E24A4A';
+        ctx.beginPath();
+        ctx.strokeStyle = tcStyle;
+        ctx.lineWidth = 3;
+        const p1TC = getCoord(0, fixedCost);
+        const p2TC = getCoord(maxUnits, maxCost);
+        ctx.moveTo(p1TC.x, p1TC.y);
+        ctx.lineTo(p2TC.x, p2TC.y);
+        ctx.stroke();
+
+        // Total Revenue Line
+        const trStyle = getComputedStyle(document.body).getPropertyValue('--chart-revenue').trim() || '#4A90E2';
+        ctx.beginPath();
+        ctx.strokeStyle = trStyle;
+        ctx.lineWidth = 3;
+        const p1TR = getCoord(0, 0);
+        const p2TR = getCoord(maxUnits, maxRevenue);
+        ctx.moveTo(p1TR.x, p1TR.y);
+        ctx.lineTo(p2TR.x, p2TR.y);
+        ctx.stroke();
+
+        // Draw Break-Even Point dot
+        const beCoord = getCoord(beUnits, beUnits * price);
+        ctx.beginPath();
+        ctx.fillStyle = '#D4A017'; // Accent color
+        ctx.arc(beCoord.x, beCoord.y, 6, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#0c0a00'; // Background color
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // BEP Label
+        ctx.fillStyle = '#D4A017';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'bottom';
+        ctx.font = 'bold 12px Inter, sans-serif';
+        ctx.fillText('Break-Even', beCoord.x + 10, beCoord.y - 10);
+    };
+
+    const calculateBreakEven = () => {
+        const fixedCosts = parseFloat(document.getElementById('fixed-costs').value) || 0;
+        const variableCost = parseFloat(document.getElementById('variable-cost').value) || 0;
+        const sellingPrice = parseFloat(document.getElementById('selling-price').value) || 0;
+
+        const errorMsg = document.getElementById('error-msg');
+
+        if (sellingPrice <= variableCost && sellingPrice > 0 && variableCost > 0) {
+            errorMsg.style.display = 'block';
+            document.getElementById('be-units').innerText = '0';
+            document.getElementById('be-revenue').innerText = '$0.00';
+            drawChart(fixedCosts, variableCost, sellingPrice, 0);
+            return;
+        }
+
+        errorMsg.style.display = 'none';
+
+        let beUnits = 0;
+        let beRevenue = 0;
+
+        if (sellingPrice > variableCost) {
+            beUnits = fixedCosts / (sellingPrice - variableCost);
+            beRevenue = beUnits * sellingPrice;
+        }
+
+        document.getElementById('be-units').innerText = formatNumber(Math.ceil(beUnits)); // usually units are whole
+        document.getElementById('be-revenue').innerText = formatCurrency(beRevenue);
+
+        drawChart(fixedCosts, variableCost, sellingPrice, beUnits);
+    };
+
+    // Attach event listeners
+    const inputs = document.querySelectorAll('input[type="number"]');
+    inputs.forEach(input => {
+        input.addEventListener('input', calculateBreakEven);
+    });
+
+    // Handle window resize for canvas
+    window.addEventListener('resize', calculateBreakEven);
+
+    // Initial calculation
+    setTimeout(() => {
+        calculateBreakEven();
+    }, 0);
+</script>
+
+</body>
+</html>
