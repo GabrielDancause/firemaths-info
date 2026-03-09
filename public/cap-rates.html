@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Estate Cap Rates by City 2026 | firemaths.info</title>
+  <meta name="description" content="Comprehensive analysis of capitalization rates, median prices, and average rents across 50 US cities. Find the best markets for real estate investing.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0b10;
+      --card: #111318;
+      --border: #1e2030;
+      --accent: #D4A017;
+      --accent-glow: rgba(212, 160, 23, 0.15);
+      --text: #e0d8c8;
+      --text-muted: #888;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: 50%;
+      width: 800px; height: 800px;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%);
+      z-index: -1;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent);
+      background: var(--accent-glow);
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Key Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 40px 0;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+
+    .stat-card:hover {
+      border-color: var(--accent);
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Data Section */
+    .data-section {
+      padding: 60px 0;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 20px 12px 40px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent);
+    }
+
+    .search-box::before {
+      content: '🔍';
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.5;
+    }
+
+    /* Table */
+    .table-container {
+      overflow-x: auto;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+
+    th:hover {
+      color: var(--text);
+    }
+
+    th.sort-asc::after { content: ' ↑'; color: var(--accent); }
+    th.sort-desc::after { content: ' ↓'; color: var(--accent); }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    td {
+      font-size: 0.95rem;
+    }
+
+    .highlight-cap {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Content Sections (Methodology, FAQ) */
+    .content-section {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .content-section h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: #fff;
+    }
+
+    .content-section h3 {
+      font-size: 1.2rem;
+      margin: 25px 0 10px;
+      color: #fff;
+    }
+
+    .content-section p {
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
+
+    /* FAQ */
+    .faq-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 15px;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      padding: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+
+    .faq-question:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .faq-question::after {
+      content: '+';
+      font-size: 1.5rem;
+      color: var(--accent);
+      font-weight: 300;
+    }
+
+    .faq-item.active .faq-question::after {
+      content: '−';
+    }
+
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out, padding 0.3s ease;
+      color: var(--text-muted);
+    }
+
+    .faq-item.active .faq-answer {
+      padding: 0 20px 20px;
+      max-height: 500px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.2rem; }
+      .controls { flex-direction: column; align-items: stretch; }
+      th, td { padding: 12px 15px; }
+    }
+  </style>
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Real Estate Cap Rates by City 2026",
+    "description": "Average capitalization rates for rental properties across 50 US cities. Essential data for real estate investors comparing markets.",
+    "author": {
+      "@type": "Organization",
+      "name": "firemaths.info"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "firemaths.info",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://firemaths.info/favicon.svg"
+      }
+    },
+    "datePublished": "2026-01-01",
+    "dateModified": "2026-01-01"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a good cap rate for a rental property in 2026?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A 'good' cap rate depends on the market, property class, and your investment strategy. Generally, investors look for cap rates between 4% and 8%. Lower cap rates typically indicate lower risk (e.g., Class A properties in major metros), while higher cap rates indicate higher risk or emerging markets."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is the capitalization rate calculated in this study?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The cap rate is calculated as: (Annual Rent - Estimated Expenses) / Median Property Price. In this study, we conservatively estimate operating expenses at 45% of gross annual rent, which accounts for property taxes, insurance, maintenance, vacancy, and management fees."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do some major cities have such low cap rates?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Major metropolitan areas like New York and San Francisco often have very low cap rates (sometimes under 3%). This is because high property values outpace rental income. Investors in these markets usually prioritize long-term property appreciation over immediate cash flow."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Price-to-Rent ratio?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The price-to-rent ratio is calculated by dividing the median home price by the median annual rent. A lower ratio (under 15) suggests it is better to buy than rent, and typically indicates a strong market for cash-flow investors. A high ratio (over 20) indicates renting is relatively cheaper than buying."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where does this real estate data come from?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The data in this study is synthesized from public US Census ACS data for median home values and gross rents. Because markets fluctuate rapidly, this data serves as a baseline for comparing relative market strength rather than an absolute guarantee of current neighborhood-level pricing."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="container">
+      <span class="tag">Original Research</span>
+      <h1>US City Cap Rates 2026</h1>
+      <p>Analyze median prices, average rents, and capitalization rates across 50 major US metropolitan areas. Find the optimal markets for cash flow vs appreciation.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value font-mono">50</div>
+        <div class="stat-label">Cities Analyzed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value font-mono">7.82%</div>
+        <div class="stat-label">Highest Cap Rate Found</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value font-mono">45%</div>
+        <div class="stat-label">Est. Operating Expenses</div>
+      </div>
+    </div>
+
+    <div class="data-section">
+      <div class="controls">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Search by city or state (e.g., Texas)...">
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table id="dataTable">
+          <thead>
+            <tr>
+              <th data-sort="city">City</th>
+              <th data-sort="state">State</th>
+              <th data-sort="medianPrice" class="sort-desc">Median Price</th>
+              <th data-sort="avgRentMonthly">Avg Monthly Rent</th>
+              <th data-sort="capRate">Cap Rate</th>
+              <th data-sort="priceToRent">Price to Rent Ratio</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <!-- Data populated via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="content-section">
+      <h2>Methodology</h2>
+      <p>This study collected data for 50 of the largest US cities. Median home values and average monthly gross rents were aggregated using recent US Census ACS data.</p>
+      <p><strong>Calculations:</strong></p>
+      <ul>
+        <li><strong>Annual Rent:</strong> Average Monthly Rent &times; 12</li>
+        <li><strong>Net Operating Income (NOI):</strong> Annual Rent - Estimated Expenses (calculated flat at 45% of gross rent).</li>
+        <li><strong>Cap Rate:</strong> (NOI / Median Property Price) &times; 100</li>
+        <li><strong>Price-to-Rent Ratio:</strong> Median Property Price / Annual Rent</li>
+      </ul>
+      <p><em>Note: Data fields marked as 'N/A' indicate insufficient public data points for that specific municipality. Values are estimates and do not constitute financial advice.</em></p>
+    </div>
+
+    <div class="content-section">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <div class="faq-question">What is a good cap rate for a rental property in 2026?</div>
+        <div class="faq-answer">
+          <p>A "good" cap rate depends on the market, property class, and your investment strategy. Generally, investors look for cap rates between 4% and 8%. Lower cap rates typically indicate lower risk (e.g., Class A properties in major metros), while higher cap rates indicate higher risk or emerging markets.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">How is the capitalization rate calculated in this study?</div>
+        <div class="faq-answer">
+          <p>The cap rate is calculated as: (Annual Rent - Estimated Expenses) / Median Property Price. In this study, we conservatively estimate operating expenses at 45% of gross annual rent, which accounts for property taxes, insurance, maintenance, vacancy, and management fees.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Why do some major cities have such low cap rates?</div>
+        <div class="faq-answer">
+          <p>Major metropolitan areas like New York and San Francisco often have very low cap rates (sometimes under 3%). This is because high property values outpace rental income. Investors in these markets usually prioritize long-term property appreciation over immediate cash flow.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">What is the Price-to-Rent ratio?</div>
+        <div class="faq-answer">
+          <p>The price-to-rent ratio is calculated by dividing the median home price by the median annual rent. A lower ratio (under 15) suggests it is better to buy than rent, and typically indicates a strong market for cash-flow investors. A high ratio (over 20) indicates renting is relatively cheaper than buying.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Where does this real estate data come from?</div>
+        <div class="faq-answer">
+          <p>The data in this study is synthesized from public US Census ACS data for median home values and gross rents. Because markets fluctuate rapidly, this data serves as a baseline for comparing relative market strength rather than an absolute guarantee of current neighborhood-level pricing.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      &copy; 2026 <a href="/">firemaths.info</a> &middot; A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property
+    </div>
+  </footer>
+
+  <script>
+    // Embedded Data
+    const rawData = [{"city":"New York","state":"NY","medianPrice":724400,"avgRentMonthly":1688,"capRate":1.54,"priceToRent":35.76,"popGrowth":null,"jobGrowth":null},{"city":"Los Angeles","state":"CA","medianPrice":903700,"avgRentMonthly":1788,"capRate":1.31,"priceToRent":42.12,"popGrowth":null,"jobGrowth":null},{"city":"Chicago","state":"IL","medianPrice":313300,"avgRentMonthly":1324,"capRate":2.79,"priceToRent":19.72,"popGrowth":null,"jobGrowth":null},{"city":"Houston","state":"TX","medianPrice":267000,"avgRentMonthly":1246,"capRate":3.08,"priceToRent":17.86,"popGrowth":null,"jobGrowth":null},{"city":"Phoenix","state":"AZ","medianPrice":429200,"avgRentMonthly":1486,"capRate":2.29,"priceToRent":24.07,"popGrowth":null,"jobGrowth":null},{"city":"Philadelphia","state":"PA","medianPrice":237900,"avgRentMonthly":1281,"capRate":3.55,"priceToRent":15.48,"popGrowth":null,"jobGrowth":null},{"city":"San Antonio","state":"TX","medianPrice":230700,"avgRentMonthly":1234,"capRate":3.53,"priceToRent":15.58,"popGrowth":null,"jobGrowth":null},{"city":"San Diego","state":"CA","medianPrice":905300,"avgRentMonthly":2128,"capRate":1.55,"priceToRent":35.45,"popGrowth":null,"jobGrowth":null},{"city":"Dallas","state":"TX","medianPrice":320400,"avgRentMonthly":1360,"capRate":2.8,"priceToRent":19.63,"popGrowth":null,"jobGrowth":null},{"city":"Jacksonville","state":"FL","medianPrice":301000,"avgRentMonthly":1406,"capRate":3.08,"priceToRent":17.84,"popGrowth":null,"jobGrowth":null},{"city":"Fort Worth","state":"TX","medianPrice":293600,"avgRentMonthly":1339,"capRate":3.01,"priceToRent":18.27,"popGrowth":null,"jobGrowth":null},{"city":"San Jose","state":"CA","medianPrice":1211900,"avgRentMonthly":2410,"capRate":1.31,"priceToRent":41.91,"popGrowth":null,"jobGrowth":null},{"city":"Austin","state":"TX","medianPrice":593000,"avgRentMonthly":1581,"capRate":1.76,"priceToRent":31.26,"popGrowth":null,"jobGrowth":null},{"city":"Charlotte","state":"NC","medianPrice":385600,"avgRentMonthly":1463,"capRate":2.5,"priceToRent":21.96,"popGrowth":null,"jobGrowth":null},{"city":"Columbus","state":"OH","medianPrice":248900,"avgRentMonthly":1208,"capRate":3.2,"priceToRent":17.17,"popGrowth":null,"jobGrowth":null},{"city":"Indianapolis","state":"IN","medianPrice":216700,"avgRentMonthly":1039,"capRate":3.16,"priceToRent":17.38,"popGrowth":null,"jobGrowth":null},{"city":"San Francisco","state":"CA","medianPrice":1343700,"avgRentMonthly":2308,"capRate":1.13,"priceToRent":48.52,"popGrowth":null,"jobGrowth":null},{"city":"Seattle","state":"WA","medianPrice":924200,"avgRentMonthly":1877,"capRate":1.34,"priceToRent":41.03,"popGrowth":null,"jobGrowth":null},{"city":"Denver","state":"CO","medianPrice":599500,"avgRentMonthly":1711,"capRate":1.88,"priceToRent":29.2,"popGrowth":null,"jobGrowth":null},{"city":"Oklahoma City","state":"OK","medianPrice":227300,"avgRentMonthly":1020,"capRate":2.96,"priceToRent":18.57,"popGrowth":null,"jobGrowth":null},{"city":"Nashville","state":"TN","medianPrice":432400,"avgRentMonthly":1464,"capRate":2.23,"priceToRent":24.61,"popGrowth":null,"jobGrowth":null},{"city":"Washington","state":"DC","medianPrice":711100,"avgRentMonthly":1843,"capRate":1.71,"priceToRent":32.15,"popGrowth":null,"jobGrowth":null},{"city":"El Paso","state":"TX","medianPrice":176700,"avgRentMonthly":981,"capRate":3.66,"priceToRent":15.01,"popGrowth":null,"jobGrowth":null},{"city":"Las Vegas","state":"NV","medianPrice":426400,"avgRentMonthly":1432,"capRate":2.22,"priceToRent":24.81,"popGrowth":null,"jobGrowth":null},{"city":"Boston","state":"MA","medianPrice":701400,"avgRentMonthly":1970,"capRate":1.85,"priceToRent":29.67,"popGrowth":null,"jobGrowth":null},{"city":"Detroit","state":"MI","medianPrice":83600,"avgRentMonthly":990,"capRate":7.82,"priceToRent":7.04,"popGrowth":null,"jobGrowth":null},{"city":"Louisville","state":"KY","medianPrice":229400,"avgRentMonthly":1023,"capRate":2.94,"priceToRent":18.69,"popGrowth":null,"jobGrowth":null},{"city":"Portland","state":"OR","medianPrice":562500,"avgRentMonthly":1480,"capRate":1.74,"priceToRent":31.67,"popGrowth":null,"jobGrowth":null},{"city":"Memphis","state":"TN","medianPrice":173400,"avgRentMonthly":1098,"capRate":4.18,"priceToRent":13.16,"popGrowth":null,"jobGrowth":null},{"city":"Baltimore","state":"MD","medianPrice":210300,"avgRentMonthly":1235,"capRate":3.88,"priceToRent":14.19,"popGrowth":null,"jobGrowth":null},{"city":"Milwaukee","state":"WI","medianPrice":174600,"avgRentMonthly":962,"capRate":3.64,"priceToRent":15.12,"popGrowth":null,"jobGrowth":null},{"city":"Albuquerque","state":"NM","medianPrice":288700,"avgRentMonthly":1037,"capRate":2.37,"priceToRent":23.2,"popGrowth":null,"jobGrowth":null},{"city":"Tucson","state":"AZ","medianPrice":268000,"avgRentMonthly":1051,"capRate":2.59,"priceToRent":21.25,"popGrowth":null,"jobGrowth":null},{"city":"Fresno","state":"CA","medianPrice":365900,"avgRentMonthly":1334,"capRate":2.41,"priceToRent":22.86,"popGrowth":null,"jobGrowth":null},{"city":"Sacramento","state":"CA","medianPrice":520200,"avgRentMonthly":1650,"capRate":2.09,"priceToRent":26.27,"popGrowth":null,"jobGrowth":null},{"city":"Atlanta","state":"GA","medianPrice":424600,"avgRentMonthly":1611,"capRate":2.5,"priceToRent":21.96,"popGrowth":null,"jobGrowth":null},{"city":"Mesa","state":"AZ","medianPrice":420600,"avgRentMonthly":1500,"capRate":2.35,"priceToRent":23.37,"popGrowth":null,"jobGrowth":null},{"city":"Kansas City","state":"MO","medianPrice":239400,"avgRentMonthly":1152,"capRate":3.18,"priceToRent":17.32,"popGrowth":null,"jobGrowth":null},{"city":"Raleigh","state":"NC","medianPrice":430600,"avgRentMonthly":1434,"capRate":2.2,"priceToRent":25.02,"popGrowth":null,"jobGrowth":null},{"city":"Colorado Springs","state":"CO","medianPrice":455200,"avgRentMonthly":1537,"capRate":2.23,"priceToRent":24.68,"popGrowth":null,"jobGrowth":null},{"city":"Omaha","state":"NE","medianPrice":243800,"avgRentMonthly":1105,"capRate":2.99,"priceToRent":18.39,"popGrowth":null,"jobGrowth":null},{"city":"Miami","state":"FL","medianPrice":535600,"avgRentMonthly":1580,"capRate":1.95,"priceToRent":28.25,"popGrowth":null,"jobGrowth":null},{"city":"Virginia Beach","state":"VA","medianPrice":370300,"avgRentMonthly":1551,"capRate":2.76,"priceToRent":19.9,"popGrowth":null,"jobGrowth":null},{"city":"Long Beach","state":"CA","medianPrice":772500,"avgRentMonthly":1743,"capRate":1.49,"priceToRent":36.93,"popGrowth":null,"jobGrowth":null},{"city":"Oakland","state":"CA","medianPrice":913600,"avgRentMonthly":1838,"capRate":1.33,"priceToRent":41.42,"popGrowth":null,"jobGrowth":null},{"city":"Minneapolis","state":"MN","medianPrice":347300,"avgRentMonthly":1265,"capRate":2.4,"priceToRent":22.88,"popGrowth":null,"jobGrowth":null},{"city":"Bakersfield","state":"CA","medianPrice":366000,"avgRentMonthly":1365,"capRate":2.46,"priceToRent":22.34,"popGrowth":null,"jobGrowth":null},{"city":"Tulsa","state":"OK","medianPrice":199600,"avgRentMonthly":971,"capRate":3.21,"priceToRent":17.13,"popGrowth":null,"jobGrowth":null},{"city":"Tampa","state":"FL","medianPrice":417100,"avgRentMonthly":1620,"capRate":2.56,"priceToRent":21.46,"popGrowth":null,"jobGrowth":null},{"city":"Arlington","state":"TX","medianPrice":285500,"avgRentMonthly":1333,"capRate":3.08,"priceToRent":17.85,"popGrowth":null,"jobGrowth":null}];
+
+    // State
+    let currentData = [...rawData];
+    let sortCol = 'medianPrice';
+    let sortDesc = true;
+
+    // DOM Elements
+    const tableBody = document.getElementById('tableBody');
+    const searchInput = document.getElementById('searchInput');
+    const headers = document.querySelectorAll('th[data-sort]');
+
+    // Formatters
+    const formatCurrency = (val) => val === null ? 'N/A' : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
+    const formatPercent = (val) => val === null ? 'N/A' : val.toFixed(2) + '%';
+    const formatNumber = (val) => val === null ? 'N/A' : val.toFixed(2);
+
+    // Render Table
+    function renderTable() {
+      tableBody.innerHTML = '';
+
+      if (currentData.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">No cities found matching your search.</td></tr>';
+        return;
+      }
+
+      currentData.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${row.city}</strong></td>
+          <td>${row.state}</td>
+          <td class="font-mono">${formatCurrency(row.medianPrice)}</td>
+          <td class="font-mono">${formatCurrency(row.avgRentMonthly)}</td>
+          <td class="font-mono highlight-cap">${formatPercent(row.capRate)}</td>
+          <td class="font-mono">${formatNumber(row.priceToRent)}</td>
+        `;
+        tableBody.appendChild(tr);
+      });
+    }
+
+    // Sort Data
+    function sortData() {
+      currentData.sort((a, b) => {
+        let valA = a[sortCol];
+        let valB = b[sortCol];
+
+        // Handle nulls: always put nulls at the bottom
+        if (valA === null) return 1;
+        if (valB === null) return -1;
+
+        if (typeof valA === 'string') {
+          return sortDesc ? valB.localeCompare(valA) : valA.localeCompare(valB);
+        }
+        return sortDesc ? valB - valA : valA - valB;
+      });
+      renderTable();
+    }
+
+    // Event Listeners
+    searchInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase();
+      currentData = rawData.filter(d =>
+        d.city.toLowerCase().includes(term) ||
+        d.state.toLowerCase().includes(term)
+      );
+      sortData();
+    });
+
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        const col = header.getAttribute('data-sort');
+        if (sortCol === col) {
+          sortDesc = !sortDesc;
+        } else {
+          sortCol = col;
+          sortDesc = true;
+        }
+
+        // Update classes
+        headers.forEach(h => {
+          h.classList.remove('sort-asc', 'sort-desc');
+        });
+        header.classList.add(sortDesc ? 'sort-desc' : 'sort-asc');
+
+        sortData();
+      });
+    });
+
+    // FAQ Toggle
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        item.classList.toggle('active');
+      });
+    });
+
+    // Initial render
+    sortData();
+  </script>
+</body>
+</html>
