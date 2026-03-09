@@ -9,6 +9,22 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.17.1"
-  }
+    "astro": "^5.17.1",
+    "axios": "^1.13.6",
+    "cheerio": "^1.2.0",
+    "puppeteer": "^24.38.0"
+  },
+  "description": "Personal finance calculators, FIRE tools & real estate analysis",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GabrielDancause/firemaths-info.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GabrielDancause/firemaths-info/issues"
+  },
+  "homepage": "https://github.com/GabrielDancause/firemaths-info#readme"
 }

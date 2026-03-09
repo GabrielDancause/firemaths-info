@@ -1,0 +1,512 @@
+[
+  {
+    "city": "Austin",
+    "state": "TX",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Tampa",
+    "state": "FL",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Atlanta",
+    "state": "GA",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Charlotte",
+    "state": "NC",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Phoenix",
+    "state": "AZ",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Dallas",
+    "state": "TX",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Nashville",
+    "state": "TN",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Orlando",
+    "state": "FL",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Raleigh",
+    "state": "NC",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Las Vegas",
+    "state": "NV",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Columbus",
+    "state": "OH",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Indianapolis",
+    "state": "IN",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Kansas City",
+    "state": "MO",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Jacksonville",
+    "state": "FL",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "San Antonio",
+    "state": "TX",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Houston",
+    "state": "TX",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Miami",
+    "state": "FL",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Chicago",
+    "state": "IL",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Philadelphia",
+    "state": "PA",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Detroit",
+    "state": "MI",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Memphis",
+    "state": "TN",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Birmingham",
+    "state": "AL",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Cleveland",
+    "state": "OH",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "St. Louis",
+    "state": "MO",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Baltimore",
+    "state": "MD",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Milwaukee",
+    "state": "WI",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Cincinnati",
+    "state": "OH",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Louisville",
+    "state": "KY",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Oklahoma City",
+    "state": "OK",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Tulsa",
+    "state": "OK",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Richmond",
+    "state": "VA",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Virginia Beach",
+    "state": "VA",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Des Moines",
+    "state": "IA",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Omaha",
+    "state": "NE",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Little Rock",
+    "state": "AR",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Boise",
+    "state": "ID",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Salt Lake City",
+    "state": "UT",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Denver",
+    "state": "CO",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Seattle",
+    "state": "WA",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Portland",
+    "state": "OR",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "San Francisco",
+    "state": "CA",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "San Jose",
+    "state": "CA",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Los Angeles",
+    "state": "CA",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "San Diego",
+    "state": "CA",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Sacramento",
+    "state": "CA",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Boston",
+    "state": "MA",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "New York",
+    "state": "NY",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Washington",
+    "state": "DC",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Providence",
+    "state": "RI",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Hartford",
+    "state": "CT",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Pittsburgh",
+    "state": "PA",
+    "medianPrice": null,
+    "avgRentMonthly": null,
+    "capRate": null,
+    "priceToRent": null,
+    "popGrowth": null,
+    "jobGrowth": null
+  }
+]
