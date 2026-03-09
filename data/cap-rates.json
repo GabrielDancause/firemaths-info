@@ -1,0 +1,502 @@
+[
+  {
+    "city": "New York",
+    "state": "NY",
+    "medianPrice": 724400,
+    "avgRentMonthly": 1688,
+    "capRate": 1.54,
+    "priceToRent": 35.76,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Los Angeles",
+    "state": "CA",
+    "medianPrice": 903700,
+    "avgRentMonthly": 1788,
+    "capRate": 1.31,
+    "priceToRent": 42.12,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Chicago",
+    "state": "IL",
+    "medianPrice": 313300,
+    "avgRentMonthly": 1324,
+    "capRate": 2.79,
+    "priceToRent": 19.72,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Houston",
+    "state": "TX",
+    "medianPrice": 267000,
+    "avgRentMonthly": 1246,
+    "capRate": 3.08,
+    "priceToRent": 17.86,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Phoenix",
+    "state": "AZ",
+    "medianPrice": 429200,
+    "avgRentMonthly": 1486,
+    "capRate": 2.29,
+    "priceToRent": 24.07,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Philadelphia",
+    "state": "PA",
+    "medianPrice": 237900,
+    "avgRentMonthly": 1281,
+    "capRate": 3.55,
+    "priceToRent": 15.48,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "San Antonio",
+    "state": "TX",
+    "medianPrice": 230700,
+    "avgRentMonthly": 1234,
+    "capRate": 3.53,
+    "priceToRent": 15.58,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "San Diego",
+    "state": "CA",
+    "medianPrice": 905300,
+    "avgRentMonthly": 2128,
+    "capRate": 1.55,
+    "priceToRent": 35.45,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Dallas",
+    "state": "TX",
+    "medianPrice": 320400,
+    "avgRentMonthly": 1360,
+    "capRate": 2.8,
+    "priceToRent": 19.63,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Jacksonville",
+    "state": "FL",
+    "medianPrice": 301000,
+    "avgRentMonthly": 1406,
+    "capRate": 3.08,
+    "priceToRent": 17.84,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Fort Worth",
+    "state": "TX",
+    "medianPrice": 293600,
+    "avgRentMonthly": 1339,
+    "capRate": 3.01,
+    "priceToRent": 18.27,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "San Jose",
+    "state": "CA",
+    "medianPrice": 1211900,
+    "avgRentMonthly": 2410,
+    "capRate": 1.31,
+    "priceToRent": 41.91,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Austin",
+    "state": "TX",
+    "medianPrice": 593000,
+    "avgRentMonthly": 1581,
+    "capRate": 1.76,
+    "priceToRent": 31.26,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Charlotte",
+    "state": "NC",
+    "medianPrice": 385600,
+    "avgRentMonthly": 1463,
+    "capRate": 2.5,
+    "priceToRent": 21.96,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Columbus",
+    "state": "OH",
+    "medianPrice": 248900,
+    "avgRentMonthly": 1208,
+    "capRate": 3.2,
+    "priceToRent": 17.17,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Indianapolis",
+    "state": "IN",
+    "medianPrice": 216700,
+    "avgRentMonthly": 1039,
+    "capRate": 3.16,
+    "priceToRent": 17.38,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "San Francisco",
+    "state": "CA",
+    "medianPrice": 1343700,
+    "avgRentMonthly": 2308,
+    "capRate": 1.13,
+    "priceToRent": 48.52,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Seattle",
+    "state": "WA",
+    "medianPrice": 924200,
+    "avgRentMonthly": 1877,
+    "capRate": 1.34,
+    "priceToRent": 41.03,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Denver",
+    "state": "CO",
+    "medianPrice": 599500,
+    "avgRentMonthly": 1711,
+    "capRate": 1.88,
+    "priceToRent": 29.2,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Oklahoma City",
+    "state": "OK",
+    "medianPrice": 227300,
+    "avgRentMonthly": 1020,
+    "capRate": 2.96,
+    "priceToRent": 18.57,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Nashville",
+    "state": "TN",
+    "medianPrice": 432400,
+    "avgRentMonthly": 1464,
+    "capRate": 2.23,
+    "priceToRent": 24.61,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Washington",
+    "state": "DC",
+    "medianPrice": 711100,
+    "avgRentMonthly": 1843,
+    "capRate": 1.71,
+    "priceToRent": 32.15,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "El Paso",
+    "state": "TX",
+    "medianPrice": 176700,
+    "avgRentMonthly": 981,
+    "capRate": 3.66,
+    "priceToRent": 15.01,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Las Vegas",
+    "state": "NV",
+    "medianPrice": 426400,
+    "avgRentMonthly": 1432,
+    "capRate": 2.22,
+    "priceToRent": 24.81,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Boston",
+    "state": "MA",
+    "medianPrice": 701400,
+    "avgRentMonthly": 1970,
+    "capRate": 1.85,
+    "priceToRent": 29.67,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Detroit",
+    "state": "MI",
+    "medianPrice": 83600,
+    "avgRentMonthly": 990,
+    "capRate": 7.82,
+    "priceToRent": 7.04,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Louisville",
+    "state": "KY",
+    "medianPrice": 229400,
+    "avgRentMonthly": 1023,
+    "capRate": 2.94,
+    "priceToRent": 18.69,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Portland",
+    "state": "OR",
+    "medianPrice": 562500,
+    "avgRentMonthly": 1480,
+    "capRate": 1.74,
+    "priceToRent": 31.67,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Memphis",
+    "state": "TN",
+    "medianPrice": 173400,
+    "avgRentMonthly": 1098,
+    "capRate": 4.18,
+    "priceToRent": 13.16,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Baltimore",
+    "state": "MD",
+    "medianPrice": 210300,
+    "avgRentMonthly": 1235,
+    "capRate": 3.88,
+    "priceToRent": 14.19,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Milwaukee",
+    "state": "WI",
+    "medianPrice": 174600,
+    "avgRentMonthly": 962,
+    "capRate": 3.64,
+    "priceToRent": 15.12,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Albuquerque",
+    "state": "NM",
+    "medianPrice": 288700,
+    "avgRentMonthly": 1037,
+    "capRate": 2.37,
+    "priceToRent": 23.2,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Tucson",
+    "state": "AZ",
+    "medianPrice": 268000,
+    "avgRentMonthly": 1051,
+    "capRate": 2.59,
+    "priceToRent": 21.25,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Fresno",
+    "state": "CA",
+    "medianPrice": 365900,
+    "avgRentMonthly": 1334,
+    "capRate": 2.41,
+    "priceToRent": 22.86,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Sacramento",
+    "state": "CA",
+    "medianPrice": 520200,
+    "avgRentMonthly": 1650,
+    "capRate": 2.09,
+    "priceToRent": 26.27,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Atlanta",
+    "state": "GA",
+    "medianPrice": 424600,
+    "avgRentMonthly": 1611,
+    "capRate": 2.5,
+    "priceToRent": 21.96,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Mesa",
+    "state": "AZ",
+    "medianPrice": 420600,
+    "avgRentMonthly": 1500,
+    "capRate": 2.35,
+    "priceToRent": 23.37,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Kansas City",
+    "state": "MO",
+    "medianPrice": 239400,
+    "avgRentMonthly": 1152,
+    "capRate": 3.18,
+    "priceToRent": 17.32,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Raleigh",
+    "state": "NC",
+    "medianPrice": 430600,
+    "avgRentMonthly": 1434,
+    "capRate": 2.2,
+    "priceToRent": 25.02,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Colorado Springs",
+    "state": "CO",
+    "medianPrice": 455200,
+    "avgRentMonthly": 1537,
+    "capRate": 2.23,
+    "priceToRent": 24.68,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Omaha",
+    "state": "NE",
+    "medianPrice": 243800,
+    "avgRentMonthly": 1105,
+    "capRate": 2.99,
+    "priceToRent": 18.39,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Miami",
+    "state": "FL",
+    "medianPrice": 535600,
+    "avgRentMonthly": 1580,
+    "capRate": 1.95,
+    "priceToRent": 28.25,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Virginia Beach",
+    "state": "VA",
+    "medianPrice": 370300,
+    "avgRentMonthly": 1551,
+    "capRate": 2.76,
+    "priceToRent": 19.9,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Long Beach",
+    "state": "CA",
+    "medianPrice": 772500,
+    "avgRentMonthly": 1743,
+    "capRate": 1.49,
+    "priceToRent": 36.93,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Oakland",
+    "state": "CA",
+    "medianPrice": 913600,
+    "avgRentMonthly": 1838,
+    "capRate": 1.33,
+    "priceToRent": 41.42,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Minneapolis",
+    "state": "MN",
+    "medianPrice": 347300,
+    "avgRentMonthly": 1265,
+    "capRate": 2.4,
+    "priceToRent": 22.88,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Bakersfield",
+    "state": "CA",
+    "medianPrice": 366000,
+    "avgRentMonthly": 1365,
+    "capRate": 2.46,
+    "priceToRent": 22.34,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Tulsa",
+    "state": "OK",
+    "medianPrice": 199600,
+    "avgRentMonthly": 971,
+    "capRate": 3.21,
+    "priceToRent": 17.13,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Tampa",
+    "state": "FL",
+    "medianPrice": 417100,
+    "avgRentMonthly": 1620,
+    "capRate": 2.56,
+    "priceToRent": 21.46,
+    "popGrowth": null,
+    "jobGrowth": null
+  },
+  {
+    "city": "Arlington",
+    "state": "TX",
+    "medianPrice": 285500,
+    "avgRentMonthly": 1333,
+    "capRate": 3.08,
+    "priceToRent": 17.85,
+    "popGrowth": null,
+    "jobGrowth": null
+  }
+]
