@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Income Tax Brackets by Country 2026 | firemaths.info</title>
+  <link rel="canonical" href="https://firemaths.info/tax-brackets-comparison">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Income Tax Brackets by Country 2026",
+      "description": "A comprehensive comparison of top marginal rates, effective taxes, and brackets across 46 global economies.",
+      "author": {
+        "@type": "Organization",
+        "name": "firemaths.info"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "firemaths.info"
+      },
+      "datePublished": "2026-01-01",
+      "dateModified": "2026-01-01"
+    }
+  </script>
+  <style>
+    :root {
+      --bg: #0a0b10;
+      --card-bg: #141008;
+      --border: #2a2010;
+      --accent: #D4A017;
+      --text: #e0d8c8;
+      --text-muted: #888888;
+      --danger: #ef4444;
+      --success: #10b981;
+      --font-ui: 'Inter', sans-serif;
+      --font-code: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-ui);
+      line-height: 1.6;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .tag {
+      display: inline-block;
+      background-color: rgba(212, 160, 23, 0.1);
+      color: var(--accent);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.875rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(212, 160, 23, 0.3);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin: 0 0 0.5rem 0;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-weight: 800;
+      margin-top: 0;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.125rem;
+      margin-bottom: 3rem;
+    }
+
+    /* Layout & Cards */
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .input-group label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    input, select {
+      background-color: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      font-family: var(--font-ui);
+      font-size: 1rem;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    button {
+      background-color: var(--accent);
+      color: #000;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-family: var(--font-ui);
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      margin-top: 4rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    .faq-container, .methodology-container {
+      margin-top: 3rem;
+    }
+
+    .faq-item {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .faq-question {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-answer {
+      color: var(--text-muted);
+    }
+
+    /* Content styling for dynamically injected elements */
+    .code-font {
+      font-family: var(--font-code);
+    }
+
+    .data-table-container {
+      overflow-x: auto;
+      margin-top: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    th:hover {
+      color: var(--accent);
+    }
+
+    tr:hover {
+      background-color: rgba(212, 160, 23, 0.05);
+    }
+
+    .highlight-cell {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .notes-cell {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      max-width: 250px;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 1.5rem 1rem; }
+      h1 { font-size: 2rem; }
+      .card { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="tag">Original Research</span>
+      <h1>Income Tax Brackets by Country 2026</h1>
+      <p class="subtitle">A comprehensive comparison of top marginal rates, effective taxes, and brackets across 46 global economies.</p>
+    </header>
+
+    <main id="app-root">
+      <!-- Data will be injected here -->
+    </main>
+
+    <div class="card methodology-container">
+      <h2>Methodology</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1rem;">This 2026 comparative study analyzes personal income tax systems across 46 major economies. Data collection and validation processes included:</p>
+      <ul style="color: var(--text-muted); padding-left: 1.5rem; line-height: 1.8;">
+        <li><strong>Primary Sources:</strong> Data was systematically aggregated from PwC Tax Summaries, OECD statistical databases, Worldwide-Tax.com, TradingEconomics, and Tax-Rates.org.</li>
+        <li><strong>Standardization:</strong> All local currency bracket thresholds were converted to USD to provide a unified comparative baseline. Effective tax rates at $50k and $100k thresholds include standard deductions but exclude complex specialized credits.</li>
+        <li><strong>Scope:</strong> The analysis captures top marginal rates, lowest non-zero brackets, capital gains taxes, VAT/GST rates, and employee social security contributions.</li>
+        <li><strong>Validation:</strong> Rates were strictly validated against known international maximums (0-65% for income, up to $2M USD for top bracket entry thresholds).</li>
+      </ul>
+    </div>
+
+    <div class="card faq-container">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+        <div class="faq-question">Which country has the highest income tax?</div>
+        <div class="faq-answer">Sweden and Denmark consistently rank among the highest for top marginal personal income tax rates, often exceeding 52%. However, these top rates often apply at relatively lower income thresholds compared to countries like the US, resulting in a higher overall tax burden for middle-to-high earners.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">What are the US federal tax brackets for 2026?</div>
+        <div class="faq-answer">For 2026, the US federal tax system remains progressive with 7 brackets ranging from 10% up to a top marginal rate of 37%. Note that state taxes (ranging from 0% in states like Texas and Florida to over 13% in California) apply additionally to these federal rates.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">Do any countries have 0% income tax?</div>
+        <div class="faq-answer">Yes, several Middle Eastern countries including the United Arab Emirates and Saudi Arabia levy 0% personal income tax on salaries. However, these nations typically generate revenue through other means, such as VAT (usually 5-15%) and corporate taxes.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">How does Canada's tax rate compare to the US?</div>
+        <div class="faq-answer">Canada's top federal marginal rate is 33%, but combined with provincial taxes, the top marginal rate can exceed 50% in provinces like Ontario and Quebec. The US top federal rate is 37%, and combined with state taxes, peaks around 50% in California. Canada generally offers more generous social safety nets funded by these taxes, but lacks the income splitting (joint filing) benefits available to US married couples.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">What is the average tax rate in Europe?</div>
+        <div class="faq-answer">The average top marginal income tax rate across European OECD countries is approximately 42%. Western and Northern European nations (like France, Germany, and Norway) tend to have higher progressive rates, while Eastern European nations (like Romania and Hungary) frequently utilize lower, flat-tax systems (10-15%).</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 firemaths.info &middot; A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property</p>
+  </footer>
+
+  <script>
+    // We fetch the data from our static JSON file that was generated during the build/pre-step.
+    // Given the constraints of a pure static site without a build step for this specific HTML,
+    // we fetch it dynamically on load.
+
+    let rawData = [];
+    let currentSort = { column: 'topMarginalRate', direction: 'desc' };
+
+    async function init() {
+      try {
+        const response = await fetch('/data/tax-brackets-comparison.json');
+        if (!response.ok) throw new Error('Failed to load data');
+        rawData = await response.json();
+        renderApp();
+      } catch (err) {
+        document.getElementById('app-root').innerHTML = `
+          <div class="card" style="text-align: center; color: var(--danger);">
+            <h2>Error Loading Data</h2>
+            <p>Could not load the tax comparison data. Please try again later.</p>
+          </div>
+        `;
+        console.error(err);
+      }
+    }
+
+    function renderApp() {
+      const root = document.getElementById('app-root');
+
+      const sortedData = [...rawData].sort((a, b) => {
+        let valA = a[currentSort.column];
+        let valB = b[currentSort.column];
+
+        if (typeof valA === 'string') valA = valA.toLowerCase();
+        if (typeof valB === 'string') valB = valB.toLowerCase();
+
+        if (valA < valB) return currentSort.direction === 'asc' ? -1 : 1;
+        if (valA > valB) return currentSort.direction === 'asc' ? 1 : -1;
+        return 0;
+      });
+
+      const tableHTML = `
+        <div class="controls">
+          <div class="input-group">
+            <label>Search Country</label>
+            <input type="text" id="searchInput" placeholder="e.g. United States" oninput="filterTable()">
+          </div>
+          <div class="input-group">
+            <label>Region</label>
+            <select id="regionFilter" onchange="filterTable()">
+              <option value="all">All Regions</option>
+              ${[...new Set(rawData.map(d => d.region))].sort().map(r => `<option value="${r}">${r}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+
+        <div class="card data-table-container">
+          <table id="taxTable">
+            <thead>
+              <tr>
+                <th onclick="handleSort('country')">Country ${getSortIcon('country')}</th>
+                <th onclick="handleSort('topMarginalRate')">Top Rate ${getSortIcon('topMarginalRate')}</th>
+                <th onclick="handleSort('topBracketStartUSD')">Top Bracket Starts (USD) ${getSortIcon('topBracketStartUSD')}</th>
+                <th onclick="handleSort('lowestRate')">Lowest Rate ${getSortIcon('lowestRate')}</th>
+                <th onclick="handleSort('effectiveRateAt100kUSD')">Effective Rate ($100k) ${getSortIcon('effectiveRateAt100kUSD')}</th>
+                <th onclick="handleSort('capitalGainsTax')">Capital Gains ${getSortIcon('capitalGainsTax')}</th>
+                <th onclick="handleSort('vatRate')">VAT / GST ${getSortIcon('vatRate')}</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${sortedData.map(d => `
+                <tr class="data-row" data-country="${d.country.toLowerCase()}" data-region="${d.region}">
+                  <td style="font-weight: 700;">${d.country}</td>
+                  <td class="code-font highlight-cell">${d.topMarginalRate}%</td>
+                  <td class="code-font">$${d.topBracketStartUSD.toLocaleString()}</td>
+                  <td class="code-font">${d.lowestRate}%</td>
+                  <td class="code-font">${d.effectiveRateAt100kUSD}%</td>
+                  <td class="code-font">${d.capitalGainsTax}%</td>
+                  <td class="code-font">${d.vatRate}%</td>
+                  <td class="notes-cell">${d.specialNotes || '-'}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      root.innerHTML = tableHTML;
+    }
+
+    function getSortIcon(column) {
+      if (currentSort.column !== column) return '<span style="color:var(--border)">↕</span>';
+      return currentSort.direction === 'asc' ? '↑' : '↓';
+    }
+
+    window.handleSort = function(column) {
+      if (currentSort.column === column) {
+        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentSort.column = column;
+        currentSort.direction = 'asc';
+      }
+      renderApp();
+      filterTable(); // re-apply filters after re-render
+    };
+
+    window.filterTable = function() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const region = document.getElementById('regionFilter').value;
+      const rows = document.querySelectorAll('.data-row');
+
+      rows.forEach(row => {
+        const countryMatch = row.getAttribute('data-country').includes(search);
+        const regionMatch = region === 'all' || row.getAttribute('data-region') === region;
+        row.style.display = (countryMatch && regionMatch) ? '' : 'none';
+      });
+    };
+
+    // Initialize the app
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
