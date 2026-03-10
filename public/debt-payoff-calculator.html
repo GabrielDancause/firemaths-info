@@ -5,7 +5,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
     <meta charset="UTF-8">
-<link rel="canonical" href="https://firemaths.info/debt-payoff" />
+<link rel="canonical" href="https://firemaths.info/debt-payoff-calculator" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Debt Payoff Calculator | firemaths.info</title>
     <meta name="description" content="Compare the Snowball and Avalanche debt payoff strategies. Calculate your total interest saved and debt-free date with extra monthly payments.">
@@ -19,7 +19,7 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Debt Payoff Calculator",
-      "url": "https://firemaths.info/debt-payoff",
+      "url": "https://firemaths.info/debt-payoff-calculator",
       "description": "Compare the Snowball and Avalanche debt payoff strategies. Calculate your total interest saved and debt-free date with extra monthly payments.",
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
@@ -390,7 +390,7 @@
     </style>
 </head>
 <body>
-<script src="/nav.js"></script>
+<script src="nav.js"></script>
 
 <div class="container">
     <header>
@@ -551,7 +551,7 @@
             const debtHTML = `
                 <div class="debt-item" data-id="${debt.id}">
                     <div class="debt-header">
-                        <h3>Debt ${index + 1}</h3>
+                        <input type="text" class="debt-name-input" value="${debt.name}" onchange="updateDebtName(${debt.id}, this.value)" style="background: transparent; border: none; color: var(--accent); font-size: 1.1rem; font-weight: 600; font-family: 'Inter', sans-serif; outline: none; border-bottom: 1px dashed var(--border);" placeholder="Debt Name">
                         ${debts.length > 1 ? `<button class="remove-btn" onclick="removeDebt(${debt.id})">Remove</button>` : ''}
                     </div>
                     <div class="debt-grid">
@@ -606,6 +606,14 @@
         const debt = debts.find(d => d.id === id);
         if (debt) {
             debt[field] = Math.max(0, parseFloat(value) || 0);
+            calculate();
+        }
+    };
+
+    window.updateDebtName = (id, value) => {
+        const debt = debts.find(d => d.id === id);
+        if (debt) {
+            debt.name = value || "Unnamed Debt";
             calculate();
         }
     };
