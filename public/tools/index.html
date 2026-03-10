@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculators - firemaths.info</title>
+  <meta name="description" content="A complete collection of financial calculators for FIRE, compound interest, real estate, and more.">
+  <link rel="canonical" href="https://firemaths.info/tools/">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-G86C7NJG3F');
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #060a12;
+      color: #c8d0de;
+      line-height: 1.6;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 40px;
+      background: linear-gradient(180deg, #1a0f00 0%, #060a12 100%);
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 40%, rgba(212,160,23,0.08) 0%, transparent 60%);
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff 0%, #D4A017 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      color: #5a6a80;
+      font-size: 1.05rem;
+      max-width: 520px;
+      margin: 0 auto 24px;
+    }
+
+    /* Search & Filter */
+    .search-container {
+      max-width: 500px;
+      margin: 0 auto 16px;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      padding: 14px 20px 14px 48px;
+      border-radius: 24px;
+      border: 1px solid #1e2030;
+      background: #111318;
+      color: #fff;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus {
+      border-color: #D4A017;
+    }
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #5a6a80;
+    }
+    .tool-count {
+      color: #D4A017;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    /* Tools Grid */
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 24px 60px;
+    }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .tool-card {
+      background: #111318;
+      border: 1px solid #1e2030;
+      border-radius: 12px;
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: all 0.2s ease;
+    }
+    .tool-card:hover {
+      border-color: #D4A017;
+      transform: translateY(-2px);
+    }
+    .tool-emoji {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .tool-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #e0e8f0;
+      margin-bottom: 6px;
+    }
+    .tool-desc {
+      font-size: 0.8rem;
+      color: #6a7a90;
+      line-height: 1.4;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 40px;
+      color: #5a6a80;
+      grid-column: 1 / -1;
+      display: none;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 50px 24px;
+      font-size: 0.85rem;
+      color: #3a4a5a;
+      border-top: 1px solid #1e2030;
+      background: #040810;
+    }
+    .footer a {
+      color: #D4A017;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.2rem; }
+      .tools-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <script src="/nav.js"></script>
+
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Calculators</h1>
+      <p>Free financial tools to run the numbers on your path to financial independence.</p>
+
+      <div class="search-container">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search calculators..." autocomplete="off">
+      </div>
+      <div class="tool-count" id="toolCount">33 tools</div>
+    </div>
+  </div>
+
+  <div class="section-container">
+    <div class="tools-grid" id="toolsGrid">
+
+      <a class="tool-card" href="/fire-calculator" data-name="fire calculator" data-desc="calculate your fire number based on expenses and savings rate">
+        <span class="tool-emoji">🔥</span>
+        <h3 class="tool-name">FIRE Calculator</h3>
+        <p class="tool-desc">Calculate your FIRE number based on expenses and savings rate</p>
+      </a>
+      <a class="tool-card" href="/compound-interest-calculator" data-name="compound interest calculator" data-desc="calculate compound growth with monthly contributions and charts">
+        <span class="tool-emoji">📊</span>
+        <h3 class="tool-name">Compound Interest Calculator</h3>
+        <p class="tool-desc">Calculate compound growth with monthly contributions and charts</p>
+      </a>
+      <a class="tool-card" href="/rental-yield-calculator" data-name="rental yield calculator" data-desc="gross and net rental yield, cap rate, cash-on-cash return">
+        <span class="tool-emoji">🏠</span>
+        <h3 class="tool-name">Rental Yield Calculator</h3>
+        <p class="tool-desc">Gross and net rental yield, cap rate, cash-on-cash return</p>
+      </a>
+      <a class="tool-card" href="/mortgage-calculator" data-name="mortgage calculator" data-desc="monthly payments, amortization schedule, extra payment scenarios">
+        <span class="tool-emoji">🏠</span>
+        <h3 class="tool-name">Mortgage Calculator</h3>
+        <p class="tool-desc">Monthly payments, amortization schedule, extra payment scenarios</p>
+      </a>
+      <a class="tool-card" href="/loan-amortization" data-name="loan amortization calculator" data-desc="full amortization schedules with principal vs interest breakdown">
+        <span class="tool-emoji">📊</span>
+        <h3 class="tool-name">Loan Amortization Calculator</h3>
+        <p class="tool-desc">Full amortization schedules with principal vs interest breakdown</p>
+      </a>
+      <a class="tool-card" href="/emergency-fund" data-name="emergency fund calculator" data-desc="ideal emergency fund based on expenses and job stability">
+        <span class="tool-emoji">🛡️</span>
+        <h3 class="tool-name">Emergency Fund Calculator</h3>
+        <p class="tool-desc">Ideal emergency fund based on expenses and job stability</p>
+      </a>
+      <a class="tool-card" href="/tax-bracket" data-name="tax bracket calculator" data-desc="effective and marginal tax rates with filing status options">
+        <span class="tool-emoji">🏛️</span>
+        <h3 class="tool-name">Tax Bracket Calculator</h3>
+        <p class="tool-desc">Effective and marginal tax rates with filing status options</p>
+      </a>
+      <a class="tool-card" href="/savings-goal" data-name="savings goal calculator" data-desc="time to reach goals with contributions and interest factors">
+        <span class="tool-emoji">🎯</span>
+        <h3 class="tool-name">Savings Goal Calculator</h3>
+        <p class="tool-desc">Time to reach goals with contributions and interest factors</p>
+      </a>
+      <a class="tool-card" href="/dividend-calculator" data-name="dividend reinvestment calculator" data-desc="drip growth projection with compound dividend chart">
+        <span class="tool-emoji">💰</span>
+        <h3 class="tool-name">Dividend Reinvestment Calculator</h3>
+        <p class="tool-desc">DRIP growth projection with compound dividend chart</p>
+      </a>
+      <a class="tool-card" href="/dca-calculator" data-name="dollar cost averaging calculator" data-desc="dca vs lump sum simulation with historical returns">
+        <span class="tool-emoji">📊</span>
+        <h3 class="tool-name">Dollar Cost Averaging Calculator</h3>
+        <p class="tool-desc">DCA vs lump sum simulation with historical returns</p>
+      </a>
+      <a class="tool-card" href="/present-value" data-name="present value calculator" data-desc="present value of future cash flows and annuities">
+        <span class="tool-emoji">⏳</span>
+        <h3 class="tool-name">Present Value Calculator</h3>
+        <p class="tool-desc">Present value of future cash flows and annuities</p>
+      </a>
+      <a class="tool-card" href="/roi-calculator" data-name="roi calculator" data-desc="return on investment with annualized returns and cagr">
+        <span class="tool-emoji">📈</span>
+        <h3 class="tool-name">ROI Calculator</h3>
+        <p class="tool-desc">Return on investment with annualized returns and CAGR</p>
+      </a>
+      <a class="tool-card" href="/break-even" data-name="break-even calculator" data-desc="break-even in units and revenue with visual charts">
+        <span class="tool-emoji">⚖️</span>
+        <h3 class="tool-name">Break-Even Calculator</h3>
+        <p class="tool-desc">Break-even in units and revenue with visual charts</p>
+      </a>
+      <a class="tool-card" href="/salary-hourly" data-name="salary to hourly converter" data-desc="annual to hourly conversion with hours and pto factors">
+        <span class="tool-emoji">💼</span>
+        <h3 class="tool-name">Salary to Hourly Converter</h3>
+        <p class="tool-desc">Annual to hourly conversion with hours and PTO factors</p>
+      </a>
+      <a class="tool-card" href="/freelance-rate" data-name="freelance rate calculator" data-desc="ideal hourly rate based on desired salary and expenses">
+        <span class="tool-emoji">💻</span>
+        <h3 class="tool-name">Freelance Rate Calculator</h3>
+        <p class="tool-desc">Ideal hourly rate based on desired salary and expenses</p>
+      </a>
+      <a class="tool-card" href="/capital-gains" data-name="capital gains tax calculator" data-desc="capital gains tax on stocks, crypto, real estate investments">
+        <span class="tool-emoji">📈</span>
+        <h3 class="tool-name">Capital Gains Tax Calculator</h3>
+        <p class="tool-desc">Capital gains tax on stocks, crypto, real estate investments</p>
+      </a>
+      <a class="tool-card" href="/inflation-calculator" data-name="inflation calculator" data-desc="purchasing power over time with cpi-adjusted values">
+        <span class="tool-emoji">📉</span>
+        <h3 class="tool-name">Inflation Calculator</h3>
+        <p class="tool-desc">Purchasing power over time with CPI-adjusted values</p>
+      </a>
+      <a class="tool-card" href="/profit-margin" data-name="profit margin calculator" data-desc="gross, operating, net margins with markup percentage">
+        <span class="tool-emoji">📊</span>
+        <h3 class="tool-name">Profit Margin Calculator</h3>
+        <p class="tool-desc">Gross, operating, net margins with markup percentage</p>
+      </a>
+      <a class="tool-card" href="/sales-tax" data-name="sales tax calculator" data-desc="sales tax for us states and canadian provinces">
+        <span class="tool-emoji">🧾</span>
+        <h3 class="tool-name">Sales Tax Calculator</h3>
+        <p class="tool-desc">Sales tax for US states and Canadian provinces</p>
+      </a>
+      <a class="tool-card" href="/stock-return" data-name="stock return calculator" data-desc="total return including dividends and holding period">
+        <span class="tool-emoji">📈</span>
+        <h3 class="tool-name">Stock Return Calculator</h3>
+        <p class="tool-desc">Total return including dividends and holding period</p>
+      </a>
+      <a class="tool-card" href="/rule-of-72" data-name="rule of 72 calculator" data-desc="investment doubling time at given return rates">
+        <span class="tool-emoji">🔢</span>
+        <h3 class="tool-name">Rule of 72 Calculator</h3>
+        <p class="tool-desc">Investment doubling time at given return rates</p>
+      </a>
+      <a class="tool-card" href="/withdrawal-calculator" data-name="retirement withdrawal calculator" data-desc="safe withdrawal rates with 4% rule and inflation">
+        <span class="tool-emoji">🏖️</span>
+        <h3 class="tool-name">Retirement Withdrawal Calculator</h3>
+        <p class="tool-desc">Safe withdrawal rates with 4% rule and inflation</p>
+      </a>
+      <a class="tool-card" href="/paycheck-calculator" data-name="paycheck calculator" data-desc="net paycheck after federal tax, state tax, and deductions">
+        <span class="tool-emoji">💵</span>
+        <h3 class="tool-name">Paycheck Calculator</h3>
+        <p class="tool-desc">Net paycheck after federal tax, state tax, and deductions</p>
+      </a>
+      <a class="tool-card" href="/rent-vs-buy" data-name="rent vs buy calculator" data-desc="compare renting vs buying with appreciation and costs">
+        <span class="tool-emoji">🏡</span>
+        <h3 class="tool-name">Rent vs Buy Calculator</h3>
+        <p class="tool-desc">Compare renting vs buying with appreciation and costs</p>
+      </a>
+      <a class="tool-card" href="/credit-card-payoff" data-name="credit card payoff calculator" data-desc="time to pay off debt with minimum vs fixed payments">
+        <span class="tool-emoji">💳</span>
+        <h3 class="tool-name">Credit Card Payoff Calculator</h3>
+        <p class="tool-desc">Time to pay off debt with minimum vs fixed payments</p>
+      </a>
+      <a class="tool-card" href="/debt-payoff" data-name="debt payoff calculator" data-desc="compare snowball vs avalanche debt strategies">
+        <span class="tool-emoji">❄️</span>
+        <h3 class="tool-name">Debt Payoff Calculator</h3>
+        <p class="tool-desc">Compare snowball vs avalanche debt strategies</p>
+      </a>
+      <a class="tool-card" href="/lease-buy" data-name="lease vs buy calculator" data-desc="compare car leasing vs buying with total cost analysis">
+        <span class="tool-emoji">🚗</span>
+        <h3 class="tool-name">Lease vs Buy Calculator</h3>
+        <p class="tool-desc">Compare car leasing vs buying with total cost analysis</p>
+      </a>
+      <a class="tool-card" href="/net-income" data-name="net income calculator" data-desc="take-home pay after taxes and deductions">
+        <span class="tool-emoji">💰</span>
+        <h3 class="tool-name">Net Income Calculator</h3>
+        <p class="tool-desc">Take-home pay after taxes and deductions</p>
+      </a>
+      <a class="tool-card" href="/net-worth-tracker" data-name="net worth tracker" data-desc="track and visualize your net worth over time">
+        <span class="tool-emoji">📊</span>
+        <h3 class="tool-name">Net Worth Tracker</h3>
+        <p class="tool-desc">Track and visualize your net worth over time</p>
+      </a>
+      <a class="tool-card" href="/tip-calculator" data-name="tip calculator" data-desc="calculate tips and split bills between people">
+        <span class="tool-emoji">🍽️</span>
+        <h3 class="tool-name">Tip Calculator</h3>
+        <p class="tool-desc">Calculate tips and split bills between people</p>
+      </a>
+      <a class="tool-card" href="/401k-calculator" data-name="401k & rrsp calculator" data-desc="retirement savings growth with employer matches">
+        <span class="tool-emoji">🏦</span>
+        <h3 class="tool-name">401k & RRSP Calculator</h3>
+        <p class="tool-desc">Retirement savings growth with employer matches</p>
+      </a>
+      <a class="tool-card" href="/expense-ratio" data-name="expense ratio calculator" data-desc="impact of fund expense ratios on investment returns">
+        <span class="tool-emoji">📉</span>
+        <h3 class="tool-name">Expense Ratio Calculator</h3>
+        <p class="tool-desc">Impact of fund expense ratios on investment returns</p>
+      </a>
+      <a class="tool-card" href="/bond-yield" data-name="bond yield calculator" data-desc="yield to maturity, current yield, and yield to call">
+        <span class="tool-emoji">🏛️</span>
+        <h3 class="tool-name">Bond Yield Calculator</h3>
+        <p class="tool-desc">Yield to maturity, current yield, and yield to call</p>
+      </a>
+      <div class="no-results" id="noResults">No calculators found matching your search.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    © 2026 <a href="/">firemaths.info</a> · A <a href="https://gab.ae">GAB Ventures</a> property
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('searchInput');
+      const toolCards = document.querySelectorAll('.tool-card');
+      const noResults = document.getElementById('noResults');
+      const toolCount = document.getElementById('toolCount');
+
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        let visibleCount = 0;
+
+        toolCards.forEach(card => {
+          const name = card.getAttribute('data-name') || '';
+          const desc = card.getAttribute('data-desc') || '';
+
+          if (name.includes(query) || desc.includes(query)) {
+            card.style.display = 'block';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        toolCount.textContent = `${visibleCount} tool${visibleCount !== 1 ? 's' : ''}`;
+
+        if (visibleCount === 0) {
+          noResults.style.display = 'block';
+        } else {
+          noResults.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
