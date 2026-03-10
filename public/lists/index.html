@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curated Lists | firemaths.info</title>
+    <meta name="description" content="Best financial tools, apps, and services compared.">
+    <link rel="canonical" href="https://firemaths.info/lists/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-G86C7NJG3F');
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Curated Lists",
+      "description": "Best financial tools, apps, and services compared.",
+      "url": "https://firemaths.info/lists/",
+      "author": {
+        "@type": "Organization",
+        "name": "firemaths.info"
+      }
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #060a12;
+            color: #e0d8c8;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 80px 24px 60px;
+            background: linear-gradient(180deg, #1a0f00 0%, #060a12 100%);
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 40%, rgba(212,160,23,0.08) 0%, transparent 60%);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .hero .tagline {
+            color: #D4A017;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #D4A017 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .search-container {
+            max-width: 500px;
+            margin: 30px auto 10px;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 16px 20px;
+            border-radius: 30px;
+            border: 1px solid #1e2030;
+            background: #111318;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .search-input:focus {
+            border-color: #D4A017;
+            box-shadow: 0 0 0 2px rgba(212,160,23,0.2);
+        }
+        .counter {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        /* Grid */
+        .lists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 40px 0 80px;
+        }
+
+        .list-card {
+            background: #111318;
+            border: 1px solid #1e2030;
+            border-radius: 12px;
+            padding: 24px 20px;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: all 0.2s ease;
+        }
+        .list-card:hover {
+            border-color: #D4A017;
+            transform: translateY(-2px);
+        }
+        .list-emoji {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .list-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #e0e8f0;
+            margin-bottom: 8px;
+        }
+        .list-desc {
+            font-size: 0.9rem;
+            color: #6a7a90;
+            line-height: 1.5;
+        }
+
+        #no-results {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            grid-column: 1 / -1;
+            font-style: italic;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            font-size: 0.85rem;
+            color: #888;
+            border-top: 1px solid #2a2010;
+            background: #141008;
+            margin-top: auto;
+        }
+        .footer a { color: #D4A017; text-decoration: none; font-weight: 500;}
+        .footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .lists-grid { grid-template-columns: 1fr; }
+        }
+
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <script src="/nav.js"></script>
+
+    <main>
+        <div class="hero">
+            <div class="hero-content">
+                <div class="tagline">firemaths.info</div>
+                <h1>Curated Lists</h1>
+
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search lists...">
+                    <div class="counter" id="listCounter">4 lists</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="lists-grid" id="listsGrid">
+                <a class="list-card" href="/list-budgeting-apps">
+                    <span class="list-emoji">💰</span>
+                    <h3 class="list-name">Best Budgeting Apps</h3>
+                    <p class="list-desc">Compare budgeting apps by features, pricing, and bank sync</p>
+                </a>
+
+                <a class="list-card" href="/list-brokerages">
+                    <span class="list-emoji">📋</span>
+                    <h3 class="list-name">Best Online Brokerages</h3>
+                    <p class="list-desc">Fidelity, Schwab, Vanguard, IBKR comparison</p>
+                </a>
+
+                <a class="list-card" href="/list-credit-cards">
+                    <span class="list-emoji">💳</span>
+                    <h3 class="list-name">Best No-Fee Credit Cards</h3>
+                    <p class="list-desc">Cashback and travel rewards cards without annual fees</p>
+                </a>
+
+                <a class="list-card" href="/list-savings-accounts">
+                    <span class="list-emoji">🏦</span>
+                    <h3 class="list-name">Best High-Yield Savings Accounts</h3>
+                    <p class="list-desc">Compare rates, minimums, and FDIC insurance</p>
+                </a>
+
+                <div id="no-results">No lists found matching your search.</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container" style="padding:0">
+            © 2025 <a href="https://firemaths.info">firemaths.info</a> · A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const cards = document.querySelectorAll('.list-card');
+            const noResultsMsg = document.getElementById('no-results');
+            const counterElement = document.getElementById('listCounter');
+
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                let visibleCount = 0;
+
+                cards.forEach(card => {
+                    const textContent = card.textContent.toLowerCase();
+                    if (textContent.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (visibleCount === 0) {
+                    noResultsMsg.style.display = 'block';
+                } else {
+                    noResultsMsg.style.display = 'none';
+                }
+
+                counterElement.textContent = `${visibleCount} list${visibleCount === 1 ? '' : 's'}`;
+            });
+        });
+    </script>
+</body>
+</html>
