@@ -262,6 +262,30 @@
             color: var(--text-primary);
         }
 
+        .chart-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .chart-header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            position: relative;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
         .seo-content {
             margin-bottom: 4rem;
         }
@@ -531,6 +555,23 @@
             </div>
         </div>
 
+        <div class="chart-section">
+            <div class="chart-header">
+                <h2>Net Worth Comparison</h2>
+                <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1.5rem; font-size: 0.875rem; color: var(--text-secondary);">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="width: 12px; height: 12px; border-radius: 50%; background-color: #D4A017; display: inline-block;"></span> Buying
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="width: 12px; height: 12px; border-radius: 50%; background-color: #4A90E2; display: inline-block;"></span> Renting
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="comparisonChart"></canvas>
+            </div>
+        </div>
+
         <div class="seo-content">
             <h2>The Rent vs. Buy Dilemma Explained</h2>
             <p>One of the most debated personal finance topics is whether it is better to rent or buy a home. Buying is traditionally viewed as a step toward financial stability and wealth building through equity. Conversely, renting is often dismissed as "throwing money away." However, when factoring in the total costs of homeownership—such as property taxes, maintenance, homeowners insurance, and the opportunity cost of a down payment—renting and investing the difference can sometimes be the more financially sound decision.</p>
@@ -545,6 +586,16 @@
                 <li><strong>Home Appreciation vs. Market Returns:</strong> While real estate generally appreciates, historically, the stock market has returned higher average annual yields. The differential between these two rates significantly impacts the outcome.</li>
                 <li><strong>Hidden Costs of Ownership:</strong> Maintenance is unpredictable. A new roof, HVAC system, or plumbing issues can easily erode the financial benefits of owning. As a renter, your monthly payment is your maximum housing cost; as an owner, your mortgage is your minimum housing cost.</li>
             </ul>
+
+            <h2>Frequently Asked Questions (FAQ)</h2>
+            <h3 style="font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary);">Is renting really throwing money away?</h3>
+            <p>No, renting is paying for a service (shelter). It provides flexibility and a predictable maximum monthly cost. The "thrown away" argument ignores the sunk costs of buying, such as interest, property taxes, insurance, and maintenance, none of which build equity.</p>
+
+            <h3 style="font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary);">What is a good rule of thumb for maintenance costs?</h3>
+            <p>A common rule of thumb is to budget 1% to 2% of the home's value per year for maintenance. For a $500,000 home, expect to spend $5,000 to $10,000 annually on average over the long term.</p>
+
+            <h3 style="font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary);">How do I decide if I should buy or rent?</h3>
+            <p>Input your realistic estimates into the calculator above. If the net worth difference after your expected time horizon heavily favors one side, that's the mathematical answer. However, personal factors like desired stability, willingness to do maintenance, and career mobility are just as important.</p>
         </div>
     </main>
 
@@ -628,6 +679,14 @@
 
         let totalMonthlyBuyCostsAccumulated = 0;
 
+        // History tracking for chart
+        // Initial net worth: 0 for both (buying: home value - debt - selling costs ~ 0 or negative depending on closing costs)
+        // Actually, buying net worth on day 1 = HomePrice - Loan - SellingCosts = downPayment - SellingCosts
+        // Renting net worth on day 1 = initialBuyCosts
+        const initialSellingCosts = homePrice * (sellingCostsRate / 100);
+        const buyHistory = [homePrice - loanAmount - initialSellingCosts];
+        const rentHistory = [initialBuyCosts];
+
         for (let month = 1; month <= totalMonths; month++) {
             // Update Home Value (compounded monthly)
             currentHomeValue *= Math.pow(1 + (appreciationRate / 100), 1 / 12);
@@ -669,6 +728,14 @@
 
             // Add or subtract monthly difference to/from rent investment
             rentInvestmentBalance += monthlyCashFlowDiff;
+
+            // Record yearly history
+            if (month % 12 === 0) {
+                const currentSellingCosts = currentHomeValue * (sellingCostsRate / 100);
+                const currentBuyingNetWorth = currentHomeValue - remainingLoan - currentSellingCosts;
+                buyHistory.push(currentBuyingNetWorth);
+                rentHistory.push(rentInvestmentBalance);
+            }
         }
 
         // End of term calculations for Buying
@@ -728,6 +795,9 @@
 
         document.getElementById('totalSavingsInvested').innerText = formatCurrency(totalInvestedCapital - initialBuyCosts);
         document.getElementById('rentingNetWorth').innerText = formatCurrency(finalRentingNetWorth);
+
+        // Draw Chart
+        drawChart(buyHistory, rentHistory, yearsToCompare);
     };
 
     const inputs = document.querySelectorAll('input[type="number"]');
@@ -735,8 +805,134 @@
         input.addEventListener('input', updateCalculator);
     });
 
+    // Charting logic using vanilla canvas
+    let chartCanvas = document.getElementById('comparisonChart');
+    let ctx = chartCanvas.getContext('2d');
+
+    const drawChart = (buyData, rentData, years) => {
+        // Handle DPI for crisp text
+        const dpr = window.devicePixelRatio || 1;
+        const rect = chartCanvas.parentElement.getBoundingClientRect();
+
+        chartCanvas.width = rect.width * dpr;
+        chartCanvas.height = rect.height * dpr;
+
+        ctx.setTransform(1, 0, 0, 1, 0, 0); // reset transform
+        ctx.scale(dpr, dpr);
+
+        const width = rect.width;
+        const height = rect.height;
+
+        ctx.clearRect(0, 0, width, height);
+
+        const padding = { top: 20, right: 20, bottom: 40, left: 80 };
+        const chartWidth = width - padding.left - padding.right;
+        const chartHeight = height - padding.top - padding.bottom;
+
+        const maxYears = years;
+        // Include initial state (0) in min/max to ensure axis starts at 0 if needed, or handles negatives
+        let minVal = Math.min(...buyData, ...rentData, 0);
+        let maxVal = Math.max(...buyData, ...rentData);
+
+        // Add some padding to min/max
+        const range = maxVal - minVal;
+        if (range === 0) {
+            maxVal += 1000;
+            minVal -= 1000;
+        } else {
+            maxVal += range * 0.1;
+            minVal -= range * 0.1;
+        }
+
+        const totalRange = maxVal - minVal;
+
+        // Draw grid and axes
+        ctx.strokeStyle = '#2a2010';
+        ctx.lineWidth = 1;
+        ctx.font = '12px Inter, sans-serif';
+        ctx.fillStyle = '#888888';
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+
+        // Y-axis
+        const yTicks = 5;
+        for (let i = 0; i <= yTicks; i++) {
+            const val = minVal + (totalRange * (i / yTicks));
+            const y = height - padding.bottom - (chartHeight * (i / yTicks));
+
+            ctx.beginPath();
+            ctx.moveTo(padding.left, y);
+            ctx.lineTo(width - padding.right, y);
+            ctx.stroke();
+
+            const absVal = Math.abs(val);
+            let label = absVal >= 1000000 ? '$' + (absVal / 1000000).toFixed(1) + 'M' :
+                        absVal >= 1000 ? '$' + (absVal / 1000).toFixed(0) + 'k' : '$' + absVal.toFixed(0);
+            if (val < 0) label = '-' + label;
+            ctx.fillText(label, padding.left - 10, y);
+        }
+
+        // X-axis
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        const xTicks = Math.min(maxYears, 10);
+        for (let i = 0; i <= xTicks; i++) {
+            const yearIndex = Math.round((maxYears / xTicks) * i);
+            const x = padding.left + (chartWidth * (yearIndex / maxYears));
+
+            ctx.beginPath();
+            ctx.moveTo(x, height - padding.bottom);
+            ctx.lineTo(x, height - padding.bottom + 5);
+            ctx.stroke();
+
+            ctx.fillText('Yr ' + yearIndex, x, height - padding.bottom + 10);
+        }
+
+        // Zero line if minVal < 0
+        if (minVal < 0 && maxVal > 0) {
+            const zeroY = height - padding.bottom - (chartHeight * ((0 - minVal) / totalRange));
+            ctx.beginPath();
+            ctx.strokeStyle = '#888888';
+            ctx.moveTo(padding.left, zeroY);
+            ctx.lineTo(width - padding.right, zeroY);
+            ctx.stroke();
+        }
+
+        // Draw lines
+        const drawLine = (data, color) => {
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+            ctx.lineJoin = 'round';
+
+            data.forEach((val, i) => {
+                const x = padding.left + (chartWidth * (i / maxYears));
+                const y = height - padding.bottom - (chartHeight * ((val - minVal) / totalRange));
+
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+
+            // Note: Area fill could be complex with negative values, so we stick to lines for this comparison
+        };
+
+        // Draw Rent scenario
+        drawLine(rentData, '#4A90E2');
+        // Draw Buy scenario
+        drawLine(buyData, '#D4A017');
+    };
+
+    // Handle window resize for canvas
+    window.addEventListener('resize', () => {
+        updateCalculator();
+    });
+
     // Initial calculation
-    updateCalculator();
+    // Timeout added to ensure layout is done for canvas size
+    setTimeout(() => {
+        updateCalculator();
+    }, 0);
 </script>
 
 </body>
