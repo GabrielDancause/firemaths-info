@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Loan Repayment Calculator: Standard, IBR & PSLF Compared | FireMaths</title>
+    <meta name="description" content="Think paying minimums is safe? See the exact month your student loans could be forgiven—or the hidden cost of waiting. Find out how fast you can really pay them off.">
+    <link rel="canonical" href="https://firemaths.info/student-loan-calculator.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #060a12;
+            --card-bg: #0a1020;
+            --border-color: #152040;
+            --accent-color: #D4A017;
+            --text-primary: #f0f4f8;
+            --text-secondary: #8b9bb4;
+            --font-ui: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --success-color: #34d399;
+            --warning-color: #fbbf24;
+            --danger-color: #ef4444;
+            --radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Sticky Nav */
+        nav.sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(6, 10, 18, 0.85);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: #fff;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (min-width: 992px) {
+            .layout-grid {
+                grid-template-columns: 350px 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Form Inputs */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 1rem; }
+        .suffix { right: 1rem; }
+
+        input[type="number"], select {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+            -moz-appearance: textfield;
+        }
+
+        select {
+            font-family: var(--font-ui);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238b9bb4'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.2em;
+            padding-right: 2.5rem;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 1px var(--accent-color);
+        }
+
+        .has-prefix input { padding-left: 2rem; }
+        .has-suffix input { padding-right: 2.5rem; }
+
+        /* Results Grid */
+        .plans-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .plans-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .plan-card {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            position: relative;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .plan-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .plan-card.recommended {
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 20px rgba(212, 160, 23, 0.1);
+        }
+
+        .badge {
+            position: absolute;
+            top: -10px;
+            right: 1.25rem;
+            background: var(--accent-color);
+            color: #000;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.1rem 0.6rem;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .plan-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .plan-color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .metric:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .metric-value {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .metric-value.highlight {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .metric-value.success { color: var(--success-color); }
+        .metric-value.danger { color: var(--danger-color); }
+
+        /* Chart */
+        .chart-container {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .chart-wrapper {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            margin-top: 1.5rem;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Content Sections */
+        .content-section {
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .content-section p {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .content-section ul {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .content-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-question {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: #fff;
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .disclaimer {
+            max-width: 600px;
+            margin: 1rem auto 0;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+    </style>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
+
+    <!-- Application Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Student Loan Repayment Calculator",
+      "url": "https://firemaths.info/student-loan-calculator.html",
+      "description": "Compare student loan repayment plans including Standard, IBR, SAVE, and PSLF. Calculate your payoff timeline, total interest, and potential forgiveness.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the best student loan repayment calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The best student loan repayment calculator lets you compare multiple strategies side-by-side. You should be able to see the standard 10-year plan, income-driven repayment (IDR) plans like SAVE or IBR, and see the impact of Public Service Loan Forgiveness (PSLF) based on your specific income and loan balance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How fast can I pay off student loans?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "How fast you can pay off student loans depends on your interest rate, balance, and how much extra you pay each month. On a standard plan, it takes 10 years. By making extra payments, you can reduce this timeline to 5 years or less. Using a student loan payoff calculator helps you visualize the exact timeline based on your budget."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use an income-based repayment (IBR) plan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An income-based repayment plan is excellent if your debt is high compared to your income. It caps your monthly payment at a percentage of your discretionary income (often 10%). However, it extends your payoff timeline to 20 or 25 years, meaning you might pay more in total interest unless you qualify for PSLF or IDR forgiveness."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Public Service Loan Forgiveness (PSLF) work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PSLF forgives your remaining federal student loan balance after you make 120 qualifying monthly payments while working full-time for an eligible non-profit or government employer. You must be on an income-driven repayment plan to benefit, otherwise, a standard 10-year plan pays off the loan before forgiveness kicks in."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a student loan payoff calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A student loan payoff calculator is a financial tool that projects the future trajectory of your debt. It shows your monthly payments, total interest paid, total amount paid over the life of the loan, and the exact date you will be debt-free under various repayment strategies."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Article Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Student Loan Repayment Calculator: Standard, IBR & PSLF Compared",
+      "description": "Compare student loan repayment plans. Calculate your total paid, forgiveness amount, timeline, and extra payment impact.",
+      "datePublished": "2026-03-10",
+      "publisher": {
+        "@type": "Organization",
+        "name": "FireMaths",
+        "url": "https://firemaths.info"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Sticky Nav -->
+    <nav class="sticky-nav">
+        <div class="nav-content">
+            <a href="/" class="brand">FireMaths</a>
+            <div class="nav-links">
+                <a href="/#studies">Studies</a>
+                <a href="/#tools">Tools</a>
+                <a href="/#guides">Guides</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Student Loan Payoff Calculator</h1>
+            <p>Compare Standard, Income-Driven (SAVE/IBR), and PSLF plans. Discover the fastest path to becoming debt-free.</p>
+        </header>
+
+        <main class="layout-grid">
+            <!-- Left Column: Inputs -->
+            <aside>
+                <div class="card" style="position: sticky; top: 80px;">
+                    <h2 class="card-title">Loan Details</h2>
+
+                    <div class="form-group">
+                        <label for="balance">Total Loan Balance</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="balance" value="37500" min="0" step="100">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rate">Average Interest Rate</label>
+                        <div class="input-wrapper has-suffix">
+                            <span class="suffix">%</span>
+                            <input type="number" id="rate" value="5.8" min="0" step="0.1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="income">Adjusted Gross Income (AGI)</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="income" value="65000" min="0" step="1000">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="family-size">Family Size</label>
+                        <input type="number" id="family-size" value="1" min="1" step="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="extra-pay">Extra Monthly Payment</label>
+                        <div class="input-wrapper has-prefix">
+                            <span class="prefix">$</span>
+                            <input type="number" id="extra-pay" value="0" min="0" step="50">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 2rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="pslf-eligible" style="width: 16px; height: 16px; accent-color: var(--accent-color);">
+                            <span style="font-size: 0.95rem; color: #fff;">I work in public service (PSLF eligible)</span>
+                        </label>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Right Column: Results & Chart -->
+            <section>
+                <div class="card">
+                    <h2 class="card-title">Repayment Plan Comparison</h2>
+
+                    <div class="plans-grid" id="results-container">
+                        <!-- JS injected results -->
+                    </div>
+
+                    <div class="chart-container">
+                        <h3 style="margin-top:0; margin-bottom: 0.5rem; font-size: 1.1rem; color: #fff;">Loan Balance Over Time</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Comparing balances across different repayment strategies.</p>
+                        <div class="chart-wrapper">
+                            <canvas id="balanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- SEO Content & FAQ -->
+        <article class="content-section">
+            <h2>Understanding Your Student Loan Repayment Options</h2>
+            <p>Choosing the right repayment strategy is critical. A standard plan might minimize total interest, while an income-driven plan could provide crucial monthly cash flow relief or a path to massive forgiveness.</p>
+
+            <h3>The Standard 10-Year Plan</h3>
+            <p>This is the default plan for federal student loans. Your payments are fixed over 120 months. It usually results in the lowest total interest paid, provided you don't make extra payments. If you want to know <strong>how fast you can pay off student loans</strong>, this plan is the baseline, but adding an extra monthly payment can aggressively shorten this timeline.</p>
+
+            <h3>Income-Driven Repayment (SAVE, IBR, PAYE)</h3>
+            <p>If your student loan balance is high relative to your income, an Income-Driven Repayment (IDR) plan like SAVE (Saving on a Valuable Education) or IBR (Income-Based Repayment) caps your monthly payment at a percentage of your discretionary income. For 2026 projections, SAVE often provides the lowest monthly payment. Balances remaining after 20 or 25 years of qualifying payments are forgiven (though the forgiven amount may be treated as taxable income).</p>
+
+            <h3>Public Service Loan Forgiveness (PSLF)</h3>
+            <p>If you work full-time for a qualifying government or non-profit employer, PSLF can forgive your remaining balance tax-free after just 120 qualifying payments (10 years). To maximize PSLF, you must use an IDR plan to keep your monthly payments low, ensuring there is a substantial balance left to be forgiven at the 10-year mark.</p>
+        </article>
+
+        <section class="content-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <h3 class="faq-question">What is the best student loan repayment calculator?</h3>
+                <p class="faq-answer">The best student loan repayment calculator lets you compare multiple strategies side-by-side. You should be able to see the standard 10-year plan, income-driven repayment (IDR) plans like SAVE or IBR, and see the impact of Public Service Loan Forgiveness (PSLF) based on your specific income and loan balance.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">How fast can I pay off student loans?</h3>
+                <p class="faq-answer">How fast you can pay off student loans depends on your interest rate, balance, and how much extra you pay each month. On a standard plan, it takes 10 years. By making extra payments, you can reduce this timeline to 5 years or less. Using a student loan payoff calculator helps you visualize the exact timeline based on your budget.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">Should I use an income-based repayment (IBR) plan?</h3>
+                <p class="faq-answer">An income-based repayment plan is excellent if your debt is high compared to your income. It caps your monthly payment at a percentage of your discretionary income (often 10%). However, it extends your payoff timeline to 20 or 25 years, meaning you might pay more in total interest unless you qualify for PSLF or IDR forgiveness.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">How does Public Service Loan Forgiveness (PSLF) work?</h3>
+                <p class="faq-answer">PSLF forgives your remaining federal student loan balance after you make 120 qualifying monthly payments while working full-time for an eligible non-profit or government employer. You must be on an income-driven repayment plan to benefit, otherwise, a standard 10-year plan pays off the loan before forgiveness kicks in.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3 class="faq-question">What is a student loan payoff calculator?</h3>
+                <p class="faq-answer">A student loan payoff calculator is a financial tool that projects the future trajectory of your debt. It shows your monthly payments, total interest paid, total amount paid over the life of the loan, and the exact date you will be debt-free under various repayment strategies.</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 FireMaths &middot; A GAB Ventures property</p>
+        <p class="disclaimer">Not investment advice. All information for educational purposes only. Calculations are estimates and assume constant interest rates, income, and no tax law changes. Official federal loan calculations may vary.</p>
+    </footer>
+
+    <script>
+        // Constants & Utilities
+        const COLORS = {
+            standard: '#4A90E2',
+            graduated: '#9B51E0',
+            save: '#34d399',
+            ibr: '#f97316'
+        };
+
+        const formatCurr = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
+        const formatMonths = (m) => {
+            const y = Math.floor(m/12);
+            const mos = m%12;
+            return y > 0 ? `${y}y ${mos}m` : `${mos}m`;
+        };
+
+        // DOM Elements
+        const inputs = {
+            balance: document.getElementById('balance'),
+            rate: document.getElementById('rate'),
+            income: document.getElementById('income'),
+            familySize: document.getElementById('family-size'),
+            extraPay: document.getElementById('extra-pay'),
+            pslf: document.getElementById('pslf-eligible')
+        };
+        const resultsContainer = document.getElementById('results-container');
+        const canvas = document.getElementById('balanceChart');
+        const ctx = canvas.getContext('2d');
+
+        // Poverty Guidelines (2024/2026 approx)
+        // 48 Contiguous states
+        const getPovertyLine = (familySize) => 15060 + (5380 * (familySize - 1));
+
+        // Core Calculation Engines
+        const calculateStandard = (balance, rate, extra) => {
+            const r = (rate / 100) / 12;
+            const n = 120;
+            // Base required payment for 10 years
+            let pmt = r === 0 ? balance / n : balance * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+
+            let currentBalance = balance;
+            let totalPaid = 0;
+            let totalInterest = 0;
+            let months = 0;
+            let history = [balance];
+
+            const actualPmt = pmt + extra;
+
+            while (currentBalance > 0.01 && months < 360) {
+                months++;
+                let interest = currentBalance * r;
+                totalInterest += interest;
+
+                let payment = Math.min(actualPmt, currentBalance + interest);
+                let principal = payment - interest;
+
+                currentBalance -= principal;
+                totalPaid += payment;
+                history.push(currentBalance);
+            }
+
+            return {
+                id: 'standard',
+                name: 'Standard 10-Year',
+                color: COLORS.standard,
+                monthlyPayment: pmt + extra,
+                totalPaid,
+                forgiven: 0,
+                months,
+                history,
+                isRecommended: false
+            };
+        };
+
+        const calculateGraduated = (balance, rate, extra) => {
+            // Rough approximation: starts lower, increases every 2 years
+            // Total term 10 years (120 months)
+            const r = (rate / 100) / 12;
+            const standardPmt = r === 0 ? balance / 120 : balance * (r * Math.pow(1 + r, 120)) / (Math.pow(1 + r, 120) - 1);
+
+            // Assume starts at interest only or half standard
+            let basePmt = Math.max(balance * r, standardPmt * 0.5);
+
+            let currentBalance = balance;
+            let totalPaid = 0;
+            let months = 0;
+            let history = [balance];
+
+            while (currentBalance > 0.01 && months < 360) {
+                months++;
+
+                // Increase base payment by 20% every 24 months
+                if (months > 1 && months % 24 === 1 && months <= 120) {
+                    basePmt *= 1.2;
+                }
+
+                let actualPmt = basePmt + extra;
+                let interest = currentBalance * r;
+
+                let payment = Math.min(actualPmt, currentBalance + interest);
+                let principal = payment - interest;
+
+                currentBalance -= principal;
+                totalPaid += payment;
+                history.push(currentBalance);
+            }
+
+            return {
+                id: 'graduated',
+                name: 'Graduated',
+                color: COLORS.graduated,
+                monthlyPayment: (Math.max(balance * r, standardPmt * 0.5)) + extra, // initial
+                totalPaid,
+                forgiven: 0,
+                months,
+                history,
+                isRecommended: false
+            };
+        };
+
+        const calculateSAVE = (balance, rate, income, familySize, extra, isPSLF) => {
+            const r = (rate / 100) / 12;
+            const povertyLine = getPovertyLine(familySize);
+            // SAVE protects 225% of poverty line
+            const discretionary = Math.max(0, income - (povertyLine * 2.25));
+            // SAVE is 5% to 10% depending on undergrad/grad split. Assume 10% for worst-case/blended.
+            const monthlyIDR = discretionary * 0.10 / 12;
+
+            const maxMonths = isPSLF ? 120 : 240; // Assume undergrad (20 yrs), otherwise 25
+
+            let currentBalance = balance;
+            let totalPaid = 0;
+            let months = 0;
+            let history = [balance];
+
+            while (currentBalance > 0.01 && months < maxMonths) {
+                months++;
+                let interest = currentBalance * r;
+
+                let requiredPmt = monthlyIDR;
+                let actualPmt = requiredPmt + extra;
+
+                // SAVE interest subsidy: if requiredPmt < interest, unpaid interest is subsidized/waived
+                let appliedInterest = Math.min(interest, requiredPmt);
+
+                let payment = Math.min(actualPmt, currentBalance + appliedInterest);
+                let principal = payment - appliedInterest;
+
+                // Extra payment goes directly to principal
+                if (extra > 0 && payment === actualPmt) {
+                    principal = (requiredPmt - appliedInterest) + extra;
+                }
+
+                currentBalance -= principal;
+                totalPaid += payment;
+                history.push(currentBalance);
+            }
+
+            let forgiven = currentBalance > 0 ? currentBalance : 0;
+
+            return {
+                id: 'save',
+                name: isPSLF ? 'SAVE + PSLF' : 'SAVE Plan',
+                color: COLORS.save,
+                monthlyPayment: monthlyIDR + extra,
+                totalPaid,
+                forgiven,
+                months,
+                history,
+                isRecommended: false
+            };
+        };
+
+        const calculateIBR = (balance, rate, income, familySize, extra, isPSLF) => {
+            const r = (rate / 100) / 12;
+            const povertyLine = getPovertyLine(familySize);
+            // IBR protects 150% of poverty line
+            const discretionary = Math.max(0, income - (povertyLine * 1.5));
+            // IBR is 10% for new borrowers (15% for old, assume 10%)
+            const monthlyIDR = discretionary * 0.10 / 12;
+
+            // Cap at standard 10yr payment
+            const standardPmt = balance * (r * Math.pow(1 + r, 120)) / (Math.pow(1 + r, 120) - 1);
+            const cappedIDR = Math.min(monthlyIDR, standardPmt);
+
+            const maxMonths = isPSLF ? 120 : 240;
+
+            let currentBalance = balance;
+            let totalPaid = 0;
+            let months = 0;
+            let history = [balance];
+
+            while (currentBalance > 0.01 && months < maxMonths) {
+                months++;
+                let interest = currentBalance * r;
+
+                let requiredPmt = cappedIDR;
+                let actualPmt = requiredPmt + extra;
+
+                // No interest subsidy in normal IBR after first 3 years, keep simple: unpaid interest capitalizes or grows
+
+                let payment = Math.min(actualPmt, currentBalance + interest);
+                let principal = payment - interest;
+
+                currentBalance -= principal;
+                totalPaid += payment;
+                history.push(currentBalance);
+            }
+
+            let forgiven = currentBalance > 0 ? currentBalance : 0;
+
+            return {
+                id: 'ibr',
+                name: isPSLF ? 'IBR + PSLF' : 'IBR Plan',
+                color: COLORS.ibr,
+                monthlyPayment: cappedIDR + extra,
+                totalPaid,
+                forgiven,
+                months,
+                history,
+                isRecommended: false
+            };
+        };
+
+
+        const updateApp = () => {
+            const b = parseFloat(inputs.balance.value) || 0;
+            const r = parseFloat(inputs.rate.value) || 0;
+            const i = parseFloat(inputs.income.value) || 0;
+            const f = parseInt(inputs.familySize.value) || 1;
+            const e = parseFloat(inputs.extraPay.value) || 0;
+            const pslf = inputs.pslf.checked;
+
+            if(b === 0) return;
+
+            const plans = [
+                calculateStandard(b, r, e),
+                calculateGraduated(b, r, e),
+                calculateSAVE(b, r, i, f, e, pslf),
+                calculateIBR(b, r, i, f, e, pslf)
+            ];
+
+            // Find recommended (lowest total paid out of pocket)
+            let minPaid = Infinity;
+            let recIndex = 0;
+            plans.forEach((p, idx) => {
+                if (p.totalPaid < minPaid) {
+                    minPaid = p.totalPaid;
+                    recIndex = idx;
+                }
+            });
+            plans[recIndex].isRecommended = true;
+
+            renderResults(plans);
+            drawChart(plans);
+        };
+
+        const renderResults = (plans) => {
+            resultsContainer.innerHTML = plans.map(p => `
+                <div class="plan-card ${p.isRecommended ? 'recommended' : ''}">
+                    ${p.isRecommended ? '<div class="badge">Best Value</div>' : ''}
+                    <div class="plan-title">
+                        <span class="plan-color-dot" style="background-color: ${p.color}"></span>
+                        ${p.name}
+                    </div>
+
+                    <div class="metric">
+                        <span class="metric-label">Monthly Payment</span>
+                        <span class="metric-value ${p.id === 'graduated' ? '' : 'highlight'}">
+                            ${formatCurr(p.monthlyPayment)}${p.id === 'graduated' ? '<span style="font-size:0.7em;color:var(--text-secondary);font-weight:400;margin-left:4px;">(Initial)</span>' : ''}
+                        </span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Total Paid Over Time</span>
+                        <span class="metric-value">${formatCurr(p.totalPaid)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Time to Payoff/Forgiveness</span>
+                        <span class="metric-value">${formatMonths(p.months)}</span>
+                    </div>
+                    ${p.forgiven > 0 ? `
+                    <div class="metric">
+                        <span class="metric-label">Amount Forgiven</span>
+                        <span class="metric-value success">${formatCurr(p.forgiven)}</span>
+                    </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        };
+
+        const drawChart = (plans) => {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.parentElement.getBoundingClientRect();
+
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.scale(dpr, dpr);
+
+            const w = rect.width;
+            const h = rect.height;
+            const pad = { t: 20, r: 20, b: 30, l: 60 };
+            const cw = w - pad.l - pad.r;
+            const ch = h - pad.t - pad.b;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Find max bounds
+            let maxM = 0;
+            let maxB = 0;
+            plans.forEach(p => {
+                if (p.history.length > maxM) maxM = p.history.length;
+                p.history.forEach(v => { if (v > maxB) maxB = v; });
+            });
+            maxM = Math.max(maxM, 12); // At least 1 year
+            maxB = maxB * 1.1; // 10% headroom
+
+            // Grid & Axes
+            ctx.strokeStyle = '#152040';
+            ctx.fillStyle = '#8b9bb4';
+            ctx.font = '11px "JetBrains Mono", monospace';
+            ctx.lineWidth = 1;
+
+            // Y Axis
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            for(let i=0; i<=5; i++) {
+                let y = h - pad.b - (ch * (i/5));
+                let val = maxB * (i/5);
+
+                ctx.beginPath();
+                ctx.moveTo(pad.l, y);
+                ctx.lineTo(w - pad.r, y);
+                ctx.stroke();
+
+                let txt = val >= 1000 ? `$${(val/1000).toFixed(0)}k` : `$${val.toFixed(0)}`;
+                ctx.fillText(txt, pad.l - 10, y);
+            }
+
+            // X Axis
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            let years = Math.ceil(maxM / 12);
+            let xTicks = years > 10 ? 10 : years;
+            for(let i=0; i<=xTicks; i++) {
+                let yr = Math.round((years / xTicks) * i);
+                let x = pad.l + (cw * ((yr * 12) / maxM));
+
+                if (x <= w - pad.r) {
+                    ctx.fillText(`${yr}y`, x, h - pad.b + 10);
+                }
+            }
+
+            // Draw Lines
+            plans.forEach(p => {
+                ctx.beginPath();
+                ctx.strokeStyle = p.color;
+                ctx.lineWidth = p.isRecommended ? 4 : 2;
+                ctx.lineJoin = 'round';
+
+                p.history.forEach((val, idx) => {
+                    let x = pad.l + (cw * (idx / maxM));
+                    let y = h - pad.b - (ch * (val / maxB));
+                    if (idx === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                });
+                ctx.stroke();
+
+                // Draw drop line if forgiven
+                if (p.forgiven > 0 && p.history.length > 0) {
+                    let lastX = pad.l + (cw * ((p.history.length - 1) / maxM));
+                    let lastY = h - pad.b - (ch * (p.history[p.history.length-1] / maxB));
+                    let endY = h - pad.b; // 0 balance
+
+                    ctx.beginPath();
+                    ctx.strokeStyle = p.color;
+                    ctx.setLineDash([5, 5]);
+                    ctx.moveTo(lastX, lastY);
+                    ctx.lineTo(lastX, endY);
+                    ctx.stroke();
+                    ctx.setLineDash([]); // reset
+                }
+            });
+        };
+
+        // Event Listeners
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', updateApp);
+            if(input.type === 'checkbox') input.addEventListener('change', updateApp);
+        });
+        window.addEventListener('resize', () => {
+            // Need a tiny delay for resize to settle
+            setTimeout(updateApp, 50);
+        });
+
+        // Init
+        updateApp();
+
+    </script>
+</body>
+</html>
