@@ -4,41 +4,27 @@
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
+
     <meta charset="UTF-8">
-<link rel="canonical" href="https://firemaths.info/inflation-calculator" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inflation Calculator | firemaths.info</title>
-    <meta name="description" content="Calculate the changing value of a dollar over time. See how purchasing power has been impacted by historical inflation rates using US CPI data from 1913 to present.">
+    <title>Inflation Calculator | Purchasing Power & Historical CPI Data | FireMaths</title>
+    <meta name="description" content="Think your money is safe under the mattress? Discover the silent tax eating your savings. Calculate exact purchasing power loss from 1913 to today with our inflation calculator.">
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Inflation Calculator",
-      "url": "https://firemaths.info/inflation-calculator",
-      "description": "Calculate purchasing power and historical inflation using US CPI data.",
-      "applicationCategory": "FinanceApplication",
-      "operatingSystem": "All",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
-    }
-    </script>
+    <link rel="canonical" href="https://firemaths.info/inflation-calculator.html" />
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg-color: #0c0a00;
-            --card-bg: #141008;
-            --border-color: #2a2010;
+            --bg-color: #060a12;
+            --card-bg: #0a1020;
+            --border-color: #152040;
             --accent-color: #D4A017;
-            --text-primary: #e0d8c8;
-            --text-secondary: #888888;
+            --text-primary: #f0f4f8;
+            --text-secondary: #a0aec0;
             --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
         }
@@ -61,8 +47,61 @@
             font-weight: 700;
             line-height: 1.2;
             color: var(--text-primary);
+            margin-bottom: 1rem;
         }
 
+        /* Sticky Nav */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(6, 10, 18, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: var(--accent-color);
+            font-weight: 800;
+            font-size: 1.25rem;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 600px) {
+            .nav-links { gap: 1rem; }
+            .nav-links a { font-size: 0.85rem; }
+        }
+
+        /* Main Container */
         .container {
             max-width: 1000px;
             margin: 0 auto;
@@ -75,16 +114,21 @@
         }
 
         header h1 {
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 5vw, 3rem);
             margin-bottom: 0.5rem;
-            color: var(--accent-color);
+            background: linear-gradient(135deg, #fff, #a0aec0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         header p {
             color: var(--text-secondary);
             font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
+        /* Grid */
         .calculator-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -96,33 +140,38 @@
             .calculator-grid {
                 grid-template-columns: 1fr 1fr;
             }
+            .full-width {
+                grid-column: 1 / -1;
+            }
         }
 
-        .scenario-card {
+        /* Cards */
+        .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: transform 0.2s, border-color 0.2s;
         }
 
-        .scenario-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
             margin-bottom: 1.5rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid var(--border-color);
         }
 
-        .scenario-header h2 {
+        .card-header h2 {
             font-size: 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            margin-bottom: 0;
         }
 
+        /* Forms */
         .input-group {
             margin-bottom: 1.25rem;
         }
@@ -141,16 +190,14 @@
             align-items: center;
         }
 
-        .prefix, .suffix {
+        .prefix {
             position: absolute;
+            left: 1rem;
             color: var(--text-secondary);
             font-family: var(--font-mono);
             font-size: 1rem;
             pointer-events: none;
         }
-
-        .prefix { left: 1rem; }
-        .suffix { right: 1rem; }
 
         input[type="number"], select {
             width: 100%;
@@ -165,11 +212,15 @@
             -moz-appearance: textfield;
         }
 
+        input.has-prefix {
+            padding-left: 2rem;
+        }
+
         select {
             font-family: var(--font-ui);
             cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a0aec0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 1rem center;
         }
@@ -185,95 +236,171 @@
             border-color: var(--accent-color);
         }
 
-        .has-prefix input { padding-left: 2rem; }
-        .has-suffix input { padding-right: 2.5rem; }
-
-        .results {
-            margin-top: auto;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
+        /* Results */
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
-        .result-item {
+        .hero-result {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero-result span {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--accent-color);
+            font-size: 1.2em;
+        }
+
+        .metrics-list {
+            margin-top: auto;
+        }
+
+        .metric-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px dashed var(--border-color);
         }
 
-        .result-label {
+        .metric-item:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
             color: var(--text-secondary);
-            font-size: 0.875rem;
+            font-size: 0.9rem;
         }
 
-        .result-value {
+        .metric-value {
             font-family: var(--font-mono);
-            font-size: 1.125rem;
-            font-weight: 500;
+            font-size: 1.1rem;
+            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .result-final .result-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-color);
-        }
-
         .copy-btn {
-            background: none;
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
+            background: rgba(212, 160, 23, 0.1);
+            border: 1px solid rgba(212, 160, 23, 0.3);
+            color: var(--accent-color);
             cursor: pointer;
-            padding: 0.25rem 0.5rem;
+            padding: 0.2rem 0.5rem;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-family: var(--font-ui);
             transition: all 0.2s;
+            text-transform: uppercase;
+            font-weight: 600;
         }
 
         .copy-btn:hover {
-            border-color: var(--accent-color);
+            background: var(--accent-color);
+            color: var(--bg-color);
+        }
+
+        /* Chart Canvas */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin-top: 1rem;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Insights Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-box {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-box .label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-box .value {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 700;
             color: var(--text-primary);
         }
 
-        .explanation {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
+        .stat-box .subtext {
+             font-size: 0.75rem;
+             color: var(--text-secondary);
+             margin-top: 0.25rem;
         }
 
-        .seo-content {
-            margin-bottom: 4rem;
+        /* Content & FAQ Sections */
+        .content-section {
+            margin-top: 4rem;
         }
 
-        .seo-content h2 {
+        .content-section h2 {
             font-size: 1.75rem;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
             color: var(--accent-color);
-        }
-
-        .seo-content p {
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .seo-content ul {
             margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section p {
+            margin-bottom: 1.25rem;
             color: var(--text-secondary);
         }
 
-        .seo-content li {
-            margin-bottom: 0.5rem;
+        .faq-item {
+            margin-bottom: 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
         }
 
+        .faq-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
         footer {
             text-align: center;
-            padding: 2rem 0;
+            padding: 3rem 1.5rem;
+            margin-top: 4rem;
             border-top: 1px solid var(--border-color);
             color: var(--text-secondary);
             font-size: 0.875rem;
@@ -289,245 +416,499 @@
             color: var(--text-primary);
             text-decoration: underline;
         }
+
+        .disclaimer {
+            font-size: 0.75rem;
+            margin-top: 1rem;
+            opacity: 0.7;
+        }
     </style>
+
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Inflation Calculator",
+      "url": "https://firemaths.info/inflation-calculator.html",
+      "description": "Calculate purchasing power and historical inflation using US CPI data.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does an inflation calculator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An inflation calculator works by comparing the Consumer Price Index (CPI) of two different years. It takes an initial dollar amount, divides the CPI of the target year by the CPI of the starting year to get an inflation multiplier, and then multiplies the initial amount by that factor to determine its equivalent purchasing power."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is $100 worth today compared to the past?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The value of $100 today depends heavily on the starting year due to compounding inflation. For example, $100 in 1970 had the same purchasing power as approximately $809 today, meaning goods that cost $100 then would cost over $800 now."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a purchasing power calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A purchasing power calculator is a tool that measures how the value of money changes over time. It shows you how many goods or services a specific amount of money could buy in a past year compared to a more recent year, illustrating the erosion of cash value due to inflation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the average inflation rate by decade?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Inflation varies wildly by decade. The 1970s saw massive inflation averaging over 7% annually. The 1980s averaged around 5%. The 1990s and 2000s were calmer, averaging roughly 3% and 2.5% respectively. The 2010s were historically low at under 2%, while the early 2020s saw a spike back up above 4%."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is it important to calculate inflation for retirement?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If you don't calculate inflation, you will drastically underestimate your retirement needs. If your expenses are $50,000 today, a 3% average inflation rate means you will need roughly $90,000 to maintain the exact same lifestyle in 20 years. Your investments must outpace inflation to preserve your real wealth."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Inflation Calculator: What Is Your Money Really Worth?",
+      "description": "Calculate exact purchasing power loss from 1913 to today with our inflation calculator using historical CPI data.",
+      "author": {
+        "@type": "Organization",
+        "name": "FireMaths"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "FireMaths",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://firemaths.info/favicon.ico"
+        }
+      },
+      "datePublished": "2024-03-11"
+    }
+    </script>
 </head>
 <body>
-<script src="/nav.js"></script>
 
-<div class="container">
-    <header>
-        <h1>Inflation Calculator</h1>
-        <p>Measure purchasing power over time</p>
-    </header>
+    <!-- Sticky Nav -->
+    <nav class="sticky-nav">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">FireMaths</a>
+            <div class="nav-links">
+                <a href="/#studies">Studies</a>
+                <a href="/#tools">Tools</a>
+                <a href="/#guides">Guides</a>
+            </div>
+        </div>
+    </nav>
 
-    <main>
-        <div class="calculator-grid">
-            <!-- Input Section -->
-            <div class="scenario-card">
-                <div class="scenario-header">
-                    <h2>Calculate Inflation</h2>
-                </div>
+    <div class="container">
+        <header>
+            <h1>Inflation Calculator</h1>
+            <p>Measure the true cost of time. See how purchasing power has been impacted by historical inflation using US CPI data.</p>
+        </header>
 
-                <div class="inputs">
+        <main>
+            <div class="calculator-grid">
+                <!-- Inputs -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Calculation Details</h2>
+                    </div>
                     <div class="input-group">
-                        <label for="amount">Original Amount</label>
-                        <div class="input-wrapper has-prefix">
+                        <label for="amount">Amount ($)</label>
+                        <div class="input-wrapper">
                             <span class="prefix">$</span>
-                            <input type="number" id="amount" value="100" min="0" step="1">
+                            <input type="number" id="amount" class="has-prefix" value="100" min="1" step="any">
                         </div>
                     </div>
-
                     <div class="input-group">
-                        <label for="start-year">Starting Year</label>
-                        <div class="input-wrapper">
-                            <select id="start-year">
-                                <!-- Options populated by JS -->
-                            </select>
+                        <label for="start-year">From Year</label>
+                        <select id="start-year"></select>
+                    </div>
+                    <div class="input-group">
+                        <label for="end-year">To Year</label>
+                        <select id="end-year"></select>
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Purchasing Power</h2>
+                    </div>
+                    <div class="results-container">
+                        <div class="hero-result" id="summary-text">
+                            $100 in 1990 has the same purchasing power as <span>$239.63</span> in 2024.
+                        </div>
+
+                        <div class="metrics-list">
+                            <div class="metric-item">
+                                <span class="metric-label">Adjusted Value</span>
+                                <div class="metric-value">
+                                    <span id="adjusted-amount">$239.63</span>
+                                    <button class="copy-btn" onclick="copyValue('adjusted-amount', this)">Copy</button>
+                                </div>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Cumulative Inflation</span>
+                                <span class="metric-value" id="cumulative-rate">139.6%</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-label">Average Annual Rate</span>
+                                <span class="metric-value" id="annual-rate">2.61%</span>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="input-group">
-                        <label for="end-year">Ending Year</label>
-                        <div class="input-wrapper">
-                            <select id="end-year">
-                                <!-- Options populated by JS -->
-                            </select>
+                <!-- Chart Card -->
+                <div class="card full-width">
+                    <div class="card-header">
+                        <h2>Value Over Time (Timeline)</h2>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+                        This chart shows what <strong id="chart-base-amount" style="color: var(--text-primary);">$100</strong> from <strong id="chart-base-year" style="color: var(--text-primary);">1990</strong> is worth in subsequent years to maintain the exact same purchasing power.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="inflationChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Quick Insights -->
+                <div class="card full-width">
+                    <div class="card-header">
+                        <h2>Historical & Future Context</h2>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="label">$1 in 1970 is today</span>
+                            <span class="value" id="stat-1970">$0.00</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="label">Highest Decade</span>
+                            <span class="value">1970s</span>
+                            <span class="subtext">7.4% avg/yr</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="label">$100k in 10 Yrs*</span>
+                            <span class="value" id="stat-future-10">$0</span>
+                            <span class="subtext">*Assuming 3% inflation</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="label">$100k in 20 Yrs*</span>
+                            <span class="value" id="stat-future-20">$0</span>
+                            <span class="subtext">*Assuming 3% inflation</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Breakdown Section -->
-            <div class="scenario-card">
-                <div class="scenario-header">
-                    <h2>Purchasing Power</h2>
+            <!-- SEO Content & FAQ -->
+            <div class="content-section">
+                <h2>Understanding the Inflation Calculator</h2>
+                <p>Inflation is the silent thief of wealth. It represents the rate at which the general level of prices for goods and services rises, eroding purchasing power. As inflation occurs, every dollar you own buys a smaller percentage of a good or service. This means your money's value decreases over time, requiring you to spend more dollars tomorrow to purchase what you could buy with fewer dollars today.</p>
+                <p>This purchasing power calculator uses historical Consumer Price Index (CPI-U) data provided by the U.S. Bureau of Labor Statistics (BLS). By comparing the CPI of a past year to the CPI of a more recent year, we can accurately determine how much buying power a specific amount of money has gained or lost.</p>
+
+                <h2>Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <h3>How does an inflation calculator work?</h3>
+                    <p>An inflation calculator works by comparing the Consumer Price Index (CPI) of two different years. It takes an initial dollar amount, divides the CPI of the target year by the CPI of the starting year to get an inflation multiplier, and then multiplies the initial amount by that factor to determine its equivalent purchasing power.</p>
                 </div>
 
-                <div class="explanation" id="summary-text">
-                    <!-- Updated via JS -->
-                    $100 in 1913 has the same purchasing power as $3,173.74 in 2024.
+                <div class="faq-item">
+                    <h3>What is $100 worth today compared to the past?</h3>
+                    <p>The value of $100 today depends heavily on the starting year due to compounding inflation. For example, using our tool to see what $100 in 1970 is worth today reveals a massive drop in purchasing power, meaning goods that cost $100 then would cost hundreds of dollars more now.</p>
                 </div>
 
-                <div class="results">
-                    <div class="result-item result-final">
-                        <span class="result-label" id="adjusted-label">Adjusted Value</span>
-                        <div class="result-value">
-                            <span id="adjusted-amount">$0</span>
-                            <button class="copy-btn" onclick="copyValue('adjusted-amount', this)">Copy</button>
-                        </div>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Cumulative Inflation</span>
-                        <span class="result-value" id="cumulative-inflation">0%</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Average Annual Inflation</span>
-                        <span class="result-value" id="annual-inflation">0%</span>
-                    </div>
+                <div class="faq-item">
+                    <h3>What is a purchasing power calculator?</h3>
+                    <p>A purchasing power calculator is a tool that measures how the value of money changes over time. It shows you how many goods or services a specific amount of money could buy in a past year compared to a more recent year, illustrating the erosion of cash value due to inflation.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is the average inflation rate by decade?</h3>
+                    <p>Inflation varies wildly by decade. The 1970s saw massive inflation averaging over 7% annually. The 1980s averaged around 5%. The 1990s and 2000s were calmer, averaging roughly 3% and 2.5% respectively. The 2010s were historically low at under 2%, while the early 2020s saw a spike back up above 4%.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Why is it important to calculate inflation for retirement?</h3>
+                    <p>If you don't calculate inflation, you will drastically underestimate your retirement needs. If your expenses are $50,000 today, a 3% average inflation rate means you will need roughly $90,000 to maintain the exact same lifestyle in 20 years. Your investments must outpace inflation to preserve your real wealth.</p>
                 </div>
             </div>
-        </div>
 
-        <div class="seo-content">
-            <h2>What is Inflation?</h2>
-            <p>Inflation is the rate at which the general level of prices for goods and services rises, eroding purchasing power. As inflation occurs, every dollar you own buys a smaller percentage of a good or service. This means your money's value decreases over time, requiring you to spend more dollars tomorrow to purchase what you could buy with fewer dollars today.</p>
-            <p>Central banks typically attempt to limit inflation, and avoid deflation, in order to keep the economy running smoothly. For personal finance planning, understanding historical inflation is critical because it highlights why holding cash long-term is generally a poor strategy compared to investing in assets that outpace inflation.</p>
+        </main>
 
-            <h2>How the Consumer Price Index (CPI) Works</h2>
-            <p>This calculator uses data from the Consumer Price Index (CPI), specifically the CPI-U (Consumer Price Index for All Urban Consumers), which is provided by the U.S. Bureau of Labor Statistics (BLS). The CPI measures the average change over time in the prices paid by urban consumers for a market basket of consumer goods and services.</p>
-            <ul>
-                <li><strong>Housing and Groceries:</strong> The CPI basket includes common everyday expenses such as housing, food, transportation, and medical care.</li>
-                <li><strong>Historical Context:</strong> Our data spans back to 1913, when the BLS first started tracking these metrics consistently.</li>
-                <li><strong>Purchasing Power:</strong> By comparing the CPI of a past year to the CPI of a more recent year, we can accurately determine how much buying power a specific amount of money has gained or lost.</li>
-            </ul>
+        <footer>
+            <p>&copy; 2026 FireMaths &middot; A GAB Ventures property</p>
+            <p class="disclaimer">Not investment advice. All information for educational purposes only.</p>
+        </footer>
+    </div>
 
-            <h2>Why You Must Plan for Inflation in FIRE</h2>
-            <p>When pursuing Financial Independence, Retire Early (FIRE), inflation is one of the most significant variables. If your expenses are $40,000 today, an average inflation rate of just 3% means you will need nearly $72,000 to maintain the same standard of living in 20 years.</p>
-            <p>The famous "4% Rule" (based on the Trinity Study) implicitly accounts for inflation by assuming your portfolio will grow at an inflation-adjusted rate, allowing you to increase your withdrawal amount each year to match rising costs. Failing to factor inflation into your retirement numbers often leads to drastically underestimating your target FIRE number.</p>
-        </div>
+    <!-- Application Logic -->
+    <script>
+        // US Historical CPI Data (Annual Averages)
+        const cpiData = {
+            1913: 9.9, 1914: 10.0, 1915: 10.1, 1916: 10.9, 1917: 12.8, 1918: 15.1, 1919: 17.3,
+            1920: 20.0, 1921: 17.9, 1922: 16.7, 1923: 17.1, 1924: 17.1, 1925: 17.5, 1926: 17.7,
+            1927: 17.4, 1928: 17.1, 1929: 17.1, 1930: 16.7, 1931: 15.2, 1932: 13.7, 1933: 13.0,
+            1934: 13.4, 1935: 13.7, 1936: 13.9, 1937: 14.4, 1938: 14.1, 1939: 13.9, 1940: 14.0,
+            1941: 14.7, 1942: 16.3, 1943: 17.3, 1944: 17.6, 1945: 18.0, 1946: 19.5, 1947: 22.3,
+            1948: 24.1, 1949: 23.8, 1950: 24.1, 1951: 26.0, 1952: 26.5, 1953: 26.7, 1954: 26.9,
+            1955: 26.8, 1956: 27.2, 1957: 28.1, 1958: 28.9, 1959: 29.1, 1960: 29.6, 1961: 29.9,
+            1962: 30.2, 1963: 30.6, 1964: 31.0, 1965: 31.5, 1966: 32.4, 1967: 33.4, 1968: 34.8,
+            1969: 36.7, 1970: 38.8, 1971: 40.5, 1972: 41.8, 1973: 44.4, 1974: 49.3, 1975: 53.8,
+            1976: 56.9, 1977: 60.6, 1978: 65.2, 1979: 72.6, 1980: 82.4, 1981: 90.9, 1982: 96.5,
+            1983: 99.6, 1984: 103.9, 1985: 107.6, 1986: 109.6, 1987: 113.6, 1988: 118.3, 1989: 124.0,
+            1990: 130.7, 1991: 136.2, 1992: 140.3, 1993: 144.5, 1994: 148.2, 1995: 152.4, 1996: 156.9,
+            1997: 160.5, 1998: 163.0, 1999: 166.6, 2000: 172.2, 2001: 177.1, 2002: 179.9, 2003: 184.0,
+            2004: 188.9, 2005: 195.3, 2006: 201.6, 2007: 207.3, 2008: 215.3, 2009: 214.5, 2010: 218.1,
+            2011: 224.9, 2012: 229.6, 2013: 233.0, 2014: 236.7, 2015: 237.0, 2016: 240.0, 2017: 245.1,
+            2018: 251.1, 2019: 255.7, 2020: 258.8, 2021: 271.0, 2022: 292.6, 2023: 304.7, 2024: 314.2
+        };
 
-    </main>
+        const years = Object.keys(cpiData).map(Number).sort((a,b)=>a-b);
+        const maxYear = years[years.length - 1];
 
-    <footer>
-        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
-    </footer>
-</div>
+        // Formatters
+        const fCurr = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+        const fCurrNoCent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+        const fPct = new Intl.NumberFormat('en-US', { style: 'percent', minimumFractionDigits: 1, maximumFractionDigits: 2 });
 
-<script>
-    // Historical Annual Average CPI Data (US Bureau of Labor Statistics)
-    const cpiData = {
-        1913: 9.9, 1914: 10.0, 1915: 10.1, 1916: 10.9, 1917: 12.8, 1918: 15.1, 1919: 17.3,
-        1920: 20.0, 1921: 17.9, 1922: 16.7, 1923: 17.1, 1924: 17.1, 1925: 17.5, 1926: 17.7,
-        1927: 17.4, 1928: 17.1, 1929: 17.1, 1930: 16.7, 1931: 15.2, 1932: 13.7, 1933: 13.0,
-        1934: 13.4, 1935: 13.7, 1936: 13.9, 1937: 14.4, 1938: 14.1, 1939: 13.9, 1940: 14.0,
-        1941: 14.7, 1942: 16.3, 1943: 17.3, 1944: 17.6, 1945: 18.0, 1946: 19.5, 1947: 22.3,
-        1948: 24.1, 1949: 23.8, 1950: 24.1, 1951: 26.0, 1952: 26.5, 1953: 26.7, 1954: 26.9,
-        1955: 26.8, 1956: 27.2, 1957: 28.1, 1958: 28.9, 1959: 29.1, 1960: 29.6, 1961: 29.9,
-        1962: 30.2, 1963: 30.6, 1964: 31.0, 1965: 31.5, 1966: 32.4, 1967: 33.4, 1968: 34.8,
-        1969: 36.7, 1970: 38.8, 1971: 40.5, 1972: 41.8, 1973: 44.4, 1974: 49.3, 1975: 53.8,
-        1976: 56.9, 1977: 60.6, 1978: 65.2, 1979: 72.6, 1980: 82.4, 1981: 90.9, 1982: 96.5,
-        1983: 99.6, 1984: 103.9, 1985: 107.6, 1986: 109.6, 1987: 113.6, 1988: 118.3, 1989: 124.0,
-        1990: 130.7, 1991: 136.2, 1992: 140.3, 1993: 144.5, 1994: 148.2, 1995: 152.4, 1996: 156.9,
-        1997: 160.5, 1998: 163.0, 1999: 166.6, 2000: 172.2, 2001: 177.1, 2002: 179.9, 2003: 184.0,
-        2004: 188.9, 2005: 195.3, 2006: 201.6, 2007: 207.3, 2008: 215.3, 2009: 214.5, 2010: 218.1,
-        2011: 224.9, 2012: 229.6, 2013: 233.0, 2014: 236.7, 2015: 237.0, 2016: 240.0, 2017: 245.1,
-        2018: 251.1, 2019: 255.7, 2020: 258.8, 2021: 271.0, 2022: 292.6, 2023: 304.7, 2024: 314.2
-    };
+        // DOM Elements
+        const elAmt = document.getElementById('amount');
+        const elStart = document.getElementById('start-year');
+        const elEnd = document.getElementById('end-year');
+        const elSummary = document.getElementById('summary-text');
+        const elAdjAmt = document.getElementById('adjusted-amount');
+        const elCumRate = document.getElementById('cumulative-rate');
+        const elAnnRate = document.getElementById('annual-rate');
 
-    const startYearSelect = document.getElementById('start-year');
-    const endYearSelect = document.getElementById('end-year');
-    const amountInput = document.getElementById('amount');
+        // Canvas context
+        const canvas = document.getElementById('inflationChart');
+        const ctx = canvas.getContext('2d');
 
-    const years = Object.keys(cpiData).map(Number).sort((a, b) => a - b);
-    const minYear = years[0];
-    const maxYear = years[years.length - 1];
+        // Init Form
+        function init() {
+            years.forEach(y => {
+                elStart.add(new Option(y, y));
+                elEnd.add(new Option(y, y));
+            });
+            elStart.value = 1990;
+            elEnd.value = maxYear;
 
-    // Populate selects
-    years.forEach(year => {
-        const option1 = document.createElement('option');
-        option1.value = year;
-        option1.textContent = year;
-        startYearSelect.appendChild(option1);
+            // Calculate context stats
+            calcContextStats();
 
-        const option2 = document.createElement('option');
-        option2.value = year;
-        option2.textContent = year;
-        endYearSelect.appendChild(option2);
-    });
+            // Listeners
+            [elAmt, elStart, elEnd].forEach(el => el.addEventListener('input', calculate));
 
-    // Default selections
-    startYearSelect.value = 1990;
-    endYearSelect.value = maxYear;
+            // Handle Resize for canvas
+            window.addEventListener('resize', drawChart);
 
-    const formatCurrency = (value) => {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            maximumFractionDigits: 2
-        }).format(value);
-    };
-
-    const formatPercent = (value) => {
-        return new Intl.NumberFormat('en-US', {
-            style: 'percent',
-            minimumFractionDigits: 1,
-            maximumFractionDigits: 2
-        }).format(value);
-    };
-
-    window.copyValue = async (elementId, btn) => {
-        const text = document.getElementById(elementId).innerText;
-        try {
-            await navigator.clipboard.writeText(text);
-            const originalText = btn.innerText;
-            btn.innerText = 'Copied!';
-            setTimeout(() => {
-                btn.innerText = originalText;
-            }, 2000);
-        } catch (err) {
-            console.error('Failed to copy text: ', err);
-        }
-    };
-
-    const updateCalculator = () => {
-        const amount = parseFloat(amountInput.value) || 0;
-        let startYear = parseInt(startYearSelect.value);
-        let endYear = parseInt(endYearSelect.value);
-
-        if (startYear === endYear) {
-            document.getElementById('summary-text').innerHTML = `There is no inflation between the same year.`;
-            document.getElementById('adjusted-amount').innerText = formatCurrency(amount);
-            document.getElementById('cumulative-inflation').innerText = "0%";
-            document.getElementById('annual-inflation').innerText = "0%";
-            document.getElementById('adjusted-label').innerText = `Value in ${endYear}`;
-            return;
+            calculate();
         }
 
-        const startCpi = cpiData[startYear];
-        const endCpi = cpiData[endYear];
+        function calculate() {
+            const amt = parseFloat(elAmt.value) || 0;
+            const startY = parseInt(elStart.value);
+            const endY = parseInt(elEnd.value);
 
-        // Calculate the multiplier based on CPI ratio
-        const multiplier = endCpi / startCpi;
-        const adjustedAmount = amount * multiplier;
+            document.getElementById('chart-base-amount').innerText = fCurr.format(amt);
+            document.getElementById('chart-base-year').innerText = startY;
 
-        // Cumulative inflation
-        const cumulativeRate = multiplier - 1;
+            if (startY === endY) {
+                elSummary.innerHTML = `${fCurr.format(amt)} in ${startY} has the exact same purchasing power in ${endY}.`;
+                elAdjAmt.innerText = fCurr.format(amt);
+                elCumRate.innerText = "0%";
+                elAnnRate.innerText = "0%";
+                drawChart();
+                return;
+            }
 
-        // Average annual inflation (compound annual growth rate)
-        const yearDiff = Math.abs(endYear - startYear);
+            const cpi1 = cpiData[startY];
+            const cpi2 = cpiData[endY];
+            const multiplier = cpi2 / cpi1;
+            const adjAmt = amt * multiplier;
 
-        // If start year is greater than end year (calculating backwards)
-        let annualRate;
-        if (startYear < endYear) {
-            annualRate = Math.pow(multiplier, 1 / yearDiff) - 1;
-            document.getElementById('summary-text').innerHTML = `<strong>${formatCurrency(amount)}</strong> in ${startYear} has the same purchasing power as <strong>${formatCurrency(adjustedAmount)}</strong> in ${endYear}.`;
-        } else {
-            // Reversing the time
-            const reverseMultiplier = startCpi / endCpi;
-            annualRate = Math.pow(reverseMultiplier, 1 / yearDiff) - 1;
-            document.getElementById('summary-text').innerHTML = `To have the purchasing power of <strong>${formatCurrency(amount)}</strong> in ${startYear}, you would have only needed <strong>${formatCurrency(adjustedAmount)}</strong> back in ${endYear}.`;
+            let yearsDiff = Math.abs(endY - startY);
+
+            let cumRate, annRate;
+            if (startY < endY) {
+                // Forward in time
+                cumRate = multiplier - 1;
+                annRate = Math.pow(multiplier, 1 / yearsDiff) - 1;
+                elSummary.innerHTML = `${fCurr.format(amt)} in ${startY} has the same purchasing power as <span>${fCurr.format(adjAmt)}</span> in ${endY}.`;
+            } else {
+                // Backward in time
+                const revMult = cpi1 / cpi2;
+                cumRate = multiplier - 1; // It's negative
+                annRate = -(Math.pow(revMult, 1 / yearsDiff) - 1);
+                elSummary.innerHTML = `To match the purchasing power of ${fCurr.format(amt)} in ${startY}, you would only need <span>${fCurr.format(adjAmt)}</span> back in ${endY}.`;
+            }
+
+            elAdjAmt.innerText = fCurr.format(adjAmt);
+            elCumRate.innerText = fPct.format(cumRate);
+            elAnnRate.innerText = fPct.format(annRate);
+
+            drawChart();
         }
 
-        // Update UI
-        document.getElementById('adjusted-label').innerText = `Value in ${endYear}`;
-        document.getElementById('adjusted-amount').innerText = formatCurrency(adjustedAmount);
+        function calcContextStats() {
+            // $1 in 1970
+            const val1970 = 1 * (cpiData[maxYear] / cpiData[1970]);
+            document.getElementById('stat-1970').innerText = fCurr.format(val1970);
 
-        // Only show positive inflation rates (or negative if deflation) based on direction
-        const displayCumulative = startYear < endYear ? cumulativeRate : (multiplier - 1);
-        const displayAnnual = startYear < endYear ? annualRate : -annualRate;
+            // Future projection 100k
+            const p10 = 100000 * Math.pow(1.03, 10);
+            const p20 = 100000 * Math.pow(1.03, 20);
+            document.getElementById('stat-future-10').innerText = fCurrNoCent.format(p10);
+            document.getElementById('stat-future-20').innerText = fCurrNoCent.format(p20);
+        }
 
-        document.getElementById('cumulative-inflation').innerText = formatPercent(displayCumulative);
-        document.getElementById('annual-inflation').innerText = formatPercent(displayAnnual);
-    };
+        // Vanilla Canvas Chart
+        function drawChart() {
+            const amt = parseFloat(elAmt.value) || 0;
+            const startY = parseInt(elStart.value);
+            const endY = parseInt(elEnd.value);
 
-    // Event listeners
-    amountInput.addEventListener('input', updateCalculator);
-    startYearSelect.addEventListener('change', updateCalculator);
-    endYearSelect.addEventListener('change', updateCalculator);
+            // Ensure crisp rendering on retina displays
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
 
-    // Initial calc
-    updateCalculator();
-</script>
+            const w = rect.width;
+            const h = rect.height;
+            const padding = { top: 20, right: 20, bottom: 30, left: 60 };
+            const cw = w - padding.left - padding.right;
+            const ch = h - padding.top - padding.bottom;
 
+            ctx.clearRect(0, 0, w, h);
+
+            if (startY >= endY) {
+                ctx.fillStyle = '#a0aec0';
+                ctx.font = '14px Inter';
+                ctx.textAlign = 'center';
+                ctx.fillText('Select a To Year greater than From Year to view timeline.', w/2, h/2);
+                return;
+            }
+
+            // Generate timeline data
+            const data = [];
+            let maxVal = 0;
+            for (let y = startY; y <= endY; y++) {
+                const val = amt * (cpiData[y] / cpiData[startY]);
+                data.push({ year: y, value: val });
+                if (val > maxVal) maxVal = val;
+            }
+
+            // Draw Axes
+            ctx.strokeStyle = '#152040';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            // Y axis
+            ctx.moveTo(padding.left, padding.top);
+            ctx.lineTo(padding.left, h - padding.bottom);
+            // X axis
+            ctx.lineTo(w - padding.right, h - padding.bottom);
+            ctx.stroke();
+
+            // Y-Axis Labels
+            ctx.fillStyle = '#a0aec0';
+            ctx.font = '12px JetBrains Mono';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            const ySteps = 4;
+            for (let i = 0; i <= ySteps; i++) {
+                const val = (maxVal / ySteps) * i;
+                const yPos = (h - padding.bottom) - (i/ySteps) * ch;
+                ctx.fillText(fCurrNoCent.format(val), padding.left - 10, yPos);
+
+                // Grid line
+                if (i > 0) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = 'rgba(21, 32, 64, 0.5)';
+                    ctx.moveTo(padding.left, yPos);
+                    ctx.lineTo(w - padding.right, yPos);
+                    ctx.stroke();
+                }
+            }
+
+            // X-Axis Labels (first and last year)
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText(startY, padding.left, h - padding.bottom + 10);
+            ctx.fillText(endY, w - padding.right, h - padding.bottom + 10);
+
+            // Draw Line
+            ctx.beginPath();
+            ctx.strokeStyle = '#D4A017';
+            ctx.lineWidth = 3;
+            ctx.lineJoin = 'round';
+
+            data.forEach((d, i) => {
+                const x = padding.left + (i / (data.length - 1)) * cw;
+                const y = (h - padding.bottom) - (d.value / maxVal) * ch;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+
+            // Fill area under line
+            ctx.lineTo(w - padding.right, h - padding.bottom);
+            ctx.lineTo(padding.left, h - padding.bottom);
+            ctx.closePath();
+
+            const gradient = ctx.createLinearGradient(0, padding.top, 0, h - padding.bottom);
+            gradient.addColorStop(0, 'rgba(212, 160, 23, 0.2)');
+            gradient.addColorStop(1, 'rgba(212, 160, 23, 0)');
+            ctx.fillStyle = gradient;
+            ctx.fill();
+        }
+
+        // Copy Helper
+        window.copyValue = async (elementId, btn) => {
+            const text = document.getElementById(elementId).innerText;
+            try {
+                await navigator.clipboard.writeText(text);
+                const originalText = btn.innerText;
+                btn.innerText = 'COPIED';
+                setTimeout(() => { btn.innerText = originalText; }, 2000);
+            } catch (err) {
+                console.error('Failed to copy', err);
+            }
+        };
+
+        // Run
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 </html>
