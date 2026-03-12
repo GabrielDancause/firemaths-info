@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://firemaths.info/guide-rule-of-72.html">
+    <title>The Rule of 72: How Long to Double Your Money at Any Return Rate</title>
+    <!-- Curiosity Gap Meta Description -->
+    <meta name="description" content="A 15th-century mathematical shortcut reveals exactly when your investments will 2x. Find out why the 7% and 10% rules change everything.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Article Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "The Rule of 72: How Long to Double Your Money at Any Return Rate",
+      "description": "A 15th-century mathematical shortcut reveals exactly when your investments will 2x. Find out why the 7% and 10% rules change everything.",
+      "datePublished": "2026-03-10",
+      "publisher": {
+        "@type": "Organization",
+        "name": "FireMaths",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://firemaths.info/logo.png"
+        }
+      }
+    }
+    </script>
+
+    <!-- FAQPage Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the rule of 72?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Rule of 72 is a simple mathematical formula used to estimate how many years it will take to double an investment given a fixed annual rate of return. You simply divide 72 by your annual return rate."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long to double money at 7%?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Using the Rule of 72, if you earn a 7% annual return, it will take approximately 10.3 years to double your money (72 / 7 = 10.28)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long to double money at 10%?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At a 10% annual return rate, it will take exactly 7.2 years for your money to double according to the Rule of 72 (72 / 10 = 7.2)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How accurate is the rule of 72 calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Rule of 72 calculator is very accurate for interest rates between 6% and 10%. Outside of this range, it provides a very close estimate, but the exact logarithmic formula is required for perfect precision."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When does the rule of 72 break down?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Rule of 72 breaks down and becomes less accurate at very high return rates (e.g., above 20%) or very low return rates (e.g., below 2%). For these extremes, the Rule of 69.3 or exact logarithmic formulas provide better estimates."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060a12;
+            --card-bg: #0a1020;
+            --border-color: #152040;
+            --accent-color: #D4A017;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Sticky Nav */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(6, 10, 18, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sticky-nav .brand {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .sticky-nav .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .sticky-nav .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1.25rem;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        code {
+            font-family: var(--font-mono);
+            background-color: rgba(212, 160, 23, 0.1);
+            color: var(--accent-color);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .highlight-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* Calculator Styles */
+        .calculator-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .calculator-card h3 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .suffix {
+            position: absolute;
+            right: 1rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            padding: 0.75rem 1rem;
+            padding-right: 2.5rem;
+            border-radius: 8px;
+            transition: border-color 0.2s;
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .calc-result {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .calc-result-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .calc-result-value {
+            font-family: var(--font-mono);
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-color);
+        }
+
+        /* Table Styles */
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: rgba(212, 160, 23, 0.05);
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        td {
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .faq-item h3 {
+            margin-top: 0;
+            color: var(--text-primary);
+            font-size: 1.15rem;
+        }
+
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--text-primary);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .sticky-nav .nav-links {
+                display: none; /* simple mobile nav approach for standalone page */
+            }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            .calc-result-value { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sticky Nav -->
+<nav class="sticky-nav">
+    <a href="/" class="brand">FireMaths</a>
+    <div class="nav-links">
+        <a href="/#studies">Studies</a>
+        <a href="/#tools">Tools</a>
+        <a href="/#guides">Guides</a>
+    </div>
+</nav>
+
+<div class="container">
+    <header>
+        <h1>The Rule of 72: How Long to Double Your Money at Any Return Rate</h1>
+        <p style="text-align: center; font-size: 1.2rem; margin-bottom: 3rem;">A simple, 15th-century mathematical shortcut to forecast your wealth growth.</p>
+    </header>
+
+    <main>
+        <section>
+            <p>If you've ever wondered <strong>how long to double money</strong> in your investment portfolio, you don't need a complex spreadsheet or advanced math degree. You just need a mental math trick called the <strong>Rule of 72</strong>.</p>
+
+            <div class="highlight-box">
+                <p><strong>The Rule of 72 formula:</strong> Divide 72 by your expected annual return rate. The result is the approximate number of years it will take for your initial investment to double.</p>
+                <code>Years to Double = 72 / Annual Return Rate</code>
+            </div>
+
+            <p>For example, how long to double money at 7%? Simply calculate <code>72 / 7</code>. The answer is approximately <strong>10.3 years</strong>. If your return rate is 10%, it takes exactly <strong>7.2 years</strong> (<code>72 / 10</code>).</p>
+        </section>
+
+        <!-- Interactive Calculator -->
+        <section>
+            <div class="calculator-card">
+                <h3>Rule of 72 Calculator</h3>
+                <div class="input-group">
+                    <label for="calc-rate">Annual Return Rate</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="calc-rate" value="7" min="0.1" step="0.1">
+                        <span class="suffix">%</span>
+                    </div>
+                </div>
+                <div class="calc-result">
+                    <span class="calc-result-label">Time to double your money:</span>
+                    <div class="calc-result-value" id="calc-result">10.3 years</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Common Return Rates and Doubling Times</h2>
+            <p>To save you the math, here is a quick reference table showing how long it takes to double your money at various common interest and investment return rates using the rule of 72.</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Annual Return Rate</th>
+                            <th>Years to Double (Rule of 72)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2% (High-yield savings)</td><td>36.0 years</td></tr>
+                        <tr><td>4% (Conservative bonds)</td><td>18.0 years</td></tr>
+                        <tr><td>6% (Balanced portfolio)</td><td>12.0 years</td></tr>
+                        <tr><td>7% (Historical inflation-adjusted stock return)</td><td>10.3 years</td></tr>
+                        <tr><td>8% (Aggressive portfolio)</td><td>9.0 years</td></tr>
+                        <tr><td>10% (Historical S&P 500 average return)</td><td>7.2 years</td></tr>
+                        <tr><td>12% (Exceptional market performance)</td><td>6.0 years</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>Beyond Doubling: The Rule of 114 and Rule of 144</h2>
+            <p>If you have a longer time horizon, you might be curious about when your money will triple or quadruple. Fortunately, similar rules apply:</p>
+            <ul>
+                <li><strong>The Rule of 114 (Tripling):</strong> Divide 114 by your return rate. At an 8% return, your money will triple in roughly 14.2 years (114 / 8).</li>
+                <li><strong>The Rule of 144 (Quadrupling):</strong> Divide 144 by your return rate. At an 8% return, your money will quadruple in exactly 18 years (144 / 8). Notice that this is exactly double the Rule of 72 time!</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>When Does the Rule of 72 Break Down?</h2>
+            <p>The Rule of 72 is an approximation, not an exact law of physics. It is highly accurate for interest rates between <strong>6% and 10%</strong>. However, it begins to lose precision at the extremes.</p>
+            <p>At very high return rates (e.g., above 20%), the rule overestimates the time it takes to double. At very low return rates (e.g., under 3%), it underestimates the time. For these extreme rates, mathematicians often refer to the <em>Rule of 69.3</em> or use the exact logarithmic formula: <code>t = ln(2) / ln(1 + r)</code>.</p>
+        </section>
+
+        <section>
+            <h2>The History of the Rule of 72</h2>
+            <p>The earliest known reference to this mathematical shortcut dates all the way back to 1494. It was mentioned by <strong>Luca Pacioli</strong>, a renowned Italian mathematician and Franciscan friar (often called the "Father of Accounting"), in his comprehensive mathematics book <em>Summa de arithmetica</em>.</p>
+            <p>Pacioli presented the rule without deriving it or explaining why it worked, suggesting it was already a well-known rule of thumb among merchants of his era.</p>
+        </section>
+
+        <section>
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <h3>What is the rule of 72?</h3>
+                <p>The Rule of 72 is a simple mathematical formula used to estimate how many years it will take to double an investment given a fixed annual rate of return. You simply divide 72 by your annual return rate.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How long to double money at 7%?</h3>
+                <p>Using the Rule of 72, if you earn a 7% annual return, it will take approximately 10.3 years to double your money (72 / 7 = 10.28).</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How long to double money at 10%?</h3>
+                <p>At a 10% annual return rate, it will take exactly 7.2 years for your money to double according to the Rule of 72 (72 / 10 = 7.2).</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How accurate is the rule of 72 calculator?</h3>
+                <p>The Rule of 72 calculator is very accurate for interest rates between 6% and 10%. Outside of this range, it provides a very close estimate, but the exact logarithmic formula is required for perfect precision.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>When does the rule of 72 break down?</h3>
+                <p>The Rule of 72 breaks down and becomes less accurate at very high return rates (e.g., above 20%) or very low return rates (e.g., below 2%). For these extremes, the Rule of 69.3 or exact logarithmic formulas provide better estimates.</p>
+            </div>
+        </section>
+    </main>
+</div>
+
+<footer>
+    <p>&copy; 2026 FireMaths &middot; A GAB Ventures property. Not investment advice. All information for educational purposes only.</p>
+</footer>
+
+<script>
+    // Calculator Logic
+    const rateInput = document.getElementById('calc-rate');
+    const resultDisplay = document.getElementById('calc-result');
+
+    function calculateDoublingTime() {
+        const rate = parseFloat(rateInput.value);
+        if (isNaN(rate) || rate <= 0) {
+            resultDisplay.textContent = '--- years';
+            return;
+        }
+        const years = 72 / rate;
+
+        // Format to 1 decimal place, or drop it if it's .0
+        const formattedYears = (years % 1 === 0)
+            ? years.toString()
+            : years.toFixed(1);
+
+        resultDisplay.textContent = formattedYears + ' years';
+    }
+
+    rateInput.addEventListener('input', calculateDoublingTime);
+</script>
+
+</body>
+</html>
