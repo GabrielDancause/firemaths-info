@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
+    <meta charset="UTF-8">
+    <link rel="canonical" href="https://firemaths.info/net-worth-calculator.html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Net Worth Calculator: Track Your Financial Health | FireMaths</title>
+    <!-- CURIOSITY GAP META DESCRIPTION -->
+    <meta name="description" content="Surprising truth about wealth: Your actual net worth might be shockingly different than you think. Discover the one hidden metric that decides when you can actually retire...">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Article JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Net Worth Calculator: Track Your Financial Health",
+      "description": "Surprising truth about wealth: Your actual net worth might be shockingly different than you think. Discover the one hidden metric that decides when you can actually retire...",
+      "datePublished": "2026-03-11",
+      "publisher": {
+        "@type": "Organization",
+        "name": "FireMaths",
+        "url": "https://firemaths.info"
+      }
+    }
+    </script>
+
+    <!-- FAQPage JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "What is my net worth?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your net worth is the total value of all your assets (what you own) minus the total of all your liabilities (what you owe). It is the most accurate measure of your true financial health and wealth accumulation."
+        }
+      }, {
+        "@type": "Question",
+        "name": "How to calculate net worth?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "To calculate net worth, list all your assets such as cash, investments, real estate, and valuable personal property. Then list all your liabilities like mortgages, student loans, credit card debt, and auto loans. Subtract the total liabilities from the total assets."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Why use a net worth calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A net worth calculator simplifies tracking your financial progress over time, ensuring you don't overlook common assets or liabilities. It provides a quick snapshot of your financial health to help you make informed decisions."
+        }
+      }, {
+        "@type": "Question",
+        "name": "What is a good net worth by age?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A common rule of thumb for a suggested net worth is: (Age x Pre-tax Income) / 10. However, medians vary widely by age group, typically increasing as individuals advance in their careers and pay down debt."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Should I include my house in my net worth calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, you should include the current market value of your house as an asset, and the remaining mortgage balance as a liability. The difference between the two is your home equity, which directly contributes to your net worth."
+        }
+      }]
+    }
+    </script>
+
+    <!-- WebApplication JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Net Worth Calculator",
+      "url": "https://firemaths.info/net-worth-calculator.html",
+      "description": "Calculate your net worth by tracking assets and liabilities. See your asset allocation and compare with age-based median net worth.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060a12;
+            --card-bg: #0a1020;
+            --border-color: #152040;
+            --accent-color: #D4A017;
+            --text-primary: #e0e6ed;
+            --text-secondary: #8b9bb4;
+            --text-positive: #22c55e;
+            --text-negative: #ef4444;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --chart-c1: #D4A017; /* Accent */
+            --chart-c2: #3b82f6; /* Blue */
+            --chart-c3: #10b981; /* Green */
+            --chart-c4: #8b5cf6; /* Purple */
+            --chart-c5: #f59e0b; /* Amber */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Sticky Nav */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(6, 10, 18, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-brand span {
+            color: var(--accent-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Grid */
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 992px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .results-panel {
+                position: sticky;
+                top: 5rem;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .card-total {
+            font-family: var(--font-mono);
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .assets-total { color: var(--text-positive); }
+        .liabs-total { color: var(--text-negative); }
+
+        /* Form Elements */
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .input-label-container {
+            flex: 1;
+        }
+
+        .input-field-container {
+            flex: 1;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="number"] {
+            padding-left: 2rem;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            pointer-events: none;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(212, 160, 23, 0.1);
+        }
+
+        /* Buttons */
+        .btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--text-secondary);
+        }
+
+        .btn-add {
+            width: 100%;
+            justify-content: center;
+            margin-top: 0.5rem;
+            border-style: dashed;
+        }
+
+        .btn-add:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            background: rgba(212, 160, 23, 0.05);
+        }
+
+        .btn-remove {
+            padding: 0.5rem;
+            color: var(--text-secondary);
+            border: none;
+            background: none;
+        }
+
+        .btn-remove:hover {
+            color: var(--text-negative);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .btn-copy {
+            background: var(--accent-color);
+            color: #000;
+            border: none;
+            font-weight: 600;
+        }
+
+        .btn-copy:hover {
+            background: #e5b32a;
+            color: #000;
+        }
+
+        /* Main Result */
+        .net-worth-display {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .net-worth-label {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .net-worth-value {
+            font-family: var(--font-mono);
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        /* Chart */
+        .chart-container {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .chart-container canvas {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1;
+        }
+
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        /* Benchmarks */
+        .benchmark-section {
+            margin-top: 2rem;
+        }
+
+        .benchmark-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .benchmark-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .benchmark-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .benchmark-value {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .comparison-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        .badge-ahead { background: rgba(34, 197, 94, 0.1); color: var(--text-positive); }
+        .badge-behind { background: rgba(239, 68, 68, 0.1); color: var(--text-negative); }
+
+        /* Age Input special */
+        .age-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .age-input-wrapper input {
+            width: 100px;
+            padding-left: 1rem;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 4rem;
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .content-section h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .content-section p {
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-item h3 {
+            margin-top: 0;
+            color: var(--text-primary);
+            font-size: 1.15rem;
+        }
+
+        .faq-item p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 640px) {
+            .input-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.5rem;
+                padding-bottom: 1rem;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+            }
+            .net-worth-value {
+                font-size: 2.5rem;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Nav -->
+    <nav class="sticky-nav">
+        <a href="/" class="nav-brand">Fire<span>Maths</span></a>
+        <div class="nav-links">
+            <a href="/#studies">Studies</a>
+            <a href="/#tools">Tools</a>
+            <a href="/#guides">Guides</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Net Worth Calculator</h1>
+            <p class="subtitle">Track your true financial health. Enter your assets and liabilities below to calculate your net worth and see how you compare to age-based benchmarks.</p>
+        </header>
+
+        <div class="calculator-grid">
+            <!-- Inputs Panel -->
+            <div class="inputs-panel">
+
+                <div class="card">
+                    <div class="age-input-wrapper">
+                        <div style="flex:1;">
+                            <label for="user-age">Your Age (for benchmarks)</label>
+                            <p style="font-size:0.8rem; color:var(--text-secondary);">Used to calculate median net worth comparisons.</p>
+                        </div>
+                        <input type="number" id="user-age" value="35" min="18" max="100" oninput="calculate()">
+                    </div>
+                </div>
+
+                <!-- Assets Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Assets (What you own)</div>
+                        <div class="card-total assets-total" id="assets-total-display">$0</div>
+                    </div>
+
+                    <div id="assets-list">
+                        <!-- Default Asset Rows -->
+                        <div class="input-row asset-row">
+                            <div class="input-label-container">
+                                <input type="text" value="Cash & Checking" class="item-name" placeholder="Asset Name">
+                            </div>
+                            <div class="input-field-container">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" class="item-value asset-value" value="10000" min="0" step="100" oninput="calculate()">
+                            </div>
+                            <button class="btn btn-remove" onclick="removeRow(this)" aria-label="Remove item">✕</button>
+                        </div>
+                        <div class="input-row asset-row">
+                            <div class="input-label-container">
+                                <input type="text" value="Savings & Emergency" class="item-name" placeholder="Asset Name">
+                            </div>
+                            <div class="input-field-container">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" class="item-value asset-value" value="25000" min="0" step="100" oninput="calculate()">
+                            </div>
+                            <button class="btn btn-remove" onclick="removeRow(this)">✕</button>
+                        </div>
+                        <div class="input-row asset-row">
+                            <div class="input-label-container">
+                                <input type="text" value="Retirement (401k, IRA)" class="item-name" placeholder="Asset Name">
+                            </div>
+                            <div class="input-field-container">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" class="item-value asset-value" value="150000" min="0" step="100" oninput="calculate()">
+                            </div>
+                            <button class="btn btn-remove" onclick="removeRow(this)">✕</button>
+                        </div>
+                        <div class="input-row asset-row">
+                            <div class="input-label-container">
+                                <input type="text" value="Brokerage / Investments" class="item-name" placeholder="Asset Name">
+                            </div>
+                            <div class="input-field-container">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" class="item-value asset-value" value="50000" min="0" step="100" oninput="calculate()">
+                            </div>
+                            <button class="btn btn-remove" onclick="removeRow(this)">✕</button>
+                        </div>
+                        <div class="input-row asset-row">
+                            <div class="input-label-container">
+                                <input type="text" value="Primary Residence" class="item-name" placeholder="Asset Name">
+                            </div>
+                            <div class="input-field-container">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" class="item-value asset-value" value="450000" min="0" step="100" oninput="calculate()">
+                            </div>
+                            <button class="btn btn-remove" onclick="removeRow(this)">✕</button>
+                        </div>
+                        <div class="input-row asset-row">
+                            <div class="input-label-container">
+                                <input type="text" value="Vehicles" class="item-name" placeholder="Asset Name">
+                            </div>
+                            <div class="input-field-container">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" class="item-value asset-value" value="25000" min="0" step="100" oninput="calculate()">
+                            </div>
+                            <button class="btn btn-remove" onclick="removeRow(this)">✕</button>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-add" onclick="addRow('assets-list', 'asset-value')">+ Add Asset</button>
+                </div>
+
+                <!-- Liabilities Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Liabilities (What you owe)</div>
+                        <div class="card-total liabs-total" id="liabs-total-display">$0</div>
+                    </div>
+
+                    <div id="liabs-list">
+                        <!-- Default Liability Rows -->
+                        <div class="input-row liab-row">
+                            <div class="input-label-container">
+                                <input type="text" value="Mortgage" class="item-name" placeholder="Liability Name">
+                            </div>
+                            <div class="input-field-container">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" class="item-value liab-value" value="320000" min="0" step="100" oninput="calculate()">
+                            </div>
+                            <button class="btn btn-remove" onclick="removeRow(this)">✕</button>
+                        </div>
+                        <div class="input-row liab-row">
+                            <div class="input-label-container">
+                                <input type="text" value="Student Loans" class="item-name" placeholder="Liability Name">
+                            </div>
+                            <div class="input-field-container">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" class="item-value liab-value" value="35000" min="0" step="100" oninput="calculate()">
+                            </div>
+                            <button class="btn btn-remove" onclick="removeRow(this)">✕</button>
+                        </div>
+                        <div class="input-row liab-row">
+                            <div class="input-label-container">
+                                <input type="text" value="Auto Loans" class="item-name" placeholder="Liability Name">
+                            </div>
+                            <div class="input-field-container">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" class="item-value liab-value" value="15000" min="0" step="100" oninput="calculate()">
+                            </div>
+                            <button class="btn btn-remove" onclick="removeRow(this)">✕</button>
+                        </div>
+                        <div class="input-row liab-row">
+                            <div class="input-label-container">
+                                <input type="text" value="Credit Cards" class="item-name" placeholder="Liability Name">
+                            </div>
+                            <div class="input-field-container">
+                                <span class="currency-symbol">$</span>
+                                <input type="number" class="item-value liab-value" value="2500" min="0" step="100" oninput="calculate()">
+                            </div>
+                            <button class="btn btn-remove" onclick="removeRow(this)">✕</button>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-add" onclick="addRow('liabs-list', 'liab-value')">+ Add Liability</button>
+                </div>
+
+            </div>
+
+            <!-- Results Panel -->
+            <div class="results-panel">
+                <div class="card">
+                    <div class="net-worth-display">
+                        <div class="net-worth-label">Your Net Worth</div>
+                        <div class="net-worth-value" id="net-worth-result">$0</div>
+                        <button class="btn btn-copy" onclick="copyResults()">Copy Result</button>
+                    </div>
+
+                    <div class="card-title" style="margin-bottom: 1rem; text-align: center;">Asset Allocation</div>
+                    <div class="chart-container">
+                        <canvas id="allocationChart"></canvas>
+                    </div>
+                    <div class="chart-legend" id="chart-legend">
+                        <!-- Legend generated by JS -->
+                    </div>
+
+                    <div class="benchmark-section">
+                        <div class="card-title">Age-Based Benchmarks</div>
+                        <p style="font-size:0.85rem; color:var(--text-secondary); margin-top:0.5rem;">Compared to medians and suggested targets for age <span id="display-age">35</span>.</p>
+
+                        <div class="benchmark-grid">
+                            <div class="benchmark-card">
+                                <div>
+                                    <div class="benchmark-label">Median Net Worth (US)</div>
+                                    <div class="benchmark-value" id="median-nw">$0</div>
+                                </div>
+                                <div id="median-badge" class="comparison-badge badge-ahead">+0%</div>
+                            </div>
+                            <div class="benchmark-card">
+                                <div>
+                                    <div class="benchmark-label">Average Net Worth (US)</div>
+                                    <div class="benchmark-value" id="avg-nw">$0</div>
+                                </div>
+                                <div id="avg-badge" class="comparison-badge badge-behind">-0%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEO Content & FAQ -->
+        <article class="content-section">
+            <h2>Understanding Your Net Worth</h2>
+            <p>Your net worth is the ultimate scorecard of your financial health. While income dictates your lifestyle, net worth dictates your freedom. Utilizing a <strong>net worth calculator</strong> helps you track progress, ensure you aren't over-leveraged in debt, and plan effectively for financial independence.</p>
+
+            <h3>How to Calculate Net Worth</h3>
+            <p>The formula is simple: <strong>Assets - Liabilities = Net Worth</strong>.</p>
+            <p>First, tally up everything of value you own (assets). This includes liquid cash, checking/savings accounts, retirement accounts (401k, IRA), brokerage investments, real estate equity, and the market value of vehicles or valuables.</p>
+            <p>Next, sum up everything you owe (liabilities). This includes your remaining mortgage balance, student loans, auto loans, credit card debt, and personal loans. Subtract your liabilities from your assets to find your true net worth.</p>
+
+            <h2 style="margin-top: 3rem;">Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <h3>What is my net worth?</h3>
+                <p>Your net worth is the total value of all your assets (what you own) minus the total of all your liabilities (what you owe). It is the most accurate measure of your true financial health and wealth accumulation over time. If you sold everything you owned and paid off all your debts, the remaining cash would be your net worth.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>How to calculate net worth?</h3>
+                <p>To calculate net worth, list all your assets such as cash, investments, real estate, and valuable personal property. Then list all your liabilities like mortgages, student loans, credit card debt, and auto loans. Subtract the total liabilities from the total assets. Our interactive calculator above does this automatically.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Why use a net worth calculator?</h3>
+                <p>A net worth calculator simplifies tracking your financial progress over time, ensuring you don't overlook common assets or liabilities. It provides a quick snapshot of your financial health, helping you make informed decisions about paying down debt versus investing.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>What is a good net worth by age?</h3>
+                <p>A common rule of thumb for a suggested net worth is: (Age x Pre-tax Income) / 10. However, medians vary widely by age group. In the US, the median net worth for those under 35 is roughly $39,000, growing to $135,000 for ages 35-44, $247,000 for 45-54, and peaking around $410,000 for ages 65-74.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Should I include my house in my net worth calculator?</h3>
+                <p>Yes, you should include the current market value of your house as an asset, and the remaining mortgage balance as a liability. The difference between the two is your home equity, which directly contributes to your net worth. Some people track "Liquid Net Worth" which excludes the primary residence, but standard net worth includes it.</p>
+            </div>
+        </article>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 FireMaths &middot; A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">Not investment advice. All information for educational purposes only.</p>
+    </footer>
+
+    <script>
+        // Formatting utilities
+        const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
+        const parseCurrency = (str) => parseFloat(str.replace(/[^0-9.-]+/g,"")) || 0;
+
+        // Colors for chart
+        const colors = ['#D4A017', '#3b82f6', '#10b981', '#8b5cf6', '#f59e0b', '#ec4899', '#06b6d4'];
+
+        // DOM Elements
+        const assetsTotalEl = document.getElementById('assets-total-display');
+        const liabsTotalEl = document.getElementById('liabs-total-display');
+        const netWorthEl = document.getElementById('net-worth-result');
+        const canvas = document.getElementById('allocationChart');
+        const ctx = canvas.getContext('2d');
+
+        // Add row dynamically
+        function addRow(listId, valueClass) {
+            const list = document.getElementById(listId);
+            const rowClass = valueClass === 'asset-value' ? 'asset-row' : 'liab-row';
+            const placeholder = valueClass === 'asset-value' ? 'Asset Name' : 'Liability Name';
+
+            const div = document.createElement('div');
+            div.className = `input-row ${rowClass}`;
+            div.innerHTML = `
+                <div class="input-label-container">
+                    <input type="text" value="New Item" class="item-name" placeholder="${placeholder}">
+                </div>
+                <div class="input-field-container">
+                    <span class="currency-symbol">$</span>
+                    <input type="number" class="item-value ${valueClass}" value="0" min="0" step="100" oninput="calculate()">
+                </div>
+                <button class="btn btn-remove" onclick="removeRow(this)">✕</button>
+            `;
+            list.appendChild(div);
+            calculate();
+        }
+
+        // Remove row dynamically
+        function removeRow(btn) {
+            btn.parentElement.remove();
+            calculate();
+        }
+
+        // Calculate benchmarks based on Federal Reserve Survey of Consumer Finances rough data
+        function getBenchmarks(age) {
+            age = parseInt(age) || 35;
+            let median = 0;
+            let average = 0;
+
+            if (age < 35) { median = 39000; average = 183000; }
+            else if (age <= 44) { median = 135000; average = 549000; }
+            else if (age <= 54) { median = 247000; average = 975000; }
+            else if (age <= 64) { median = 364000; average = 1566000; }
+            else if (age <= 74) { median = 409000; average = 1794000; }
+            else { median = 335000; average = 1624000; }
+
+            return { median, average };
+        }
+
+        function updateBadge(elId, val, benchmark) {
+            const el = document.getElementById(elId);
+            if (benchmark === 0) return;
+
+            const diff = val - benchmark;
+            const pct = Math.abs((diff / benchmark) * 100).toFixed(0);
+
+            if (diff >= 0) {
+                el.textContent = `+${pct}%`;
+                el.className = 'comparison-badge badge-ahead';
+            } else {
+                el.textContent = `-${pct}%`;
+                el.className = 'comparison-badge badge-behind';
+            }
+        }
+
+        // Main Calculation Function
+        function calculate() {
+            let totalAssets = 0;
+            let totalLiabs = 0;
+            const assetData = [];
+
+            // Sum Assets
+            document.querySelectorAll('.asset-row').forEach(row => {
+                const name = row.querySelector('.item-name').value || 'Unnamed Asset';
+                const val = parseFloat(row.querySelector('.asset-value').value) || 0;
+                totalAssets += val;
+                if (val > 0) {
+                    assetData.push({ name, value: val });
+                }
+            });
+
+            // Sum Liabilities
+            document.querySelectorAll('.liab-row').forEach(row => {
+                const val = parseFloat(row.querySelector('.liab-value').value) || 0;
+                totalLiabs += val;
+            });
+
+            const netWorth = totalAssets - totalLiabs;
+
+            // Update UI
+            assetsTotalEl.textContent = formatCurrency(totalAssets);
+            liabsTotalEl.textContent = formatCurrency(totalLiabs);
+            netWorthEl.textContent = formatCurrency(netWorth);
+
+            if (netWorth < 0) {
+                netWorthEl.style.color = 'var(--text-negative)';
+            } else {
+                netWorthEl.style.color = 'var(--accent-color)';
+            }
+
+            // Benchmarks
+            const age = document.getElementById('user-age').value;
+            document.getElementById('display-age').textContent = age;
+            const benchmarks = getBenchmarks(age);
+
+            document.getElementById('median-nw').textContent = formatCurrency(benchmarks.median);
+            document.getElementById('avg-nw').textContent = formatCurrency(benchmarks.average);
+
+            updateBadge('median-badge', netWorth, benchmarks.median);
+            updateBadge('avg-badge', netWorth, benchmarks.average);
+
+            // Sort and Draw Chart
+            assetData.sort((a, b) => b.value - a.value);
+            drawChart(assetData, totalAssets);
+        }
+
+        // Canvas Pie Chart Drawing
+        function drawChart(data, total) {
+            // Setup canvas resolution
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.parentElement.getBoundingClientRect();
+
+            // Set actual size in memory
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.width * dpr;
+
+            // Normalize coordinate system
+            ctx.scale(dpr, dpr);
+
+            const width = rect.width;
+            const height = rect.width; // aspect ratio 1
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = Math.min(centerX, centerY) * 0.9;
+
+            // Clear
+            ctx.clearRect(0, 0, width, height);
+
+            if (total === 0 || data.length === 0) {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = '#152040';
+                ctx.fill();
+                document.getElementById('chart-legend').innerHTML = '<span class="legend-item">No assets to display</span>';
+                return;
+            }
+
+            let startAngle = -0.5 * Math.PI; // Start at top
+            let legendHTML = '';
+
+            data.forEach((item, index) => {
+                const sliceAngle = (item.value / total) * 2 * Math.PI;
+                const color = colors[index % colors.length];
+
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, startAngle + sliceAngle);
+                ctx.closePath();
+
+                ctx.fillStyle = color;
+                ctx.fill();
+
+                // Stroke separator
+                ctx.strokeStyle = '#0a1020';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                startAngle += sliceAngle;
+
+                // Build legend
+                const pct = ((item.value / total) * 100).toFixed(1);
+                legendHTML += `
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: ${color}"></div>
+                        <span>${item.name} (${pct}%)</span>
+                    </div>
+                `;
+            });
+
+            // Donut hole
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius * 0.6, 0, 2 * Math.PI);
+            ctx.fillStyle = '#0a1020'; // Match card bg
+            ctx.fill();
+
+            document.getElementById('chart-legend').innerHTML = legendHTML;
+        }
+
+        // Handle window resize for canvas
+        window.addEventListener('resize', () => {
+            calculate();
+        });
+
+        // Copy functionality
+        function copyResults() {
+            const nw = document.getElementById('net-worth-result').textContent;
+            navigator.clipboard.writeText(`My estimated net worth is ${nw} calculated via firemaths.info/net-worth-calculator.html`);
+            const btn = document.querySelector('.btn-copy');
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied!';
+            setTimeout(() => btn.textContent = originalText, 2000);
+        }
+
+        // Initial calc
+        document.addEventListener('DOMContentLoaded', calculate);
+    </script>
+</body>
+</html>
