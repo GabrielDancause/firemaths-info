@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent vs Buy Calculator: The True Cost of Homeownership vs Renting</title>
+    <!-- Curiosity Gap Meta Description -->
+    <meta name="description" content="Think throwing away money on rent is bad? The shocking truth about unrecoverable homeownership costs might change your mind. Find your break-even point now.">
+    <link rel="canonical" href="https://firemaths.info/rent-vs-buy-calculator.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Rent vs Buy Calculator",
+      "url": "https://firemaths.info/rent-vs-buy-calculator.html",
+      "description": "Interactive rent vs buy calculator to determine when buying a home becomes cheaper than renting.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Rent vs Buy Calculator: The True Cost of Homeownership vs Renting",
+      "description": "Think throwing away money on rent is bad? The shocking truth about unrecoverable homeownership costs might change your mind. Find your break-even point now.",
+      "datePublished": "2026-03-11",
+      "publisher": {
+        "@type": "Organization",
+        "name": "FireMaths"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Should I rent or buy a home?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Whether you should rent or buy depends on your timeline, local market, and opportunity costs. Buying typically requires staying in the home for at least 5-7 years to offset high closing costs and initial interest-heavy mortgage payments. Use our rent vs buy calculator to find your exact break-even point."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it cheaper to rent or buy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is often cheaper to rent in the short term, but cheaper to buy in the long term. This is because renting gives you lower upfront costs and no maintenance fees, allowing you to invest the difference. Over decades, however, buying generally builds more wealth through appreciation and equity."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does a rent vs buy calculator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A rent vs buy calculator compares the total unrecoverable costs of renting (monthly rent) against the unrecoverable costs of homeownership (mortgage interest, property taxes, maintenance, HOA, insurance) minus home appreciation. It also factors in the opportunity cost of investing your down payment elsewhere."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the unrecoverable costs of buying?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When buying a house, not all your money goes to building wealth. Unrecoverable costs include property taxes, homeowners insurance, HOA fees, home maintenance, closing costs, and the interest portion of your mortgage payments."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is opportunity cost important in rent vs buy decisions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If you rent, you can take the money you would have used for a down payment and invest it in the stock market. The return on that investment is your opportunity cost. If the stock market outperforms your home's appreciation, renting might actually make you wealthier."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #060a12;
+            --card-bg: #0a1020;
+            --border-color: #152040;
+            --accent-color: #D4A017;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Sticky Nav */
+        .main-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(6, 10, 18, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .main-nav .brand {
+            color: var(--accent-color);
+            font-weight: 800;
+            text-decoration: none;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        .main-nav .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .main-nav .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .main-nav .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            margin-top: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.03em;
+            background: linear-gradient(to right, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 900px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cards */
+        .scenario-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .scenario-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .scenario-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .scenario-header h2 {
+            margin-bottom: 0;
+        }
+
+        .inputs {
+            display: grid;
+            gap: 1.25rem;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @media (max-width: 500px) {
+            .inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .input-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(212, 160, 23, 0.2);
+        }
+
+        .input-wrapper.has-prefix input {
+            padding-left: 2rem;
+        }
+
+        .input-wrapper.has-suffix input {
+            padding-right: 2.5rem;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        .prefix { left: 0.75rem; }
+        .suffix { right: 0.75rem; }
+
+        /* Results / Chart */
+        .results-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .break-even-banner {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(212, 160, 23, 0.1);
+            border: 1px solid rgba(212, 160, 23, 0.3);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .break-even-banner h3 {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .break-even-banner .result-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: #fff;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            margin-top: 2rem;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Info Section */
+        .seo-content {
+            max-width: 800px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .seo-content h2 {
+            margin-top: 2.5rem;
+            color: var(--accent-color);
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .faq-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="main-nav">
+        <a href="/" class="brand">FireMaths</a>
+        <div class="nav-links">
+            <a href="/#studies">Studies</a>
+            <a href="/#tools">Tools</a>
+            <a href="/#guides">Guides</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Rent vs Buy Calculator</h1>
+            <p>Determine the true cost of homeownership vs renting. Find out exactly when buying becomes the cheaper option.</p>
+        </header>
+
+        <main>
+            <div class="calculator-grid">
+                <!-- Buy Scenario -->
+                <div class="scenario-card">
+                    <div class="scenario-header">
+                        <h2>Buying a Home</h2>
+                    </div>
+                    <div class="inputs">
+                        <div class="input-group full-width">
+                            <label for="homePrice">Home Price</label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="homePrice" value="500000" step="10000">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="downPayment">Down Payment</label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="downPayment" value="100000" step="5000">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="mortgageRate">Mortgage Rate</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="mortgageRate" value="6.5" step="0.1">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="propertyTax">Property Tax (Annual)</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="propertyTax" value="1.2" step="0.1">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="maintenance">Maintenance (Annual)</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="maintenance" value="1.0" step="0.1">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="hoa">HOA Fees (Monthly)</label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="hoa" value="0" step="10">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="insurance">Insurance (Monthly)</label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="insurance" value="150" step="10">
+                            </div>
+                        </div>
+                        <div class="input-group full-width">
+                            <label for="homeAppreciation">Home Appreciation (Annual)</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="homeAppreciation" value="3.0" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rent Scenario -->
+                <div class="scenario-card">
+                    <div class="scenario-header">
+                        <h2>Renting & Investing</h2>
+                    </div>
+                    <div class="inputs">
+                        <div class="input-group full-width">
+                            <label for="monthlyRent">Monthly Rent</label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="monthlyRent" value="2500" step="100">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="rentIncrease">Rent Increase (Annual)</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="rentIncrease" value="3.0" step="0.1">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="rentersInsurance">Renter's Ins. (Monthly)</label>
+                            <div class="input-wrapper has-prefix">
+                                <span class="prefix">$</span>
+                                <input type="number" id="rentersInsurance" value="20" step="5">
+                            </div>
+                        </div>
+                        <div class="input-group full-width">
+                            <label for="investmentReturn">Investment Return (Annual)</label>
+                            <div class="input-wrapper has-suffix">
+                                <span class="suffix">%</span>
+                                <input type="number" id="investmentReturn" value="7.0" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <div class="break-even-banner">
+                    <h3>Buying becomes cheaper than renting in</h3>
+                    <div class="result-value" id="breakEvenResult">Year 7</div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="costChart"></canvas>
+                </div>
+            </div>
+
+            <div class="seo-content">
+                <h2>Rent vs Buy Calculator: The True Cost of Homeownership</h2>
+                <p>Deciding whether to buy a house or continue renting is one of the biggest financial decisions you will make. While conventional wisdom often claims that "renting is throwing money away," the reality is far more complex. This rent vs buy calculator helps you compare the long-term financial outcomes of both choices.</p>
+                <p>By factoring in the opportunity cost of your down payment, property taxes, maintenance, and home appreciation, you can discover your actual break-even horizon. If you plan to move before that break-even year, renting is likely the better financial choice.</p>
+
+                <h2>Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <h3>Should I rent or buy?</h3>
+                    <p>Whether you should rent or buy depends on how long you plan to stay in the home, local market conditions, and your personal finances. Generally, if you plan to stay less than 5 years, renting is better due to the high transaction costs of buying and selling real estate. Our rent vs buy calculator clearly illustrates how your timeline affects the financial outcome.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Is it cheaper to rent or buy?</h3>
+                    <p>It is often cheaper to rent in the short term, but cheaper to buy in the long term. Renting offers lower upfront costs and zeroes out maintenance risk, allowing you to invest the difference in the stock market. Over decades, however, buying generally builds more wealth through property appreciation and forced equity savings.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How does a rent vs buy calculator work?</h3>
+                    <p>A rent vs buy calculator compares the total unrecoverable costs of renting (monthly rent and renter's insurance) against the unrecoverable costs of homeownership (mortgage interest, property taxes, maintenance, HOA, insurance) minus home appreciation. It fundamentally compares the net worth generated by home equity versus the net worth generated by investing a down payment in the market.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What are the unrecoverable costs of buying?</h3>
+                    <p>When buying a house, not all your money goes to building wealth. The unrecoverable costs—money that disappears forever just like rent—include property taxes, homeowners insurance, HOA fees, home maintenance (typically 1-2% of the home's value annually), closing costs, and the interest portion of your mortgage payments.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Why is opportunity cost important in rent vs buy decisions?</h3>
+                    <p>If you rent, you can take the money you would have used for a down payment and invest it in index funds or the stock market. The return on that investment is your opportunity cost. If the stock market outperforms your home's appreciation, renting might actually make you wealthier in the long run.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 FireMaths &middot; A GAB Ventures property. <a href="https://gab.ae" target="_blank" rel="noopener">gab.ae</a></p>
+        <p style="margin-top: 0.5rem; opacity: 0.7; font-size: 0.8rem;">Not investment advice. All information for educational purposes only.</p>
+    </footer>
+
+    <script>
+        const inputs = document.querySelectorAll('input');
+        const canvas = document.getElementById('costChart');
+        const ctx = canvas.getContext('2d');
+        const breakEvenEl = document.getElementById('breakEvenResult');
+
+        function formatCurrency(num) {
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(num);
+        }
+
+        function calculateMortgagePayment(principal, annualRate, years) {
+            const r = annualRate / 100 / 12;
+            const n = years * 12;
+            if (r === 0) return principal / n;
+            return principal * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+        }
+
+        function drawChart(rentData, buyData, years) {
+            // Handle high DPI displays
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+
+            ctx.resetTransform(); // clear scale to be safe
+            ctx.scale(dpr, dpr);
+
+            const width = rect.width;
+            const height = rect.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            const padding = { top: 20, right: 30, bottom: 40, left: 80 };
+            const chartWidth = width - padding.left - padding.right;
+            const chartHeight = height - padding.top - padding.bottom;
+
+            const maxVal = Math.max(...rentData, ...buyData);
+            const minVal = Math.min(...rentData, ...buyData, 0);
+            const range = Math.max(maxVal - minVal, 1000);
+
+            // Draw Grid
+            ctx.strokeStyle = '#152040';
+            ctx.lineWidth = 1;
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '12px "JetBrains Mono"';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+
+            const ySteps = 5;
+            for (let i = 0; i <= ySteps; i++) {
+                const yVal = minVal + (range * i / ySteps);
+                const yPos = padding.top + chartHeight - ((yVal - minVal) / range * chartHeight);
+
+                ctx.beginPath();
+                ctx.moveTo(padding.left, yPos);
+                ctx.lineTo(width - padding.right, yPos);
+                ctx.stroke();
+
+                let formattedY = (yVal / 1000).toFixed(0);
+                if (yVal < 0) {
+                    ctx.fillText('-$' + Math.abs(formattedY) + 'k', padding.left - 10, yPos);
+                } else {
+                    ctx.fillText('$' + formattedY + 'k', padding.left - 10, yPos);
+                }
+            }
+
+            // Draw X Axis Labels
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            for (let i = 0; i <= years; i += 5) {
+                if (i === 0) continue;
+                const xPos = padding.left + (i / years) * chartWidth;
+                ctx.fillText('Year ' + i, xPos, height - padding.bottom + 10);
+            }
+
+            // Draw Lines function
+            function drawLine(data, color, label) {
+                ctx.beginPath();
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 3;
+
+                for (let i = 0; i <= years; i++) {
+                    const xPos = padding.left + (i / years) * chartWidth;
+                    const yPos = padding.top + chartHeight - ((data[i] - minVal) / range * chartHeight);
+
+                    if (i === 0) ctx.moveTo(xPos, yPos);
+                    else ctx.lineTo(xPos, yPos);
+                }
+                ctx.stroke();
+
+                // Legend
+                const lastX = padding.left + chartWidth;
+                const lastY = padding.top + chartHeight - ((data[years] - minVal) / range * chartHeight);
+                ctx.fillStyle = color;
+                ctx.font = 'bold 13px Inter';
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'bottom';
+                ctx.fillText(label, lastX, lastY - 10);
+            }
+
+            // Rent Line (Red-ish)
+            drawLine(rentData, '#ef4444', 'Net Cost of Renting');
+            // Buy Line (Gold)
+            drawLine(buyData, '#D4A017', 'Net Cost of Buying');
+        }
+
+        function calculate() {
+            // Inputs
+            const homePrice = parseFloat(document.getElementById('homePrice').value);
+            const downPayment = parseFloat(document.getElementById('downPayment').value);
+            const mortgageRate = parseFloat(document.getElementById('mortgageRate').value);
+            const propTaxRate = parseFloat(document.getElementById('propertyTax').value);
+            const maintRate = parseFloat(document.getElementById('maintenance').value);
+            const hoaMonthly = parseFloat(document.getElementById('hoa').value);
+            const insuranceMonthly = parseFloat(document.getElementById('insurance').value);
+            const homeAppreciation = parseFloat(document.getElementById('homeAppreciation').value);
+
+            const monthlyRent = parseFloat(document.getElementById('monthlyRent').value);
+            const rentIncrease = parseFloat(document.getElementById('rentIncrease').value);
+            const rentersInsuranceMonthly = parseFloat(document.getElementById('rentersInsurance').value);
+            const invReturn = parseFloat(document.getElementById('investmentReturn').value);
+
+            const years = 30;
+            const loanTerm = 30;
+            const buyingClosingCosts = homePrice * 0.03; // Assume 3% closing costs
+            const sellingCostsRate = 0.06; // Assume 6% to sell
+
+            const loanAmount = homePrice - downPayment;
+            const monthlyMortgage = calculateMortgagePayment(loanAmount, mortgageRate, loanTerm);
+
+            let currentHomeValue = homePrice;
+            let currentLoanBalance = loanAmount;
+            let currentRent = monthlyRent;
+
+            // Arrays to hold cumulative Net Cost
+            // Net Cost = Total Money Spent out of pocket - Final Net Worth (from the house or investments)
+            const rentNetCost = [0];
+            const buyNetCost = [0];
+
+            let cumulativeRentSpent = 0;
+            let cumulativeBuySpent = downPayment + buyingClosingCosts;
+
+            // Monthly compounding for investments
+            const monthlyInvRate = invReturn / 100 / 12;
+            const monthlyMortgageRate = mortgageRate / 100 / 12;
+
+            // Investments Principal tracking
+            let rentInvestedPrincipal = downPayment + buyingClosingCosts;
+            let buyInvestedPrincipal = 0;
+
+            // Investments Total Value (Principal + Gains)
+            let rentInvestmentsValue = downPayment + buyingClosingCosts;
+            let buyInvestmentsValue = 0;
+
+            // Unrecoverable Costs (Sunk Costs)
+            let cumulativeUnrecoverableRent = 0;
+            let cumulativeUnrecoverableBuy = buyingClosingCosts; // upfront sunk cost
+
+            let breakEvenYear = -1;
+
+            for (let y = 1; y <= years; y++) {
+
+                for (let m = 1; m <= 12; m++) {
+                    // Renting: entire payment is unrecoverable
+                    let monthlyRentCost = currentRent + rentersInsuranceMonthly;
+                    cumulativeUnrecoverableRent += monthlyRentCost;
+
+                    // Buying: only taxes, maintenance, HOA, insurance, and interest are unrecoverable
+                    let propertyTaxMonthly = (currentHomeValue * (propTaxRate / 100)) / 12;
+                    let maintMonthly = (currentHomeValue * (maintRate / 100)) / 12;
+
+                    let interestPayment = currentLoanBalance * monthlyMortgageRate;
+                    let principalPayment = monthlyMortgage - interestPayment;
+                    currentLoanBalance -= principalPayment;
+                    if (currentLoanBalance < 0) currentLoanBalance = 0;
+
+                    let monthlyUnrecoverableBuy = propertyTaxMonthly + maintMonthly + hoaMonthly + insuranceMonthly + interestPayment;
+                    cumulativeUnrecoverableBuy += monthlyUnrecoverableBuy;
+
+                    // Total out of pocket for the month to calculate cashflow diff
+                    let totalMonthlyBuyOutflow = monthlyMortgage + propertyTaxMonthly + maintMonthly + hoaMonthly + insuranceMonthly;
+
+                    // Invest the difference in cash flow
+                    let diff = totalMonthlyBuyOutflow - monthlyRentCost;
+                    if (diff > 0) {
+                        // Buying is more expensive out-of-pocket, renter invests the difference
+                        rentInvestedPrincipal += diff;
+                        rentInvestmentsValue += diff;
+                    } else if (diff < 0) {
+                        // Renting is more expensive out-of-pocket, buyer invests the difference
+                        buyInvestedPrincipal += Math.abs(diff);
+                        buyInvestmentsValue += Math.abs(diff);
+                    }
+
+                    // Compound investments
+                    rentInvestmentsValue *= (1 + monthlyInvRate);
+                    buyInvestmentsValue *= (1 + monthlyInvRate);
+                }
+
+                // Annual adjustments
+                currentHomeValue *= (1 + (homeAppreciation / 100));
+                currentRent *= (1 + (rentIncrease / 100));
+
+                // Calculate Net Cost at end of year y
+                // Renting Net Cost = Unrecoverable Rent Paid - Investment Gains
+                let rentInvestmentGains = rentInvestmentsValue - rentInvestedPrincipal;
+                let currentRentNetCost = cumulativeUnrecoverableRent - rentInvestmentGains;
+                rentNetCost.push(currentRentNetCost);
+
+                // Buying Net Cost = Unrecoverable Costs - (Home Appreciation Gains - Selling Costs + Investment Gains)
+                // Home Equity Gain = (Current Value - Initial Price) - Selling Costs
+                let sellingCosts = currentHomeValue * sellingCostsRate;
+                let homeEquityGains = (currentHomeValue - homePrice) - sellingCosts;
+                let buyInvestmentGains = buyInvestmentsValue - buyInvestedPrincipal;
+
+                let currentBuyNetCost = cumulativeUnrecoverableBuy - (homeEquityGains + buyInvestmentGains);
+                buyNetCost.push(currentBuyNetCost);
+
+                if (breakEvenYear === -1 && currentBuyNetCost < currentRentNetCost) {
+                    breakEvenYear = y;
+                }
+            }
+
+            drawChart(rentNetCost, buyNetCost, years);
+
+            if (breakEvenYear !== -1) {
+                breakEvenEl.textContent = `Year ${breakEvenYear}`;
+                breakEvenEl.style.color = '#10b981'; // green-ish
+            } else {
+                breakEvenEl.textContent = `Never (30+ yrs)`;
+                breakEvenEl.style.color = '#ef4444'; // red-ish
+            }
+        }
+
+        // Initialize
+        inputs.forEach(input => {
+            input.addEventListener('input', calculate);
+        });
+
+        window.addEventListener('resize', calculate);
+
+        // Initial calculation
+        // small timeout to ensure layout is complete before drawing canvas
+        setTimeout(calculate, 100);
+    </script>
+</body>
+</html>

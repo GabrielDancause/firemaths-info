@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>50/30/20 Budget Calculator: How to Split Your Paycheck</title>
+    <meta name="description" content="Most people miscalculate their true take-home pay split. See how an unexpected 50/30/20 budget rule adjustment can transform your after-tax paycheck and help you reach financial goals faster.">
+    <link rel="canonical" href="https://firemaths.info/paycheck-budget-calculator.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "50/30/20 Budget Calculator",
+      "url": "https://firemaths.info/paycheck-budget-calculator.html",
+      "description": "A comprehensive 50/30/20 budget calculator to split your after-tax paycheck into needs, wants, and savings.",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "50/30/20 Budget Calculator: How to Split Your Paycheck",
+      "description": "Most people miscalculate their true take-home pay split. See how an unexpected 50/30/20 budget rule adjustment can transform your after-tax paycheck and help you reach financial goals faster.",
+      "datePublished": "2026-03-10T08:00:00Z",
+      "author": {
+        "@type": "Organization",
+        "name": "FireMaths"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "FireMaths",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://firemaths.info/logo.png"
+        }
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does a 50/30/20 budget calculator work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A 50/30/20 budget calculator takes your after-tax income and splits it into three categories: 50% for needs (housing, groceries, utilities), 30% for wants (entertainment, dining out), and 20% for savings and debt repayment. It helps you quickly see exactly how to budget your paycheck without complicated tracking."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best budget calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The best budget calculator is one that aligns with your financial goals and is easy to use. A calculator based on the 50/30/20 rule is widely considered excellent for beginners because it provides clear guidelines while maintaining flexibility for personal spending."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How to budget paycheck effectively?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To budget a paycheck effectively, first calculate your after-tax income. Then, apply a framework like the 50/30/20 rule. Allocate funds to your essential needs first, set aside your savings or investments, and leave the remainder for discretionary spending or wants. Adjust these percentages as your income or goals change."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I adjust the percentages in the 50/30/20 budget calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! While the classic rule is 50/30/20, a good budget calculator lets you adjust the split. If you live in an expensive city, you might need a 60/20/20 split. If you are aggressively saving for FIRE (Financial Independence, Retire Early), you might opt for a 40/10/50 split."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should I do if my needs exceed 50% of my paycheck?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If your needs take up more than 50% of your after-tax income, you have a few options: reduce your wants budget to compensate, find ways to lower fixed costs (like getting a roommate or refinancing debt), or focus on increasing your income. Many people start with a 60/20/20 or even 70/10/20 budget and work their way towards the ideal 50/30/20 split over time."
+          }
+        }
+      ]
+    }
+    </script>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
+    <style>
+        :root {
+            --bg-color: #060a12;
+            --card-bg: #0a1020;
+            --border-color: #152040;
+            --accent-color: #D4A017;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; margin-bottom: 1rem; color: #ffffff; }
+        h1 { font-size: 2.25rem; text-align: center; margin: 2rem 0 1rem; }
+        h2 { font-size: 1.875rem; margin-top: 2.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+        h3 { font-size: 1.25rem; margin-top: 1.5rem; }
+        p { margin-bottom: 1.25rem; color: var(--text-muted); }
+        ul, ol { margin-bottom: 1.25rem; padding-left: 1.5rem; color: var(--text-muted); }
+        li { margin-bottom: 0.5rem; }
+        a { color: var(--accent-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .calculator-wrapper {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-with-prefix {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .input-with-prefix:focus-within {
+            border-color: var(--accent-color);
+        }
+
+        .prefix {
+            padding: 0.75rem 1rem;
+            background-color: var(--border-color);
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        input[type="number"], input[type="range"] {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: transparent;
+            border: none;
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 1.125rem;
+            outline: none;
+        }
+
+        .toggle-group {
+            display: flex;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 0.75rem;
+            text-align: center;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .toggle-btn.active {
+            background-color: var(--border-color);
+            color: var(--accent-color);
+        }
+
+        .sliders-container {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .slider-row {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .slider-label {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot-needs { background-color: #ef4444; }
+        .dot-wants { background-color: #3b82f6; }
+        .dot-savings { background-color: #10b981; }
+
+        .slider-value {
+            font-family: var(--font-mono);
+            color: var(--accent-color);
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            outline: none;
+            padding: 0;
+            margin-top: 0.5rem;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            cursor: pointer;
+            border: none;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+        .result-card.needs::before { background-color: #ef4444; }
+        .result-card.wants::before { background-color: #3b82f6; }
+        .result-card.savings::before { background-color: #10b981; }
+
+        .result-title {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-amount {
+            font-family: var(--font-mono);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.25rem;
+        }
+
+        .result-period {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .category-breakdown {
+            margin-top: 1rem;
+            text-align: left;
+            font-size: 0.875rem;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.25rem 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        .category-item:last-child {
+            border-bottom: none;
+        }
+        .category-name { color: var(--text-muted); }
+        .category-val { font-family: var(--font-mono); color: #fff; }
+
+        .total-warning {
+            text-align: center;
+            color: #ef4444;
+            font-weight: 600;
+            margin-top: 1rem;
+            display: none;
+            padding: 0.5rem;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 4px;
+        }
+
+        /* FAQ Styling */
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-question {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        footer a { color: var(--text-muted); text-decoration: underline; }
+        footer a:hover { color: var(--accent-color); }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.5rem; }
+            .calculator-wrapper { padding: 1.25rem; }
+            .results-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- STICKY NAV -->
+    <nav style="position: sticky; top: 0; z-index: 1000; background: rgba(6, 10, 18, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid #152040; padding: 1rem 0;">
+        <div style="max-width: 800px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 1rem;">
+            <a href="/" style="font-weight: 900; font-size: 1.25rem; color: #fff; text-decoration: none;">Fire<span style="color: #D4A017;">Maths</span></a>
+            <div style="display: flex; gap: 1rem; font-size: 0.875rem; font-weight: 500;">
+                <a href="/#studies" style="color: #f3f4f6; text-decoration: none;">Studies</a>
+                <a href="/#tools" style="color: #f3f4f6; text-decoration: none;">Tools</a>
+                <a href="/#guides" style="color: #f3f4f6; text-decoration: none;">Guides</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>50/30/20 Budget Calculator: How to Split Your Paycheck</h1>
+        <p style="text-align: center; font-size: 1.125rem; margin-bottom: 2rem;">Discover exactly how to budget your paycheck. Adjust the percentages below to see real dollar amounts for your needs, wants, and savings.</p>
+
+        <div class="calculator-wrapper">
+            <div class="toggle-group" id="payPeriodToggle">
+                <button class="toggle-btn active" data-period="monthly">Monthly Paycheck</button>
+                <button class="toggle-btn" data-period="biweekly">Bi-weekly Paycheck</button>
+            </div>
+
+            <div class="input-group">
+                <label for="income">After-Tax Income (<span id="incomePeriodLabel">Monthly</span>)</label>
+                <div class="input-with-prefix">
+                    <span class="prefix">$</span>
+                    <input type="number" id="income" value="4000" min="0" step="100" placeholder="e.g. 4000">
+                </div>
+            </div>
+
+            <div class="sliders-container">
+                <div class="slider-row">
+                    <div class="slider-header">
+                        <span class="slider-label"><div class="dot dot-needs"></div>Needs</span>
+                        <span class="slider-value" id="needsPctVal">50%</span>
+                    </div>
+                    <input type="range" id="needsPct" min="0" max="100" value="50">
+                </div>
+
+                <div class="slider-row">
+                    <div class="slider-header">
+                        <span class="slider-label"><div class="dot dot-wants"></div>Wants</span>
+                        <span class="slider-value" id="wantsPctVal">30%</span>
+                    </div>
+                    <input type="range" id="wantsPct" min="0" max="100" value="30">
+                </div>
+
+                <div class="slider-row">
+                    <div class="slider-header">
+                        <span class="slider-label"><div class="dot dot-savings"></div>Savings & Debt</span>
+                        <span class="slider-value" id="savingsPctVal">20%</span>
+                    </div>
+                    <input type="range" id="savingsPct" min="0" max="100" value="20">
+                </div>
+
+                <div id="totalWarning" class="total-warning">Total must equal 100%. Currently: <span id="currentTotal">100</span>%</div>
+            </div>
+
+            <div class="results-grid">
+                <div class="result-card needs">
+                    <div class="result-title">Needs</div>
+                    <div class="result-amount" id="needsAmt">$2,000</div>
+                    <div class="result-period">per <span class="period-text">month</span></div>
+
+                    <div class="category-breakdown">
+                        <div class="category-item">
+                            <span class="category-name">Housing (60% of Needs)</span>
+                            <span class="category-val" id="cat-housing">$1,200</span>
+                        </div>
+                        <div class="category-item">
+                            <span class="category-name">Groceries (20% of Needs)</span>
+                            <span class="category-val" id="cat-groceries">$400</span>
+                        </div>
+                        <div class="category-item">
+                            <span class="category-name">Utilities/Trans. (20% of Needs)</span>
+                            <span class="category-val" id="cat-utilities">$400</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-card wants">
+                    <div class="result-title">Wants</div>
+                    <div class="result-amount" id="wantsAmt">$1,200</div>
+                    <div class="result-period">per <span class="period-text">month</span></div>
+
+                    <div class="category-breakdown">
+                        <div class="category-item">
+                            <span class="category-name">Dining Out (~33% of Wants)</span>
+                            <span class="category-val" id="cat-dining">$400</span>
+                        </div>
+                        <div class="category-item">
+                            <span class="category-name">Entertainment (~33% of Wants)</span>
+                            <span class="category-val" id="cat-entertainment">$400</span>
+                        </div>
+                        <div class="category-item">
+                            <span class="category-name">Shopping/Misc (~33% of Wants)</span>
+                            <span class="category-val" id="cat-shopping">$400</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-card savings">
+                    <div class="result-title">Savings</div>
+                    <div class="result-amount" id="savingsAmt">$800</div>
+                    <div class="result-period">per <span class="period-text">month</span></div>
+
+                    <div class="category-breakdown">
+                        <div class="category-item">
+                            <span class="category-name">Investments (50% of Savings)</span>
+                            <span class="category-val" id="cat-investments">$400</span>
+                        </div>
+                        <div class="category-item">
+                            <span class="category-name">Emergencies (25% of Savings)</span>
+                            <span class="category-val" id="cat-emergencies">$200</span>
+                        </div>
+                        <div class="category-item">
+                            <span class="category-name">Extra Debt (25% of Savings)</span>
+                            <span class="category-val" id="cat-debt">$200</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>How to Budget Your Paycheck Using the 50/30/20 Rule</h2>
+        <p>The <strong>50/30/20 budget calculator</strong> is designed to provide a simple, effective framework for managing your personal finances. Instead of tracking every single penny in dozens of categories, you split your after-tax take-home pay into three main buckets.</p>
+
+        <div class="card">
+            <h3>1. Needs (50%)</h3>
+            <p>These are your essential expenses. If you lost your job tomorrow, these are the bills you would still have to pay to survive.</p>
+            <ul>
+                <li>Rent or mortgage payments</li>
+                <li>Groceries (basic food, not dining out)</li>
+                <li>Utilities (electricity, water, internet)</li>
+                <li>Transportation (car payment, gas, transit pass)</li>
+                <li>Minimum debt payments (student loans, credit cards)</li>
+                <li>Insurance (health, car, renters/homeowners)</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>2. Wants (30%)</h3>
+            <p>These are discretionary expenses. They make life enjoyable but aren't strictly necessary for survival.</p>
+            <ul>
+                <li>Dining out and food delivery</li>
+                <li>Entertainment (movies, concerts, streaming subscriptions)</li>
+                <li>Travel and vacations</li>
+                <li>Hobbies and gym memberships</li>
+                <li>Shopping (non-essential clothing, gadgets)</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>3. Savings & Debt (20%)</h3>
+            <p>This bucket is for securing your financial future and achieving financial independence.</p>
+            <ul>
+                <li>Emergency fund contributions</li>
+                <li>Retirement accounts (IRA, 401k beyond employer match)</li>
+                <li>Investing in brokerage accounts</li>
+                <li>Extra payments on debt (above the minimum)</li>
+                <li>Saving for specific goals (down payment, wedding)</li>
+            </ul>
+        </div>
+
+        <h2>Alternative Budgeting Methods</h2>
+        <p>While the 50/30/20 budget is incredibly popular, it's not the only way to budget a paycheck. Here is how it compares to other methods:</p>
+
+        <h3>The 60/20/20 Rule</h3>
+        <p>If you live in a high-cost-of-living area (HCOL), spending only 50% on needs might be impossible due to high rent. The 60/20/20 rule adjusts the split to <strong>60% Needs, 20% Wants, and 20% Savings</strong>. It prioritizes keeping your savings rate intact by reducing your discretionary spending.</p>
+
+        <h3>Zero-Based Budgeting</h3>
+        <p>Zero-based budgeting involves assigning every single dollar a specific job before the month begins, so your Income minus Expenses equals exactly zero. While more tedious than the 50/30/20 rule, it provides granular control. You can use our budget calculator above as a starting point to determine your broader categories before drilling down into a zero-based spreadsheet.</p>
+
+        <h2>Tips for When 50% on Needs Isn't Enough</h2>
+        <p>If you plug your numbers into the budget calculator and realize your essential expenses far exceed 50%, don't panic. Here are actionable steps you can take:</p>
+        <ol>
+            <li><strong>Audit your "Needs":</strong> Are you counting unlimited 5G data or premium cable as a need? Downgrade to basics.</li>
+            <li><strong>Reduce Housing Costs:</strong> Consider getting a roommate, moving to a slightly cheaper neighborhood, or refinancing your mortgage.</li>
+            <li><strong>Shift Percentages:</strong> Temporarily use a 70/10/20 or 60/20/20 split. The goal is progress, not perfection.</li>
+            <li><strong>Focus on Income:</strong> Sometimes the issue isn't a spending problem, it's an income problem. Negotiate a raise, take on a side hustle, or switch employers.</li>
+        </ol>
+
+        <h2>Frequently Asked Questions</h2>
+        <div class="card" style="margin-top: 2rem;">
+            <div class="faq-item">
+                <div class="faq-question">How does a 50/30/20 budget calculator work?</div>
+                <p>A 50/30/20 budget calculator takes your after-tax income and splits it into three categories: 50% for needs (housing, groceries, utilities), 30% for wants (entertainment, dining out), and 20% for savings and debt repayment. It helps you quickly see exactly how to budget your paycheck without complicated tracking.</p>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What is the best budget calculator?</div>
+                <p>The best budget calculator is one that aligns with your financial goals and is easy to use. A calculator based on the 50/30/20 rule is widely considered excellent for beginners because it provides clear guidelines while maintaining flexibility for personal spending.</p>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How to budget paycheck effectively?</div>
+                <p>To budget a paycheck effectively, first calculate your after-tax income. Then, apply a framework like the 50/30/20 rule. Allocate funds to your essential needs first, set aside your savings or investments, and leave the remainder for discretionary spending or wants. Adjust these percentages as your income or goals change.</p>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Can I adjust the percentages in the 50/30/20 budget calculator?</div>
+                <p>Yes! While the classic rule is 50/30/20, a good budget calculator lets you adjust the split. If you live in an expensive city, you might need a 60/20/20 split. If you are aggressively saving for FIRE (Financial Independence, Retire Early), you might opt for a 40/10/50 split.</p>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What should I do if my needs exceed 50% of my paycheck?</div>
+                <p>If your needs take up more than 50% of your after-tax income, you have a few options: reduce your wants budget to compensate, find ways to lower fixed costs (like getting a roommate or refinancing debt), or focus on increasing your income. Many people start with a 60/20/20 or even 70/10/20 budget and work their way towards the ideal 50/30/20 split over time.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 FireMaths &middot; <a href="https://gab.ae">A GAB Ventures property</a>.</p>
+            <p>Not investment advice. All information for educational purposes only.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const incomeInput = document.getElementById('income');
+            const needsPct = document.getElementById('needsPct');
+            const wantsPct = document.getElementById('wantsPct');
+            const savingsPct = document.getElementById('savingsPct');
+
+            const needsPctVal = document.getElementById('needsPctVal');
+            const wantsPctVal = document.getElementById('wantsPctVal');
+            const savingsPctVal = document.getElementById('savingsPctVal');
+
+            const needsAmt = document.getElementById('needsAmt');
+            const wantsAmt = document.getElementById('wantsAmt');
+            const savingsAmt = document.getElementById('savingsAmt');
+
+            const totalWarning = document.getElementById('totalWarning');
+            const currentTotalSpan = document.getElementById('currentTotal');
+
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
+            const incomePeriodLabel = document.getElementById('incomePeriodLabel');
+            const periodTexts = document.querySelectorAll('.period-text');
+
+            let isMonthly = true;
+
+            function formatCurrency(num) {
+                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(num);
+            }
+
+            function updateCalculator(activeSlider) {
+                let n = parseInt(needsPct.value) || 0;
+                let w = parseInt(wantsPct.value) || 0;
+                let s = parseInt(savingsPct.value) || 0;
+
+                let total = n + w + s;
+
+                // If user is dragging a slider and total > 100, we should ideally adjust others.
+                // For simplicity, we just show a warning if total != 100
+                if(total !== 100) {
+                    totalWarning.style.display = 'block';
+                    currentTotalSpan.textContent = total;
+                } else {
+                    totalWarning.style.display = 'none';
+                }
+
+                needsPctVal.textContent = n + '%';
+                wantsPctVal.textContent = w + '%';
+                savingsPctVal.textContent = s + '%';
+
+                let income = parseFloat(incomeInput.value) || 0;
+
+                let nAmt = income * (n / 100);
+                let wAmt = income * (w / 100);
+                let sAmt = income * (s / 100);
+
+                needsAmt.textContent = formatCurrency(nAmt);
+                wantsAmt.textContent = formatCurrency(wAmt);
+                savingsAmt.textContent = formatCurrency(sAmt);
+
+                // Update category breakdown dynamically based on bucket totals
+                // Needs (Housing 60%, Groceries 20%, Utilities 20%)
+                document.getElementById('cat-housing').textContent = formatCurrency(nAmt * 0.60);
+                document.getElementById('cat-groceries').textContent = formatCurrency(nAmt * 0.20);
+                document.getElementById('cat-utilities').textContent = formatCurrency(nAmt * 0.20);
+
+                // Wants (Dining 33.3%, Entertainment 33.3%, Shopping 33.3%)
+                document.getElementById('cat-dining').textContent = formatCurrency(wAmt * 0.3333);
+                document.getElementById('cat-entertainment').textContent = formatCurrency(wAmt * 0.3333);
+                document.getElementById('cat-shopping').textContent = formatCurrency(wAmt * 0.3334);
+
+                // Savings (Investments 50%, Emergencies 25%, Debt 25%)
+                document.getElementById('cat-investments').textContent = formatCurrency(sAmt * 0.50);
+                document.getElementById('cat-emergencies').textContent = formatCurrency(sAmt * 0.25);
+                document.getElementById('cat-debt').textContent = formatCurrency(sAmt * 0.25);
+            }
+
+            incomeInput.addEventListener('input', () => updateCalculator());
+
+            needsPct.addEventListener('input', (e) => updateCalculator(e.target));
+            wantsPct.addEventListener('input', (e) => updateCalculator(e.target));
+            savingsPct.addEventListener('input', (e) => updateCalculator(e.target));
+
+            toggleBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    toggleBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    isMonthly = this.dataset.period === 'monthly';
+                    incomePeriodLabel.textContent = isMonthly ? 'Monthly' : 'Bi-weekly';
+
+                    periodTexts.forEach(el => {
+                        el.textContent = isMonthly ? 'month' : 'paycheck';
+                    });
+
+                    // Adjust placeholder roughly to fit
+                    if (isMonthly && incomeInput.value < 2000) {
+                        incomeInput.value = incomeInput.value * 2;
+                    } else if (!isMonthly && incomeInput.value > 2000) {
+                        incomeInput.value = Math.round(incomeInput.value / 2);
+                    }
+
+                    updateCalculator();
+                });
+            });
+
+            updateCalculator();
+        });
+    </script>
+</body>
+</html>
