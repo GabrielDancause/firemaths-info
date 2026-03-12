@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
+
     <meta charset="UTF-8">
-<link rel="canonical" href="https://firemaths.info/mortgage-calculator" />
+<link rel="canonical" href="https://firemaths.info/mortgage-calculator.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mortgage Calculator | firemaths.info</title>
-    <meta name="description" content="Calculate your monthly mortgage payments, total interest, and explore amortization schedules. Compare fixed vs variable rates and extra payment scenarios.">
+    <title>Mortgage Calculator: Monthly Payment, Amortization & Total Interest | firemaths.info</title>
+    <meta name="description" content="Banks hate this one trick. Use our full mortgage payment calculator to see how an extra $100/mo can save you years and thousands in interest.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,9 +31,9 @@
 
     <style>
         :root {
-            --bg-color: #0c0a00;
-            --card-bg: #141008;
-            --border-color: #2a2010;
+            --bg-color: #060a12;
+            --card-bg: #0a1020;
+            --border-color: #152040;
             --accent-color: #D4A017;
             --text-primary: #e0d8c8;
             --text-secondary: #888888;
@@ -341,13 +339,90 @@
             text-decoration: underline;
         }
     </style>
+
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What exactly is a mortgage calculator?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A mortgage calculator is a tool that estimates your monthly home loan payments based on the home price, down payment, interest rate, and loan term. It helps you understand the total cost of borrowing and how much you can afford to spend on a house."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I use a mortgage payment calculator?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Simply enter your desired home price, how much you plan to put down, your expected interest rate, and the term of the loan (e.g., 15 or 30 years). The calculator will instantly show your monthly principal and interest payment, as well as an amortization schedule."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How much is my mortgage payment going to be?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Your mortgage payment depends primarily on the size of your loan, the interest rate, and the loan duration. Use our tool above to input your specific numbers and see the exact monthly payment breakdown for both standard and extra payment scenarios."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why should I compare 15-year vs 30-year mortgages?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A 15-year mortgage has higher monthly payments but saves you tens of thousands of dollars in interest and builds equity twice as fast. A 30-year mortgage offers lower, more manageable monthly payments but costs much more in interest over the life of the loan."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can an extra $100 a month really make a difference?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! Making extra payments towards your principal reduces the balance faster. For example, adding just $100 extra per month to a typical 30-year mortgage can shave several years off your loan and save you thousands of dollars in interest."
+            }
+        }
+    ]
+}
+    </script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Mortgage Calculator: Monthly Payment, Amortization & Total Interest",
+    "description": "Banks hate this one trick. Use our full mortgage payment calculator to see how an extra $100/mo can save you years and thousands in interest.",
+    "datePublished": "2026-03-11",
+    "publisher": {
+        "@type": "Organization",
+        "name": "FireMaths",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://firemaths.info/favicon.ico"
+        }
+    }
+}
+    </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
 </head>
 <body>
-<script src="/nav.js"></script>
+
+<nav style="position: sticky; top: 0; z-index: 1000; background: rgba(6, 10, 18, 0.85); backdrop-filter: blur(8px); border-bottom: 1px solid #152040; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+    <a href="/" style="color: #D4A017; font-weight: 800; font-size: 1.25rem; text-decoration: none; letter-spacing: -0.5px;">FireMaths</a>
+    <div style="display: flex; gap: 1.5rem;">
+        <a href="/#studies" style="color: #e0d8c8; text-decoration: none; font-size: 0.875rem; font-weight: 500;">Studies</a>
+        <a href="/#tools" style="color: #e0d8c8; text-decoration: none; font-size: 0.875rem; font-weight: 500;">Tools</a>
+        <a href="/#guides" style="color: #e0d8c8; text-decoration: none; font-size: 0.875rem; font-weight: 500;">Guides</a>
+    </div>
+</nav>
+
 
 <div class="container">
     <header>
-        <h1>Mortgage Calculator</h1>
+        <h1>Mortgage Calculator: Monthly Payment, Amortization & Total Interest</h1>
         <p>Plan your payments, compare rates, and explore extra payment scenarios</p>
     </header>
 
@@ -356,7 +431,7 @@
             <!-- Inputs -->
             <div class="scenario-card">
                 <div class="scenario-header">
-                    <h2>Loan Details</h2>
+                    <h2>Mortgage Payment Calculator Inputs</h2>
                 </div>
 
                 <div class="inputs">
@@ -381,6 +456,10 @@
                         <div class="input-wrapper has-suffix">
                             <span class="suffix">Yrs</span>
                             <input type="number" id="loanTerm" value="30" min="1" max="50" step="1">
+                        </div>
+                        <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem;">
+                            <button type="button" onclick="setPresetTerm(15)" style="background: var(--card-bg); color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">15-Year</button>
+                            <button type="button" onclick="setPresetTerm(30)" style="background: var(--card-bg); color: var(--text-primary); border: 1px solid var(--border-color); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">30-Year</button>
                         </div>
                     </div>
 
@@ -445,7 +524,7 @@
             <!-- Results -->
             <div class="scenario-card">
                 <div class="scenario-header">
-                    <h2>Payment Summary</h2>
+                    <h2>How Much Is My Mortgage Payment? (Summary)</h2>
                 </div>
 
                 <div class="results">
@@ -513,6 +592,10 @@
         </div>
 
         <div class="amortization-section">
+            <h2>Amortization Chart</h2>
+            <div style="width: 100%; height: 300px; margin-bottom: 2rem; position: relative;">
+                <canvas id="amortizationChart"></canvas>
+            </div>
             <h2>Yearly Amortization Schedule</h2>
             <table>
                 <thead>
@@ -542,11 +625,49 @@
                 <li><strong>Extra Monthly Payments:</strong> Even adding $50 or $100 extra to your regular monthly payment can shave years off your loan term and save thousands in interest.</li>
                 <li><strong>Lump Sum Payments:</strong> Using tax refunds, bonuses, or other windfalls to make a single extra yearly payment is an excellent way to accelerate your payoff timeline without affecting your monthly budget.</li>
             </ul>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+            <div itemscope itemtype="https://schema.org/FAQPage">
+                <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
+                    <h3 itemprop="name" style="font-size: 1.2rem; color: var(--accent-color); margin-bottom: 0.5rem;">What exactly is a mortgage calculator?</h3>
+                    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">A mortgage calculator is a tool that estimates your monthly home loan payments based on the home price, down payment, interest rate, and loan term. It helps you understand the total cost of borrowing and how much you can afford to spend on a house.</p>
+                    </div>
+                </div>
+
+                <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
+                    <h3 itemprop="name" style="font-size: 1.2rem; color: var(--accent-color); margin-bottom: 0.5rem;">How do I use a mortgage payment calculator?</h3>
+                    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Simply enter your desired home price, how much you plan to put down, your expected interest rate, and the term of the loan (e.g., 15 or 30 years). The calculator will instantly show your monthly principal and interest payment, as well as an amortization schedule.</p>
+                    </div>
+                </div>
+
+                <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
+                    <h3 itemprop="name" style="font-size: 1.2rem; color: var(--accent-color); margin-bottom: 0.5rem;">How much is my mortgage payment going to be?</h3>
+                    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Your mortgage payment depends primarily on the size of your loan, the interest rate, and the loan duration. Use our tool above to input your specific numbers and see the exact monthly payment breakdown for both standard and extra payment scenarios.</p>
+                    </div>
+                </div>
+
+                <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
+                    <h3 itemprop="name" style="font-size: 1.2rem; color: var(--accent-color); margin-bottom: 0.5rem;">Why should I compare 15-year vs 30-year mortgages?</h3>
+                    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">A 15-year mortgage has higher monthly payments but saves you tens of thousands of dollars in interest and builds equity twice as fast. A 30-year mortgage offers lower, more manageable monthly payments but costs much more in interest over the life of the loan.</p>
+                    </div>
+                </div>
+
+                <div itemscope itemprop="mainEntity" itemtype="https://schema.org/Question" style="margin-bottom: 1.5rem;">
+                    <h3 itemprop="name" style="font-size: 1.2rem; color: var(--accent-color); margin-bottom: 0.5rem;">Can an extra $100 a month really make a difference?</h3>
+                    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text">Yes! Making extra payments towards your principal reduces the balance faster. For example, adding just $100 extra per month to a typical 30-year mortgage can shave several years off your loan and save you thousands of dollars in interest.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
     <footer>
-        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
+        <p>&copy; 2026 FireMaths &middot; A GAB Ventures property. Not investment advice. All information for educational purposes only.</p>
     </footer>
 </div>
 
@@ -748,6 +869,7 @@
             `;
             tbody.appendChild(tr);
         });
+        drawChart(yearlyData);
     };
 
     const resetUI = () => {
@@ -767,6 +889,90 @@
     inputs.forEach(input => {
         input.addEventListener('input', updateCalculator);
     });
+
+
+    // Chart rendering logic
+    const drawChart = (data) => {
+        const canvas = document.getElementById('amortizationChart');
+        const ctx = canvas.getContext('2d');
+
+        // Handle DPI
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.parentElement.getBoundingClientRect();
+
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        canvas.style.width = `${rect.width}px`;
+        canvas.style.height = `${rect.height}px`;
+
+        ctx.scale(dpr, dpr);
+
+        const width = rect.width;
+        const height = rect.height;
+
+        ctx.clearRect(0, 0, width, height);
+
+        if (!data || data.length === 0) return;
+
+        const padding = { top: 20, right: 20, bottom: 30, left: 60 };
+        const chartWidth = width - padding.left - padding.right;
+        const chartHeight = height - padding.top - padding.bottom;
+
+        const maxBalance = Math.max(...data.map(d => d.balance));
+        if (maxBalance === 0) return;
+
+        const xScale = chartWidth / (data.length - 1 || 1);
+        const yScale = chartHeight / maxBalance;
+
+        // Draw grid
+        ctx.strokeStyle = '#152040';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        for(let i=0; i<=5; i++) {
+            const y = padding.top + chartHeight - (i * chartHeight / 5);
+            ctx.moveTo(padding.left, y);
+            ctx.lineTo(width - padding.right, y);
+
+            ctx.fillStyle = '#888888';
+            ctx.font = '10px "JetBrains Mono"';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('$' + Math.round((i * maxBalance / 5)/1000) + 'k', padding.left - 10, y);
+        }
+        ctx.stroke();
+
+        // Draw balance line
+        ctx.beginPath();
+        ctx.moveTo(padding.left, padding.top + chartHeight - (data[0].balance * yScale));
+        for(let i=1; i<data.length; i++) {
+            ctx.lineTo(padding.left + (i * xScale), padding.top + chartHeight - (data[i].balance * yScale));
+        }
+        ctx.strokeStyle = '#D4A017';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // Fill under line
+        ctx.lineTo(padding.left + ((data.length - 1) * xScale), padding.top + chartHeight);
+        ctx.lineTo(padding.left, padding.top + chartHeight);
+        ctx.fillStyle = 'rgba(212, 160, 23, 0.1)';
+        ctx.fill();
+
+        // Draw x-axis labels
+        ctx.fillStyle = '#888888';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        const step = Math.ceil(data.length / 10);
+        for(let i=0; i<data.length; i+=step) {
+            ctx.fillText(data[i].year, padding.left + (i * xScale), padding.top + chartHeight + 10);
+        }
+    };
+
+    window.setPresetTerm = (years) => {
+        document.getElementById('loanTerm').value = years;
+        updateCalculator();
+    };
+
+    window.addEventListener('resize', updateCalculator);
 
     // Initial calculation
     updateCalculator();

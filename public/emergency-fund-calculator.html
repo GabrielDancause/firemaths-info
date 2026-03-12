@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
     <meta charset="UTF-8">
-<link rel="canonical" href="https://firemaths.info/emergency-fund-calculator" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emergency Fund Calculator | firemaths.info</title>
-    <meta name="description" content="Calculate your ideal emergency fund based on your monthly expenses, job stability, and dependents. Plan for 3, 6, or 12 months of runway.">
-
+    <title>Emergency Fund Calculator: How Much Do You Actually Need?</title>
+    <meta name="description" content="Most people save thousands more than they actually need. Find out exactly how much your lifestyle requires with our emergency fund calculator and stop wasting potential returns.">
+    <link rel="canonical" href="https://firemaths.info/emergency-fund-calculator.html">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -19,8 +15,8 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Emergency Fund Calculator",
-      "url": "https://firemaths.info/emergency-fund-calculator",
-      "description": "Calculate your ideal emergency fund based on your monthly expenses, job stability, and dependents.",
+      "url": "https://firemaths.info/emergency-fund-calculator.html",
+      "description": "Calculate your ideal emergency fund based on your monthly expenses, job stability, health, and dependents.",
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "All",
       "offers": {
@@ -31,23 +27,87 @@
     }
     </script>
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Emergency Fund Calculator: How Much Do You Actually Need?",
+      "description": "Calculate your ideal emergency fund and learn how much you need to save to protect against life's unexpected surprises.",
+      "datePublished": "2026-03-10",
+      "publisher": {
+        "@type": "Organization",
+        "name": "FireMaths",
+        "url": "https://firemaths.info"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "FireMaths"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is an emergency fund calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An emergency fund calculator helps you determine the exact amount of cash you need to set aside to cover essential living expenses in case of a financial shock, such as a job loss or medical emergency. It takes into account your monthly expenses and risk factors."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much emergency fund do I need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The general rule of thumb is to save enough to cover 3 to 6 months of essential living expenses. However, the exact amount depends on your job stability, dependents, and health. Freelancers or individuals in volatile industries may need closer to 12 months of expenses saved."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I save a 3 months vs 6 months emergency fund?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A 3-month emergency fund is often sufficient for single individuals with highly secure jobs and low fixed costs. A 6-month fund is recommended for most people, particularly those with dependents, single-income households, or standard corporate jobs with average turnover risk."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where should I keep my emergency fund?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your emergency fund must be liquid and safe. The best places are High-Yield Savings Accounts (HYSA), Money Market Accounts, or No-Penalty CDs, which offer higher interest rates than traditional savings accounts while protecting your principal from market volatility."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What expenses should my emergency fund cover?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It should only cover essential expenses needed to survive if you lost your income. This includes housing (rent/mortgage), groceries, essential utilities, transportation for job hunting or necessities, minimum debt payments, and necessary insurance premiums."
+          }
+        }
+      ]
+    }
+    </script>
+
     <style>
         :root {
-            --bg-color: #0c0a00;
-            --card-bg: #141008;
-            --border-color: #2a2010;
+            --bg-color: #060a12;
+            --card-bg: #0a1020;
+            --border-color: #152040;
             --accent-color: #D4A017;
-            --text-primary: #e0d8c8;
-            --text-secondary: #888888;
-            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --text-primary: #f0f0f0;
+            --text-secondary: #a0aabf;
+            --font-ui: 'Inter', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg-color);
@@ -64,9 +124,9 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 2rem 1.5rem;
+            padding: 3rem 1.5rem;
         }
 
         header {
@@ -82,7 +142,7 @@
 
         header p {
             color: var(--text-secondary);
-            font-size: 1.1rem;
+            font-size: 1.125rem;
         }
 
         .calculator-grid {
@@ -92,20 +152,21 @@
             margin-bottom: 4rem;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 800px) {
             .calculator-grid {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1.2fr 1fr;
             }
         }
 
-        .scenario-card {
+        .card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        .scenario-header {
+        .card-header {
             margin-bottom: 1.5rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid var(--border-color);
@@ -114,16 +175,16 @@
             align-items: center;
         }
 
-        .scenario-header h2 {
+        .card-header h2 {
             font-size: 1.25rem;
             color: var(--accent-color);
         }
 
-        .total-expenses-display {
+        .total-display {
             font-family: var(--font-mono);
-            font-size: 1.125rem;
-            color: var(--text-primary);
+            font-size: 1.25rem;
             font-weight: 600;
+            color: var(--text-primary);
         }
 
         .input-group {
@@ -138,142 +199,166 @@
             color: var(--text-secondary);
         }
 
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        input[type="range"] {
+            flex-grow: 1;
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            cursor: pointer;
+            border: none;
+        }
+
         .input-wrapper {
             position: relative;
             display: flex;
             align-items: center;
+            width: 120px;
+            flex-shrink: 0;
         }
 
-        .prefix, .suffix {
+        .prefix {
             position: absolute;
+            left: 0.75rem;
             color: var(--text-secondary);
             font-family: var(--font-mono);
-            font-size: 1rem;
-            pointer-events: none;
         }
-
-        .prefix { left: 1rem; }
-        .suffix { right: 1rem; }
 
         input[type="number"], select {
             width: 100%;
             background-color: var(--bg-color);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
-            font-size: 1rem;
-            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            padding: 0.5rem 0.5rem 0.5rem 1.75rem;
             border-radius: 6px;
-            transition: border-color 0.2s;
-            -moz-appearance: textfield;
-            font-family: var(--font-ui);
-        }
-
-        input[type="number"] {
             font-family: var(--font-mono);
+            outline: none;
+            transition: border-color 0.2s;
         }
 
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
+        select {
+            padding-left: 0.75rem;
+            font-family: var(--font-ui);
+            cursor: pointer;
+        }
+
+        input[type="number"]:focus, select:focus {
+            border-color: var(--accent-color);
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
 
-        input[type="number"]:focus, select:focus {
-            outline: none;
-            border-color: var(--accent-color);
+        .results-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
-        .has-prefix input { padding-left: 2rem; }
-        .has-suffix input { padding-right: 2.5rem; }
-
-        .results {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .result-item {
+        .target-card {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-color);
         }
 
-        .result-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
+        .target-card.recommended {
+            background-color: rgba(212, 160, 23, 0.05);
+            border-color: var(--accent-color);
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            text-align: center;
         }
 
-        .result-label {
-            color: var(--text-secondary);
+        .target-card.recommended .target-label {
+            color: var(--accent-color);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .target-card.recommended .target-value {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .target-label {
             font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
         }
 
-        .result-value {
+        .target-value {
             font-family: var(--font-mono);
-            font-size: 1.125rem;
-            font-weight: 500;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .result-recommended {
-            background-color: rgba(212, 160, 23, 0.1);
-            border: 1px solid var(--accent-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
+        .progress-container {
+            margin-top: 1rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
         }
 
-        .result-recommended .result-label {
-            color: var(--accent-color);
-            font-size: 1rem;
-            font-weight: 600;
-            display: block;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .result-recommended .result-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            justify-content: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .result-recommended .recommendation-note {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            font-family: var(--font-ui);
-        }
-
-        .savings-timeline {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background-color: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-        }
-
-        .timeline-header {
-            font-size: 1rem;
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .timeline-result {
+        .progress-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--accent-color);
+            width: 0%;
+            transition: width 0.3s ease;
         }
 
         .copy-btn {
@@ -283,7 +368,7 @@
             cursor: pointer;
             padding: 0.25rem 0.5rem;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-family: var(--font-ui);
             transition: all 0.2s;
         }
@@ -293,47 +378,66 @@
             color: var(--text-primary);
         }
 
-        .seo-content {
-            margin-bottom: 4rem;
+        .content-section {
+            margin-top: 4rem;
         }
 
-        .seo-content h2 {
+        .content-section h2 {
             font-size: 1.75rem;
-            margin-top: 2.5rem;
             margin-bottom: 1rem;
             color: var(--accent-color);
         }
 
-        .seo-content h3 {
+        .content-section h3 {
             font-size: 1.25rem;
             margin-top: 1.5rem;
             margin-bottom: 0.75rem;
-            color: var(--text-primary);
         }
 
-        .seo-content p {
+        .content-section p {
             margin-bottom: 1rem;
             color: var(--text-secondary);
         }
 
-        .seo-content ul {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-            color: var(--text-secondary);
+        .hysa-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
         }
 
-        .seo-content li {
-            margin-bottom: 0.5rem;
+        .hysa-table th, .hysa-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hysa-table th {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .hysa-table td {
+            color: var(--text-secondary);
         }
 
         .faq-item {
             margin-bottom: 1.5rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
         }
 
         .faq-question {
             font-weight: 600;
+            font-size: 1.1rem;
             color: var(--text-primary);
             margin-bottom: 0.5rem;
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
         }
 
         footer {
@@ -342,397 +446,408 @@
             border-top: 1px solid var(--border-color);
             color: var(--text-secondary);
             font-size: 0.875rem;
+            margin-top: 4rem;
         }
 
-        footer a {
-            color: var(--accent-color);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        footer a:hover {
-            color: var(--text-primary);
-            text-decoration: underline;
+        .disclaimer {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            opacity: 0.7;
         }
     </style>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
 </head>
 <body>
-<script src="/nav.js"></script>
+    <nav style="position: sticky; top: 0; z-index: 1000; background: rgba(6, 10, 18, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 0.75rem 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+        <a href="/" style="color: #fff; text-decoration: none; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.5px;">Fire<span style="color: #D4A017;">Maths</span></a>
+        <div style="display: flex; gap: 1rem;">
+            <a href="/#studies" style="color: #a0aabf; text-decoration: none; font-size: 0.875rem; font-weight: 500;">Studies</a>
+            <a href="/#tools" style="color: #a0aabf; text-decoration: none; font-size: 0.875rem; font-weight: 500;">Tools</a>
+            <a href="/#guides" style="color: #a0aabf; text-decoration: none; font-size: 0.875rem; font-weight: 500;">Guides</a>
+        </div>
+    </nav>
 
-<div class="container">
-    <header>
-        <h1>Emergency Fund Calculator</h1>
-        <p>Determine your ideal safety net based on your expenses and risk profile</p>
-    </header>
+    <div class="container">
+        <header>
+            <h1>Emergency Fund Calculator</h1>
+            <p>Calculate your ideal safety net based on your expenses and risk profile.</p>
+        </header>
 
-    <main>
-        <div class="calculator-grid">
-            <!-- Inputs -->
-            <div>
-                <div class="scenario-card" style="margin-bottom: 2rem;">
-                    <div class="scenario-header">
-                        <h2>Monthly Expenses</h2>
-                        <span class="total-expenses-display" id="total-expenses-display">$0</span>
+        <main>
+            <div class="calculator-grid">
+                <!-- Left Column: Inputs -->
+                <div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Monthly Essential Expenses</h2>
+                            <div class="total-display" id="total-expenses">$0</div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="housing">Housing (Rent/Mortgage)</label>
+                            <div class="input-row">
+                                <input type="range" id="housing-slider" min="0" max="5000" step="50" value="1500" class="expense-slider">
+                                <div class="input-wrapper">
+                                    <span class="prefix">$</span>
+                                    <input type="number" id="housing-number" min="0" step="50" value="1500" class="expense-number">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="food">Food & Groceries</label>
+                            <div class="input-row">
+                                <input type="range" id="food-slider" min="0" max="2000" step="10" value="400" class="expense-slider">
+                                <div class="input-wrapper">
+                                    <span class="prefix">$</span>
+                                    <input type="number" id="food-number" min="0" step="10" value="400" class="expense-number">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="utilities">Utilities & Internet</label>
+                            <div class="input-row">
+                                <input type="range" id="utilities-slider" min="0" max="1000" step="10" value="200" class="expense-slider">
+                                <div class="input-wrapper">
+                                    <span class="prefix">$</span>
+                                    <input type="number" id="utilities-number" min="0" step="10" value="200" class="expense-number">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="transport">Transportation</label>
+                            <div class="input-row">
+                                <input type="range" id="transport-slider" min="0" max="1500" step="10" value="300" class="expense-slider">
+                                <div class="input-wrapper">
+                                    <span class="prefix">$</span>
+                                    <input type="number" id="transport-number" min="0" step="10" value="300" class="expense-number">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="insurance">Insurance & Healthcare</label>
+                            <div class="input-row">
+                                <input type="range" id="insurance-slider" min="0" max="1500" step="10" value="250" class="expense-slider">
+                                <div class="input-wrapper">
+                                    <span class="prefix">$</span>
+                                    <input type="number" id="insurance-number" min="0" step="10" value="250" class="expense-number">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="debt">Minimum Debt Payments</label>
+                            <div class="input-row">
+                                <input type="range" id="debt-slider" min="0" max="3000" step="10" value="200" class="expense-slider">
+                                <div class="input-wrapper">
+                                    <span class="prefix">$</span>
+                                    <input type="number" id="debt-number" min="0" step="10" value="200" class="expense-number">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="inputs">
-                        <div class="input-group">
-                            <label for="exp-housing">Housing (Rent/Mortgage)</label>
-                            <div class="input-wrapper has-prefix">
-                                <span class="prefix">$</span>
-                                <input type="number" class="expense-input" id="exp-housing" value="1500" min="0" step="50">
-                            </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Risk Factors & Savings</h2>
                         </div>
 
                         <div class="input-group">
-                            <label for="exp-utilities">Utilities & Internet</label>
-                            <div class="input-wrapper has-prefix">
-                                <span class="prefix">$</span>
-                                <input type="number" class="expense-input" id="exp-utilities" value="250" min="0" step="10">
-                            </div>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="exp-groceries">Groceries & Food</label>
-                            <div class="input-wrapper has-prefix">
-                                <span class="prefix">$</span>
-                                <input type="number" class="expense-input" id="exp-groceries" value="500" min="0" step="10">
-                            </div>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="exp-transport">Transportation</label>
-                            <div class="input-wrapper has-prefix">
-                                <span class="prefix">$</span>
-                                <input type="number" class="expense-input" id="exp-transport" value="300" min="0" step="10">
-                            </div>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="exp-insurance">Insurance & Healthcare</label>
-                            <div class="input-wrapper has-prefix">
-                                <span class="prefix">$</span>
-                                <input type="number" class="expense-input" id="exp-insurance" value="200" min="0" step="10">
-                            </div>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="exp-debt">Minimum Debt Payments</label>
-                            <div class="input-wrapper has-prefix">
-                                <span class="prefix">$</span>
-                                <input type="number" class="expense-input" id="exp-debt" value="250" min="0" step="10">
-                            </div>
-                        </div>
-
-                        <div class="input-group">
-                            <label for="exp-other">Other Essentials</label>
-                            <div class="input-wrapper has-prefix">
-                                <span class="prefix">$</span>
-                                <input type="number" class="expense-input" id="exp-other" value="200" min="0" step="10">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="scenario-card">
-                    <div class="scenario-header">
-                        <h2>Risk Factors & Savings</h2>
-                    </div>
-
-                    <div class="inputs">
-                        <div class="input-group">
-                            <label for="job-stability">Employment Type</label>
-                            <select id="job-stability">
-                                <option value="stable">Stable (Secure industry, tenured role)</option>
-                                <option value="freelance" selected>Freelance / Contractor</option>
-                                <option value="seasonal">Seasonal / Volatile Industry</option>
+                            <label for="job-stability">Job Stability</label>
+                            <select id="job-stability" class="risk-input">
+                                <option value="stable">Stable / Secure Salary</option>
+                                <option value="freelance">Freelance / Contractor / Commission</option>
+                                <option value="seasonal">Seasonal / Highly Volatile</option>
                             </select>
                         </div>
 
                         <div class="input-group">
-                            <label for="dependents">Number of Dependents</label>
-                            <select id="dependents">
-                                <option value="0">0 (Single, no dependents)</option>
-                                <option value="1" selected>1+ (Children, spouse, or other dependents)</option>
+                            <label for="dependents">Dependents</label>
+                            <select id="dependents" class="risk-input">
+                                <option value="0">0 (Single/No Dependents)</option>
+                                <option value="1">1 or more (Children, Spouse, etc.)</option>
                             </select>
                         </div>
 
-                        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 1.5rem 0;">
-
                         <div class="input-group">
-                            <label for="current-savings">Current Emergency Fund Balance</label>
-                            <div class="input-wrapper has-prefix">
-                                <span class="prefix">$</span>
-                                <input type="number" id="current-savings" value="5000" min="0" step="100">
+                            <label for="health">Health & Medical Risks</label>
+                            <select id="health" class="risk-input">
+                                <option value="good">Good Health / Low Expected Costs</option>
+                                <option value="chronic">Chronic Condition / High Expected Costs</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group" style="margin-top: 2rem;">
+                            <label for="current-savings">Current Emergency Fund Savings</label>
+                            <div class="input-row" style="max-width: 250px;">
+                                <div class="input-wrapper" style="width: 100%;">
+                                    <span class="prefix">$</span>
+                                    <input type="number" id="current-savings" min="0" step="100" value="2500" style="width: 100%;" class="savings-input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Results -->
+                <div>
+                    <div class="card results-section" style="position: sticky; top: 5rem;">
+                        <div class="target-card recommended">
+                            <div class="target-label">Recommended Target (<span id="rec-months">6</span> Months)</div>
+                            <div class="target-value" id="rec-target">$0</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary);" id="rec-reasoning">Based on your risk profile</div>
+                        </div>
+
+                        <div class="target-card">
+                            <div class="target-label">3 Months (Minimum Base)</div>
+                            <div class="target-value">
+                                <span id="target-3">$0</span>
+                                <button class="copy-btn" onclick="copyValue('target-3', this)">Copy</button>
                             </div>
                         </div>
 
-                        <div class="input-group">
-                            <label for="monthly-contribution">Monthly Savings Contribution</label>
-                            <div class="input-wrapper has-prefix">
-                                <span class="prefix">$</span>
-                                <input type="number" id="monthly-contribution" value="500" min="0" step="50">
+                        <div class="target-card">
+                            <div class="target-label">6 Months (Standard Safe)</div>
+                            <div class="target-value">
+                                <span id="target-6">$0</span>
+                                <button class="copy-btn" onclick="copyValue('target-6', this)">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="target-card">
+                            <div class="target-label">12 Months (Conservative)</div>
+                            <div class="target-value">
+                                <span id="target-12">$0</span>
+                                <button class="copy-btn" onclick="copyValue('target-12', this)">Copy</button>
+                            </div>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-header">
+                                <span>Savings Progress</span>
+                                <span id="progress-percent" style="color: var(--accent-color); font-weight: 600;">0%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" id="progress-fill"></div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); font-family: var(--font-mono);">
+                                <span id="progress-current">$0</span>
+                                <span id="progress-goal">$0</span>
+                            </div>
+                            <div style="margin-top: 1rem; font-size: 0.875rem; text-align: center; color: var(--text-secondary);" id="progress-message">
+                                Keep saving! You have $X left to reach your goal.
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Results -->
-            <div class="scenario-card" style="height: fit-content;">
-                <div class="scenario-header">
-                    <h2>Your Targets</h2>
+            <!-- Content Sections -->
+            <div class="content-section">
+                <h2>Where to keep it: Comparing High-Yield Savings Accounts (HYSA)</h2>
+                <p>Your emergency fund must be completely liquid and protected from market drops. Do not invest this money in the stock market. The standard recommendation is to hold these funds in a High-Yield Savings Account (HYSA). Unlike traditional bank accounts paying 0.01%, HYSAs often pay 4% to 5% APY, helping your cash keep pace with inflation.</p>
+
+                <table class="hysa-table">
+                    <thead>
+                        <tr>
+                            <th>Account Type</th>
+                            <th>Average APY*</th>
+                            <th>Liquidity</th>
+                            <th>Risk</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>High-Yield Savings (HYSA)</td>
+                            <td>~4.0% - 5.0%</td>
+                            <td>Immediate (1-3 days transfer)</td>
+                            <td>None (FDIC Insured)</td>
+                        </tr>
+                        <tr>
+                            <td>Money Market Account (MMA)</td>
+                            <td>~4.0% - 5.2%</td>
+                            <td>Immediate (Often includes debit/checks)</td>
+                            <td>None (FDIC Insured)</td>
+                        </tr>
+                        <tr>
+                            <td>No-Penalty CDs</td>
+                            <td>~4.5% - 5.0%</td>
+                            <td>High (Can withdraw after 7 days)</td>
+                            <td>None (FDIC Insured)</td>
+                        </tr>
+                        <tr>
+                            <td>Traditional Bank Savings</td>
+                            <td>~0.01% - 0.4%</td>
+                            <td>Immediate</td>
+                            <td>None (FDIC Insured)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.8rem; opacity: 0.7;">*Rates fluctuate based on Federal Reserve benchmark rates. Check current rates with institutions directly.</p>
+            </div>
+
+            <div class="content-section">
+                <h2>Emergency Fund FAQ</h2>
+
+                <div class="faq-item">
+                    <div class="faq-question">What is an emergency fund calculator and how do I use it?</div>
+                    <div class="faq-answer">An emergency fund calculator helps you determine the exact amount of cash you need to set aside to cover essential living expenses in case of a financial shock, such as a job loss or medical emergency. Enter your monthly essential expenses (like rent, food, and utilities) and adjust your personal risk factors to see your customized target.</div>
                 </div>
 
-                <div class="result-recommended">
-                    <span class="result-label">Recommended Target (<span id="rec-months">6</span> Months)</span>
-                    <div class="result-value">
-                        <span id="rec-amount">$0</span>
-                        <button class="copy-btn" onclick="copyValue('rec-amount', this)">Copy</button>
-                    </div>
-                    <div class="recommendation-note" id="rec-note">Based on employment type and dependents.</div>
+                <div class="faq-item">
+                    <div class="faq-question">How much emergency fund do I need?</div>
+                    <div class="faq-answer">The general rule of thumb is to save enough to cover 3 to 6 months of essential living expenses. However, the exact amount depends on your job stability, dependents, and health. Freelancers or individuals in volatile industries may need closer to 12 months of expenses saved.</div>
                 </div>
 
-                <div class="results">
-                    <div class="result-item">
-                        <span class="result-label">3 Months (Minimum)</span>
-                        <div class="result-value">
-                            <span id="target-3">$0</span>
-                            <button class="copy-btn" onclick="copyValue('target-3', this)">Copy</button>
-                        </div>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">6 Months (Standard)</span>
-                        <div class="result-value">
-                            <span id="target-6">$0</span>
-                            <button class="copy-btn" onclick="copyValue('target-6', this)">Copy</button>
-                        </div>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">12 Months (Conservative)</span>
-                        <div class="result-value">
-                            <span id="target-12">$0</span>
-                            <button class="copy-btn" onclick="copyValue('target-12', this)">Copy</button>
-                        </div>
-                    </div>
+                <div class="faq-item">
+                    <div class="faq-question">Should I save a 3 months vs 6 months emergency fund?</div>
+                    <div class="faq-answer">A 3-month emergency fund is often sufficient for single individuals with highly secure jobs and low fixed costs. A 6-month fund is recommended for most people, particularly those with dependents, single-income households, or standard corporate jobs with average turnover risk.</div>
                 </div>
 
-                <div class="savings-timeline">
-                    <div class="timeline-header">Savings Timeline</div>
+                <div class="faq-item">
+                    <div class="faq-question">Where should I keep my emergency fund?</div>
+                    <div class="faq-answer">Your emergency fund must be liquid and safe. The best places are High-Yield Savings Accounts (HYSA), Money Market Accounts, or No-Penalty CDs, which offer higher interest rates than traditional savings accounts while protecting your principal from market volatility.</div>
+                </div>
 
-                    <div class="timeline-result">
-                        <span class="result-label">To reach Recommended Goal:</span>
-                        <div class="result-value">
-                            <span id="time-to-goal">0 months</span>
-                        </div>
-                    </div>
-
-                    <div class="timeline-progress" style="margin-top: 1rem;">
-                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.25rem;">
-                            <span>Current: <span id="progress-current">$0</span></span>
-                            <span>Target: <span id="progress-target">$0</span></span>
-                        </div>
-                        <div style="width: 100%; height: 8px; background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden;">
-                            <div id="progress-bar" style="height: 100%; background-color: var(--accent-color); width: 0%; transition: width 0.3s ease;"></div>
-                        </div>
-                        <div style="text-align: right; font-size: 0.75rem; color: var(--accent-color); margin-top: 0.25rem;">
-                            <span id="progress-percent">0%</span> Complete
-                        </div>
-                    </div>
+                <div class="faq-item">
+                    <div class="faq-question">Does an emergency fund cover job loss or other expenses?</div>
+                    <div class="faq-answer">Yes, the primary purpose of an emergency fund is to replace your income during a job loss. However, it also covers other sudden, unavoidable expenses such as major medical bills, emergency car repairs, or urgent home repairs (like a broken furnace or leaking roof).</div>
                 </div>
             </div>
-        </div>
+        </main>
 
-        <div class="seo-content">
-            <h2>Why Do You Need an Emergency Fund?</h2>
-            <p>An emergency fund is a stash of money set aside to cover the financial surprises life throws your way. These unexpected events can be stressful and costly. Examples include:</p>
-            <ul>
-                <li>Job loss or sudden reduction in income</li>
-                <li>Medical or dental emergencies</li>
-                <li>Unexpected home repairs (e.g., a broken AC or leaky roof)</li>
-                <li>Major car repairs</li>
-            </ul>
-            <p>Without an emergency fund, a financial shock can push you into high-interest debt, such as credit card balances or personal loans, which can set back your long-term financial goals like achieving FIRE (Financial Independence, Retire Early).</p>
+        <footer>
+            <p>© 2026 FireMaths · A GAB Ventures property.</p>
+            <p class="disclaimer">Not investment advice. All information for educational purposes only.</p>
+        </footer>
+    </div>
 
-            <h2>How Much Should You Save?</h2>
-            <p>The standard rule of thumb is to save enough to cover <strong>3 to 6 months of essential living expenses</strong>. However, the exact amount depends on your personal risk profile:</p>
-            <ul>
-                <li><strong>3 Months:</strong> Best for single individuals with highly stable jobs (e.g., tenured teachers, healthcare workers) and low living expenses.</li>
-                <li><strong>6 Months:</strong> The sweet spot for most people. Recommended for those with a typical corporate job, single-income families, or individuals with dependents.</li>
-                <li><strong>12 Months:</strong> Ideal for freelancers, contractors, those working in volatile industries (like early-stage startups), or those nearing retirement who want extra peace of mind.</li>
-            </ul>
+    <script>
+        // Formatting function
+        const formatMoney = (amount) => {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            }).format(amount);
+        };
 
-            <h2>What to Include in Monthly Expenses?</h2>
-            <p>When calculating your target, only include <strong>essential</strong> expenses—the things you absolutely must pay if you lost your job tomorrow:</p>
-            <ul>
-                <li>Housing (Rent, Mortgage, Property Taxes, HOA)</li>
-                <li>Utilities (Electricity, Water, Gas, Basic Internet)</li>
-                <li>Groceries (Excluding dining out)</li>
-                <li>Transportation (Car payment, Insurance, Gas, Public Transit)</li>
-                <li>Healthcare (Premiums, Prescriptions)</li>
-                <li>Minimum Debt Payments (Credit Cards, Student Loans)</li>
-            </ul>
+        // Copy functionality
+        window.copyValue = async (elementId, btn) => {
+            const text = document.getElementById(elementId).innerText;
+            try {
+                await navigator.clipboard.writeText(text);
+                const originalText = btn.innerText;
+                btn.innerText = 'Copied!';
+                setTimeout(() => { btn.innerText = originalText; }, 2000);
+            } catch (err) {
+                console.error('Failed to copy', err);
+            }
+        };
 
-            <h2>Where Should You Keep Your Emergency Fund?</h2>
-            <p>Your emergency fund must be <strong>liquid</strong> and <strong>safe</strong>. It should not be invested in the stock market or locked away in retirement accounts. The best places to keep your emergency fund include:</p>
-            <ul>
-                <li><strong>High-Yield Savings Accounts (HYSA):</strong> These accounts offer significantly higher interest rates than traditional savings accounts while keeping your money easily accessible and FDIC insured.</li>
-                <li><strong>Money Market Accounts:</strong> Similar to HYSAs, these accounts often provide higher interest rates and may come with debit cards or check-writing privileges.</li>
-                <li><strong>No-Penalty Certificates of Deposit (CDs):</strong> These allow you to lock in a guaranteed interest rate without paying a fee if you need to withdraw your money early.</li>
-            </ul>
+        // Sync inputs and calculate
+        const categories = ['housing', 'food', 'utilities', 'transport', 'insurance', 'debt'];
 
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-item">
-                <div class="faq-question">Should I pay off debt or build my emergency fund first?</div>
-                <p>Most experts recommend building a "starter" emergency fund of $1,000 to $2,000 first to prevent you from taking on more debt for minor emergencies. After that, aggressively pay off high-interest debt (like credit cards) before building your fully-funded 3-6 month emergency fund.</p>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">Does investing in a taxable brokerage account count?</div>
-                <p>No. While you can access the money, the stock market can drop precisely when you need the money (during a recession and subsequent job loss). Your emergency fund must be held in cash or cash equivalents where the principal is protected.</p>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">How do I start building my emergency fund?</div>
-                <p>Set a small, achievable initial goal ($500). Automate your savings by having a portion of your paycheck direct-deposited into your high-yield savings account. Sell unused items, pick up a side hustle, or redirect bonuses/tax refunds straight to the fund to accelerate your progress.</p>
-            </div>
-        </div>
-    </main>
+        const calculate = () => {
+            let totalMonthly = 0;
 
-    <footer>
-        <p>&copy; 2025 firemaths.info &middot; A GAB Ventures property (<a href="https://gab.ae" target="_blank" rel="noopener noreferrer">https://gab.ae</a>)</p>
-    </footer>
-</div>
+            // Sync logic and calculate sum
+            categories.forEach(cat => {
+                const numInput = document.getElementById(`${cat}-number`);
+                const sliderInput = document.getElementById(`${cat}-slider`);
 
-<script>
-    // Format currency
-    const formatCurrency = (value) => {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-            maximumFractionDigits: 0
-        }).format(value);
-    };
+                // Keep values in sync handled by event listeners, here we just read
+                let val = parseFloat(numInput.value) || 0;
+                totalMonthly += val;
+            });
 
-    // Copy to clipboard
-    window.copyValue = async (elementId, btn) => {
-        const text = document.getElementById(elementId).innerText;
-        try {
-            await navigator.clipboard.writeText(text);
-            const originalText = btn.innerText;
-            btn.innerText = 'Copied!';
-            setTimeout(() => {
-                btn.innerText = originalText;
-            }, 2000);
-        } catch (err) {
-            console.error('Failed to copy text: ', err);
-        }
-    };
+            document.getElementById('total-expenses').innerText = formatMoney(totalMonthly);
 
-    const updateCalculator = () => {
-        // Calculate total monthly expenses
-        const expenseInputs = document.querySelectorAll('.expense-input');
-        let totalExpenses = 0;
+            const target3 = totalMonthly * 3;
+            const target6 = totalMonthly * 6;
+            const target12 = totalMonthly * 12;
 
-        expenseInputs.forEach(input => {
-            totalExpenses += parseFloat(input.value) || 0;
+            document.getElementById('target-3').innerText = formatMoney(target3);
+            document.getElementById('target-6').innerText = formatMoney(target6);
+            document.getElementById('target-12').innerText = formatMoney(target12);
+
+            // Calculate Recommended
+            let recommendedMonths = 3;
+            let reasoning = ["Base 3 months"];
+
+            const job = document.getElementById('job-stability').value;
+            const deps = document.getElementById('dependents').value;
+            const health = document.getElementById('health').value;
+
+            if (job === 'freelance') { recommendedMonths += 3; reasoning.push("+3 for variable income"); }
+            if (job === 'seasonal') { recommendedMonths += 6; reasoning.push("+6 for high volatility"); }
+
+            if (deps === '1') { recommendedMonths += 3; reasoning.push("+3 for dependents"); }
+
+            if (health === 'chronic') { recommendedMonths += 3; reasoning.push("+3 for health risks"); }
+
+            if (recommendedMonths > 12) recommendedMonths = 12;
+
+            const recommendedTarget = totalMonthly * recommendedMonths;
+            document.getElementById('rec-months').innerText = recommendedMonths;
+            document.getElementById('rec-target').innerText = formatMoney(recommendedTarget);
+            document.getElementById('rec-reasoning').innerText = reasoning.join(', ');
+
+            // Progress tracking
+            const currentSavings = parseFloat(document.getElementById('current-savings').value) || 0;
+
+            let percent = 0;
+            if (recommendedTarget > 0) {
+                percent = Math.min(100, (currentSavings / recommendedTarget) * 100);
+            } else if (currentSavings > 0) {
+                percent = 100;
+            }
+
+            document.getElementById('progress-fill').style.width = `${percent}%`;
+            document.getElementById('progress-percent').innerText = `${percent.toFixed(1)}%`;
+            document.getElementById('progress-current').innerText = formatMoney(currentSavings);
+            document.getElementById('progress-goal').innerText = formatMoney(recommendedTarget);
+
+            const remaining = recommendedTarget - currentSavings;
+            const msgEl = document.getElementById('progress-message');
+            if (remaining > 0) {
+                msgEl.innerText = `Keep saving! You have ${formatMoney(remaining)} left to reach your recommended goal.`;
+                msgEl.style.color = "var(--text-secondary)";
+            } else {
+                msgEl.innerText = `Congratulations! Your emergency fund is fully funded based on your profile.`;
+                msgEl.style.color = "var(--accent-color)";
+            }
+        };
+
+        // Attach event listeners for syncing and calculating
+        categories.forEach(cat => {
+            const numInput = document.getElementById(`${cat}-number`);
+            const sliderInput = document.getElementById(`${cat}-slider`);
+
+            numInput.addEventListener('input', (e) => {
+                sliderInput.value = e.target.value;
+                calculate();
+            });
+
+            sliderInput.addEventListener('input', (e) => {
+                numInput.value = e.target.value;
+                calculate();
+            });
         });
 
-        document.getElementById('total-expenses-display').innerText = formatCurrency(totalExpenses);
+        const riskInputs = document.querySelectorAll('.risk-input, .savings-input');
+        riskInputs.forEach(input => {
+            input.addEventListener('change', calculate);
+            input.addEventListener('input', calculate);
+        });
 
-        const jobStability = document.getElementById('job-stability').value;
-        const dependents = document.getElementById('dependents').value;
-        const currentSavings = parseFloat(document.getElementById('current-savings').value) || 0;
-        const monthlyContribution = parseFloat(document.getElementById('monthly-contribution').value) || 0;
-
-        // Calculate standard targets
-        const target3 = totalExpenses * 3;
-        const target6 = totalExpenses * 6;
-        const target12 = totalExpenses * 12;
-
-        document.getElementById('target-3').innerText = formatCurrency(target3);
-        document.getElementById('target-6').innerText = formatCurrency(target6);
-        document.getElementById('target-12').innerText = formatCurrency(target12);
-
-        // Calculate recommended months
-        let recMonths = 3; // Base
-        let noteParts = [];
-
-        if (jobStability === 'stable') {
-            noteParts.push("stable employment");
-        } else if (jobStability === 'freelance') {
-            recMonths += 3;
-            noteParts.push("freelance employment");
-        } else if (jobStability === 'seasonal') {
-            recMonths += 6;
-            noteParts.push("seasonal employment (higher risk)");
-        }
-
-        if (dependents === '1') {
-            recMonths += 3;
-            noteParts.push("having dependents");
-        } else {
-            noteParts.push("no dependents");
-        }
-
-        // Cap at 12 months
-        recMonths = Math.min(12, recMonths);
-
-        // Ensure at least 6 months if seasonal
-        if (jobStability === 'seasonal' && recMonths < 6) {
-            recMonths = 6;
-        }
-
-        const recAmount = totalExpenses * recMonths;
-
-        document.getElementById('rec-months').innerText = recMonths;
-        document.getElementById('rec-amount').innerText = formatCurrency(recAmount);
-        document.getElementById('rec-note').innerText = `Based on ${noteParts.join(' and ')}.`;
-
-        // Timeline & Progress Calculations
-        const shortfall = Math.max(0, recAmount - currentSavings);
-        let timeToGoal = 0;
-
-        if (shortfall <= 0) {
-            document.getElementById('time-to-goal').innerText = "Goal reached! 🎉";
-            document.getElementById('time-to-goal').style.color = "var(--accent-color)";
-        } else if (monthlyContribution > 0) {
-            const months = Math.ceil(shortfall / monthlyContribution);
-            const years = Math.floor(months / 12);
-            const remainingMonths = months % 12;
-
-            let timeString = "";
-            if (years > 0) {
-                timeString += `${years} year${years > 1 ? 's' : ''} `;
-            }
-            if (remainingMonths > 0 || years === 0) {
-                timeString += `${remainingMonths} month${remainingMonths !== 1 ? 's' : ''}`;
-            }
-
-            document.getElementById('time-to-goal').innerText = timeString;
-            document.getElementById('time-to-goal').style.color = "var(--text-primary)";
-        } else {
-            document.getElementById('time-to-goal').innerText = "Never (add contributions)";
-            document.getElementById('time-to-goal').style.color = "#ff6b6b";
-        }
-
-        // Update Progress Bar
-        const percentComplete = recAmount > 0 ? Math.min(100, (currentSavings / recAmount) * 100) : 100;
-
-        document.getElementById('progress-current').innerText = formatCurrency(currentSavings);
-        document.getElementById('progress-target').innerText = formatCurrency(recAmount);
-        document.getElementById('progress-bar').style.width = `${percentComplete}%`;
-        document.getElementById('progress-percent').innerText = `${percentComplete.toFixed(1)}%`;
-    };
-
-    // Attach event listeners
-    const allInputs = document.querySelectorAll('input, select');
-    allInputs.forEach(input => {
-        input.addEventListener('input', updateCalculator);
-        input.addEventListener('change', updateCalculator);
-    });
-
-    // Initial calculation
-    updateCalculator();
-</script>
-
+        // Init
+        calculate();
+    </script>
 </body>
 </html>
