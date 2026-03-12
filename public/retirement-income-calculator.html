@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
+
+    <meta charset="UTF-8">
+    <link rel="canonical" href="https://firemaths.info/retirement-income-calculator.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Retirement Income Calculator: How Long Will Your Savings Last?</title>
+    <!-- Curiosity Gap Description -->
+    <meta name="description" content="Most retirees underestimate this crucial expense—find out exactly when your portfolio might hit zero. Adjust your withdrawal rate and see the surprising results instantly.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Schema.org Article -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Retirement Income Calculator: How Long Will Your Savings Last?",
+      "description": "Most retirees underestimate this crucial expense—find out exactly when your portfolio might hit zero. Adjust your withdrawal rate and see the surprising results instantly.",
+      "datePublished": "2026-03-11T00:00:00Z",
+      "publisher": {
+        "@type": "Organization",
+        "name": "FireMaths",
+        "url": "https://firemaths.info"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "FireMaths"
+      }
+    }
+    </script>
+
+    <!-- Schema.org FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a retirement income calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A retirement income calculator is a tool that projects how your savings and investments will perform over time when you start taking regular withdrawals. It accounts for market returns and inflation to estimate when your money might run out."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long will my retirement savings last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "How long your retirement savings last depends on your starting portfolio size, your annual withdrawal amount, the inflation rate, and your investment returns. Using a Monte Carlo simulation can help provide a statistical probability of success."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I use a retirement drawdown calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To use a retirement drawdown calculator, input your total savings, the amount you plan to withdraw each year, and your expected rate of return and inflation. The calculator will model the drawdown phase of your retirement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the 4% rule work for early retirement?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The 4% rule was designed for a 30-year traditional retirement. For early retirees planning for 40 to 50 years of withdrawals, a more conservative rate like 3% to 3.5% is often recommended to reduce the risk of outliving your money."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if inflation is higher than expected?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "High inflation erodes your purchasing power, meaning you have to withdraw more money to maintain your standard of living. This increases your withdrawal rate and significantly depletes your portfolio faster."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #060a12;
+            color: #e0d8c8;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Sticky Nav */
+        nav.sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(6, 10, 18, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid #152040;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #D4A017;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: #a0a8c0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 24px 40px;
+            background: linear-gradient(180deg, #0a1020 0%, #060a12 100%);
+            border-bottom: 1px solid #152040;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, #D4A017 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #a0a8c0;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 24px;
+            flex: 1;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 32px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: #0a1020;
+            border: 2px solid #152040;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+        .input-group:last-child {
+            margin-bottom: 0;
+        }
+        .input-group label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #e0d8c8;
+            margin-bottom: 10px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefix, .suffix {
+            position: absolute;
+            color: #888;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            pointer-events: none;
+        }
+        .prefix { left: 16px; }
+        .suffix { right: 16px; }
+
+        input[type="number"] {
+            width: 100%;
+            background: #060a12;
+            border: 1px solid #152040;
+            border-radius: 8px;
+            padding: 14px 16px;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.15rem;
+            transition: all 0.2s;
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #D4A017;
+            box-shadow: 0 0 0 2px rgba(212,160,23,0.2);
+        }
+
+        .input-wrapper.has-prefix input { padding-left: 36px; }
+        .input-wrapper.has-suffix input { padding-right: 36px; }
+
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .result-box {
+            background: #060a12;
+            border: 1px solid #152040;
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .result-box.highlight {
+            border-color: #D4A017;
+            background: linear-gradient(180deg, rgba(212,160,23,0.05) 0%, transparent 100%);
+        }
+
+        .result-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #a0a8c0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .result-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .result-box.highlight .result-value {
+            color: #D4A017;
+        }
+
+        .result-sub {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 6px;
+        }
+
+        .chart-container {
+            background: #060a12;
+            border: 1px solid #152040;
+            border-radius: 12px;
+            padding: 24px;
+            height: 350px;
+            position: relative;
+            width: 100%;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .content-section {
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .content-section h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 40px 0 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #152040;
+        }
+
+        .content-section h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #D4A017;
+            margin: 32px 0 16px;
+        }
+
+        .content-section p {
+            color: #a0a8c0;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .faq-item {
+            margin-bottom: 24px;
+            background: #0a1020;
+            border: 1px solid #152040;
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .faq-item h3 {
+            margin-top: 0;
+            border-bottom: none;
+            padding-bottom: 0;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .faq-item p {
+            margin-bottom: 0;
+            font-size: 1.05rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 24px;
+            font-size: 0.9rem;
+            color: #888;
+            border-top: 1px solid #152040;
+            background: #0a1020;
+            margin-top: auto;
+        }
+
+        .footer a {
+            color: #D4A017;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 850px) {
+            .calculator-grid { grid-template-columns: 1fr; }
+            .kpi-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2rem; }
+            .card { padding: 24px; }
+            .nav-links { display: none; } /* Simplified for mobile */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sticky Navigation -->
+<nav class="sticky-nav">
+    <a href="/" class="nav-brand">FireMaths</a>
+    <div class="nav-links">
+        <a href="/#studies">Studies</a>
+        <a href="/#tools">Tools</a>
+        <a href="/#guides">Guides</a>
+    </div>
+</nav>
+
+<header class="header">
+    <h1>Retirement Income Calculator</h1>
+    <p>How long will your retirement savings last? Model your portfolio drawdown against inflation and market returns.</p>
+</header>
+
+<main class="container">
+    <div class="calculator-grid">
+        <!-- Inputs -->
+        <div class="card">
+            <div class="input-group">
+                <label for="portfolio">Portfolio Size</label>
+                <div class="input-wrapper has-prefix">
+                    <span class="prefix">$</span>
+                    <input type="number" id="portfolio" value="1000000" min="1000" step="10000">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="withdrawal">Annual Withdrawal (Year 1)</label>
+                <div class="input-wrapper has-prefix">
+                    <span class="prefix">$</span>
+                    <input type="number" id="withdrawal" value="40000" min="1000" step="1000">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="returns">Expected Return (Nominal)</label>
+                <div class="input-wrapper has-suffix">
+                    <input type="number" id="returns" value="7.0" min="0" max="20" step="0.1">
+                    <span class="suffix">%</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="inflation">Inflation Rate</label>
+                <div class="input-wrapper has-suffix">
+                    <input type="number" id="inflation" value="3.0" min="0" max="15" step="0.1">
+                    <span class="suffix">%</span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="volatility">Market Volatility</label>
+                <div class="input-wrapper has-suffix">
+                    <input type="number" id="volatility" value="15.0" min="0" max="30" step="0.5">
+                    <span class="suffix">%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="results-container">
+            <div class="kpi-grid">
+                <div class="result-box highlight">
+                    <div class="result-label">Money Lasts</div>
+                    <div class="result-value" id="res-years">30+ Years</div>
+                    <div class="result-sub">Based on average returns</div>
+                </div>
+
+                <div class="result-box">
+                    <div class="result-label">Monte Carlo Success Rate</div>
+                    <div class="result-value" id="res-success">92%</div>
+                    <div class="result-sub">Probability of not running out</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="portfolioChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEO Content & FAQ -->
+    <article class="content-section">
+        <h2>Retirement Drawdown Calculator: The 4% Rule Explained</h2>
+        <p>The <strong>4% rule</strong> is a widely discussed guideline for retirement withdrawals. It suggests that you can withdraw 4% of your initial portfolio value in your first year of retirement, then adjust that dollar amount for inflation every year thereafter, with a high probability that your money will last for a 30-year retirement.</p>
+        <p>However, the 4% rule isn't perfect for everyone. If you retire early and need your money to last 40 or 50 years, a 4% withdrawal rate might be too aggressive. Testing your specific numbers using our retirement income calculator helps you visualize how different withdrawal rates, inflation, and market returns impact your portfolio's longevity.</p>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <h3>What is a retirement income calculator?</h3>
+            <p>A retirement income calculator is a tool that projects how your savings and investments will perform over time when you start taking regular withdrawals. It accounts for market returns and inflation to estimate when your money might run out.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How long will my retirement savings last?</h3>
+            <p>How long your retirement savings last depends on your starting portfolio size, your annual withdrawal amount, the inflation rate, and your investment returns. Using a Monte Carlo simulation can help provide a statistical probability of success, factoring in sequence of returns risk.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>How do I use a retirement drawdown calculator?</h3>
+            <p>To use a retirement drawdown calculator, input your total savings, the amount you plan to withdraw each year, and your expected rate of return and inflation. The calculator will model the drawdown phase of your retirement, showing you year-by-year balances.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Does the 4% rule work for early retirement?</h3>
+            <p>The 4% rule was designed for a 30-year traditional retirement. For early retirees planning for 40 to 50 years of withdrawals, a more conservative rate like 3% to 3.5% is often recommended to reduce the risk of outliving your money due to a longer timeline and inflation risk.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>What happens if inflation is higher than expected?</h3>
+            <p>High inflation erodes your purchasing power, meaning you have to withdraw more money to maintain your standard of living. This increases your withdrawal rate and significantly depletes your portfolio faster. Factoring in accurate inflation estimates is crucial for any retirement plan.</p>
+        </div>
+    </article>
+</main>
+
+<footer class="footer">
+    © 2026 FireMaths · A <a href="https://gab.ae" target="_blank" rel="noopener">GAB Ventures</a> property. Not investment advice. All information for educational purposes only.
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const inputs = {
+            portfolio: document.getElementById('portfolio'),
+            withdrawal: document.getElementById('withdrawal'),
+            returns: document.getElementById('returns'),
+            inflation: document.getElementById('inflation'),
+            volatility: document.getElementById('volatility')
+        };
+
+        const outputs = {
+            years: document.getElementById('res-years'),
+            success: document.getElementById('res-success')
+        };
+
+        const canvas = document.getElementById('portfolioChart');
+        const ctx = canvas.getContext('2d');
+
+        // Setup high-DPI canvas
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            ctx.scale(dpr, dpr);
+            canvas.style.width = `${rect.width}px`;
+            canvas.style.height = `${rect.height}px`;
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            calculate();
+        });
+
+        // Box-Muller transform for normal distribution
+        function randomNormal() {
+            let u = 0, v = 0;
+            while(u === 0) u = Math.random();
+            while(v === 0) v = Math.random();
+            return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+        }
+
+        function calculate() {
+            const initialPortfolio = parseFloat(inputs.portfolio.value) || 0;
+            const initialWithdrawal = parseFloat(inputs.withdrawal.value) || 0;
+            const expectedReturn = (parseFloat(inputs.returns.value) || 0) / 100;
+            const inflationRate = (parseFloat(inputs.inflation.value) || 0) / 100;
+            const volatility = (parseFloat(inputs.volatility.value) || 0) / 100;
+
+            const MAX_YEARS = 50;
+
+            // 1. Deterministic Calculation (Average Returns)
+            let balance = initialPortfolio;
+            let withdrawal = initialWithdrawal;
+            let yearsLasted = 0;
+            const averageTrajectory = [balance];
+
+            for (let i = 1; i <= MAX_YEARS; i++) {
+                if (balance <= 0) break;
+
+                // Withdraw at start of year
+                balance -= withdrawal;
+                if (balance < 0) balance = 0;
+
+                // Grow remaining balance
+                balance *= (1 + expectedReturn);
+
+                averageTrajectory.push(balance);
+
+                // Adjust withdrawal for inflation for next year
+                withdrawal *= (1 + inflationRate);
+                yearsLasted = i;
+            }
+
+            if (balance > 0) {
+                outputs.years.textContent = `${MAX_YEARS}+ Years`;
+            } else {
+                outputs.years.textContent = `${yearsLasted} Years`;
+            }
+
+            // 2. Monte Carlo Simulation
+            const SIMULATIONS = 1000;
+            let successCount = 0;
+
+            for (let s = 0; s < SIMULATIONS; s++) {
+                let simBalance = initialPortfolio;
+                let simWithdrawal = initialWithdrawal;
+                let failed = false;
+
+                for (let i = 1; i <= 30; i++) { // Test for 30-year success
+                    if (simBalance <= 0) {
+                        failed = true;
+                        break;
+                    }
+
+                    simBalance -= simWithdrawal;
+                    if (simBalance <= 0) {
+                        failed = true;
+                        break;
+                    }
+
+                    // Random return based on normal distribution
+                    const randomReturn = expectedReturn + (randomNormal() * volatility);
+                    simBalance *= (1 + randomReturn);
+
+                    simWithdrawal *= (1 + inflationRate);
+                }
+
+                if (!failed) successCount++;
+            }
+
+            const successRate = Math.round((successCount / SIMULATIONS) * 100);
+            outputs.success.textContent = `${successRate}%`;
+
+            // Color code success rate
+            if (successRate >= 90) {
+                outputs.success.style.color = '#4ade80'; // Green
+            } else if (successRate >= 75) {
+                outputs.success.style.color = '#D4A017'; // Yellow
+            } else {
+                outputs.success.style.color = '#f87171'; // Red
+            }
+
+            // 3. Draw Chart
+            drawChart(averageTrajectory, initialPortfolio, MAX_YEARS);
+        }
+
+        function drawChart(data, maxVal, maxYears) {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            const padding = { top: 20, right: 20, bottom: 40, left: 60 };
+            const chartWidth = width - padding.left - padding.right;
+            const chartHeight = height - padding.top - padding.bottom;
+
+            // Determine Y max scale
+            const maxY = Math.max(maxVal * 1.2, ...data); // Give 20% headroom or max value if growing
+
+            // Draw axes
+            ctx.strokeStyle = '#152040';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+
+            // Y-axis grid lines
+            const ySteps = 5;
+            ctx.fillStyle = '#a0a8c0';
+            ctx.font = '12px "JetBrains Mono"';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
+
+            for (let i = 0; i <= ySteps; i++) {
+                const yPos = padding.top + chartHeight - (i / ySteps) * chartHeight;
+                const val = (i / ySteps) * maxY;
+
+                ctx.moveTo(padding.left, yPos);
+                ctx.lineTo(width - padding.right, yPos);
+
+                // Format Y axis labels (k/M)
+                let label = '';
+                if (val >= 1000000) label = '$' + (val/1000000).toFixed(1) + 'M';
+                else if (val >= 1000) label = '$' + Math.round(val/1000) + 'k';
+                else label = '$' + Math.round(val);
+
+                ctx.fillText(label, padding.left - 10, yPos);
+            }
+            ctx.stroke();
+
+            // X-axis labels
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            const xSteps = 5;
+            for (let i = 0; i <= xSteps; i++) {
+                const year = Math.round((i / xSteps) * maxYears);
+                const xPos = padding.left + (i / xSteps) * chartWidth;
+                ctx.fillText(`Year ${year}`, xPos, height - padding.bottom + 10);
+            }
+
+            // Draw line
+            ctx.beginPath();
+            ctx.strokeStyle = '#D4A017';
+            ctx.lineWidth = 3;
+
+            for (let i = 0; i < data.length; i++) {
+                const xPos = padding.left + (i / maxYears) * chartWidth;
+                const yPos = padding.top + chartHeight - (data[i] / maxY) * chartHeight;
+
+                if (i === 0) ctx.moveTo(xPos, yPos);
+                else ctx.lineTo(xPos, yPos);
+            }
+            ctx.stroke();
+
+            // Fill under line
+            ctx.lineTo(padding.left + ((data.length - 1) / maxYears) * chartWidth, padding.top + chartHeight);
+            ctx.lineTo(padding.left, padding.top + chartHeight);
+            ctx.closePath();
+
+            const gradient = ctx.createLinearGradient(0, padding.top, 0, height - padding.bottom);
+            gradient.addColorStop(0, 'rgba(212, 160, 23, 0.2)');
+            gradient.addColorStop(1, 'rgba(212, 160, 23, 0)');
+            ctx.fillStyle = gradient;
+            ctx.fill();
+        }
+
+        // Attach events
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', calculate);
+        });
+
+        // Init
+        resizeCanvas();
+        calculate();
+    });
+</script>
+
+</body>
+</html>

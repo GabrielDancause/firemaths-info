@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cost of Living Comparison Calculator by City | FireMaths</title>
+    <meta name="description" content="Think a $100k salary means the same everywhere? See exactly how much your paycheck shrinks or grows when you cross city lines and compare real living costs.">
+    <link rel="canonical" href="https://firemaths.info/cost-of-living-comparison.html">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G86C7NJG3F"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-G86C7NJG3F');</script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #060a12;
+            --card-bg: #0a1020;
+            --border-color: #152040;
+            --accent-color: #D4A017;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-danger: #ef4444;
+            --text-success: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Nav provided by nav.js but ensure space if needed, sticky nav logic already in nav.js, user requested explicit sticky nav inline so overriding/implementing */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(6, 10, 18, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sticky-nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .sticky-nav .brand {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        .sticky-nav .links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .sticky-nav a:hover {
+            color: var(--accent-color);
+        }
+
+        main.container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (min-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(212, 160, 23, 0.2);
+        }
+
+        .result-box {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(180deg, rgba(212, 160, 23, 0.1) 0%, rgba(10, 16, 32, 0) 100%);
+            border: 1px solid var(--accent-color);
+            border-radius: 12px;
+            margin-top: 1rem;
+        }
+
+        .result-label {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-diff {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .diff-pos { color: var(--text-danger); }
+        .diff-neg { color: var(--text-success); }
+
+        .breakdown-section {
+            margin-top: 3rem;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .bar-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .bar-labels span:last-child {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .bar-track {
+            height: 12px;
+            background-color: var(--bg-color);
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            border: 1px solid var(--border-color);
+        }
+
+        .bar-fill {
+            height: 100%;
+            transition: width 0.5s ease-out;
+        }
+
+        .bar-fill.base { background-color: #3b82f6; opacity: 0.8; }
+        .bar-fill.target { background-color: var(--accent-color); }
+
+        .comparison-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .legend-dot.base { background-color: #3b82f6; opacity: 0.8; }
+        .legend-dot.target { background-color: var(--accent-color); }
+
+        .faq-section {
+            margin-top: 4rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-q {
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+        }
+
+        .faq-a {
+            color: var(--text-muted);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 2rem; }
+            .result-value { font-size: 2.5rem; }
+            .sticky-nav { padding: 1rem; flex-direction: column; gap: 1rem; }
+            .sticky-nav .links { gap: 1rem; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="sticky-nav">
+        <a href="/" class="brand">FireMaths</a>
+        <div class="links">
+            <a href="/#studies">Studies</a>
+            <a href="/#tools">Tools</a>
+            <a href="/#guides">Guides</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header>
+            <h1>Cost of Living Comparison Calculator</h1>
+            <p class="subtitle">Enter your current city and salary to see how far it goes in another city. We use real data to compare housing, food, and daily expenses.</p>
+        </header>
+
+        <div class="calculator-grid">
+            <div class="card">
+                <h2>Your Details</h2>
+                <div class="input-group">
+                    <label for="salary">Current Salary ($)</label>
+                    <input type="number" id="salary" value="100000" min="0" step="1000">
+                </div>
+                <div class="input-group">
+                    <label for="base-city">Current City</label>
+                    <select id="base-city">
+                        <!-- Options populated by JS -->
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="target-city">Target City</label>
+                    <select id="target-city">
+                        <!-- Options populated by JS -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Equivalent Salary Needed</h2>
+                <div class="result-box">
+                    <div class="result-label">To maintain your lifestyle in <span id="target-city-name">...</span></div>
+                    <div class="result-value" id="equivalent-salary">$0</div>
+                    <div class="result-diff" id="salary-diff">...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card breakdown-section">
+            <h2>Cost Breakdown Comparison</h2>
+            <div class="comparison-legend">
+                <div class="legend-item"><div class="legend-dot base"></div><span id="legend-base-name">Current City</span></div>
+                <div class="legend-item"><div class="legend-dot target"></div><span id="legend-target-name">Target City</span></div>
+            </div>
+
+            <div class="bar-chart" id="chart-container">
+                <!-- Bars populated by JS -->
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-q">What is a cost of living comparison calculator?</div>
+                <div class="faq-a">A cost of living comparison calculator is a tool that helps you determine how much money you would need to earn in a different city to maintain your current standard of living. It compares the costs of housing, groceries, transportation, and other basic expenses between your current location and a target destination.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">How is the cost of living by city calculated?</div>
+                <div class="faq-a">The cost of living by city is calculated by compiling data on thousands of prices for various goods and services, including rent or mortgage payments, groceries, restaurants, local transportation, and utilities. These are weighted into an index, usually with a major city like New York serving as the baseline (100).</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">Why is doing a salary comparison between cities important?</div>
+                <div class="faq-a">A salary comparison between cities is crucial before accepting a job offer or moving, because a higher salary in a new city might actually result in a lower standard of living if the local costs (especially housing and taxes) are significantly higher than where you currently live.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">Are housing costs the biggest factor in cost of living differences?</div>
+                <div class="faq-a">Yes, housing (rent or home prices) is typically the largest single expense for most households and the factor that varies the most drastically between cities. For example, rent in tech hubs or financial centers can be 300% higher than in smaller midwestern cities, while food and utilities might only differ by 10-20%.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-q">How accurate is this cost of living data?</div>
+                <div class="faq-a">Our calculator uses crowd-sourced and scraped data from major global cost of living databases. While it provides a highly accurate aggregate baseline for comparison, your personal expenses may vary depending on your specific neighborhood choices, consumption habits, and family size.</div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        © 2026 FireMaths · A GAB Ventures property. Not investment advice. All information for educational purposes only. <a href="https://gab.ae" target="_blank" rel="noopener noreferrer">gab.ae</a>
+    </footer>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Cost of Living Comparison: How Far Does Your Salary Go in Different Cities?",
+      "description": "Think a $100k salary means the same everywhere? See exactly how much your paycheck shrinks or grows when you cross city lines.",
+      "datePublished": "2026-03-10",
+      "publisher": {
+        "@type": "Organization",
+        "name": "FireMaths",
+        "url": "https://firemaths.info"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a cost of living comparison calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A cost of living comparison calculator is a tool that helps you determine how much money you would need to earn in a different city to maintain your current standard of living. It compares the costs of housing, groceries, transportation, and other basic expenses between your current location and a target destination."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is the cost of living by city calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The cost of living by city is calculated by compiling data on thousands of prices for various goods and services, including rent or mortgage payments, groceries, restaurants, local transportation, and utilities. These are weighted into an index, usually with a major city like New York serving as the baseline (100)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is doing a salary comparison between cities important?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A salary comparison between cities is crucial before accepting a job offer or moving, because a higher salary in a new city might actually result in a lower standard of living if the local costs (especially housing and taxes) are significantly higher than where you currently live."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are housing costs the biggest factor in cost of living differences?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, housing (rent or home prices) is typically the largest single expense for most households and the factor that varies the most drastically between cities. For example, rent in tech hubs or financial centers can be 300% higher than in smaller midwestern cities, while food and utilities might only differ by 10-20%."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How accurate is this cost of living data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our calculator uses crowd-sourced and scraped data from major global cost of living databases. While it provides a highly accurate aggregate baseline for comparison, your personal expenses may vary depending on your specific neighborhood choices, consumption habits, and family size."
+          }
+        }
+      ]
+    }
+    </script>
+    <script>
+        const cityData = [
+  {
+    "city": "Zurich, Switzerland",
+    "col_index": 118.5,
+    "rent_index": 70.6,
+    "col_plus_rent": 97.1,
+    "groceries": 115.4,
+    "restaurant": 121.0,
+    "local_purchasing": 164.4
+  },
+  {
+    "city": "Geneva, Switzerland",
+    "col_index": 116.5,
+    "rent_index": 65.1,
+    "col_plus_rent": 93.6,
+    "groceries": 114.3,
+    "restaurant": 121.8,
+    "local_purchasing": 158.5
+  },
+  {
+    "city": "Basel, Switzerland",
+    "col_index": 112.4,
+    "rent_index": 49.6,
+    "col_plus_rent": 84.4,
+    "groceries": 110.4,
+    "restaurant": 114.9,
+    "local_purchasing": 183.7
+  },
+  {
+    "city": "Lausanne, Switzerland",
+    "col_index": 111.5,
+    "rent_index": 55.0,
+    "col_plus_rent": 86.3,
+    "groceries": 108.9,
+    "restaurant": 116.2,
+    "local_purchasing": 163.7
+  },
+  {
+    "city": "Lugano, Switzerland",
+    "col_index": 110.1,
+    "rent_index": 47.0,
+    "col_plus_rent": 81.9,
+    "groceries": 107.3,
+    "restaurant": 125.3,
+    "local_purchasing": 153.6
+  },
+  {
+    "city": "Bern, Switzerland",
+    "col_index": 110.0,
+    "rent_index": 46.8,
+    "col_plus_rent": 81.8,
+    "groceries": 107.3,
+    "restaurant": 110.2,
+    "local_purchasing": 174.4
+  },
+  {
+    "city": "New York, NY, United States",
+    "col_index": 100.0,
+    "rent_index": 100.0,
+    "col_plus_rent": 100.0,
+    "groceries": 100.0,
+    "restaurant": 100.0,
+    "local_purchasing": 100.0
+  },
+  {
+    "city": "Reykjavik, Iceland",
+    "col_index": 98.9,
+    "rent_index": 50.1,
+    "col_plus_rent": 77.1,
+    "groceries": 105.2,
+    "restaurant": 109.3,
+    "local_purchasing": 109.0
+  },
+  {
+    "city": "Honolulu, HI, United States",
+    "col_index": 98.2,
+    "rent_index": 63.9,
+    "col_plus_rent": 82.9,
+    "groceries": 114.8,
+    "restaurant": 99.9,
+    "local_purchasing": 96.0
+  },
+  {
+    "city": "San Francisco, CA, United States",
+    "col_index": 97.6,
+    "rent_index": 80.5,
+    "col_plus_rent": 90.0,
+    "groceries": 103.2,
+    "restaurant": 109.2,
+    "local_purchasing": 151.0
+  },
+  {
+    "city": "Tel Aviv-Yafo, Israel",
+    "col_index": 91.4,
+    "rent_index": 46.2,
+    "col_plus_rent": 71.2,
+    "groceries": 81.9,
+    "restaurant": 98.2,
+    "local_purchasing": 109.5
+  },
+  {
+    "city": "Seattle, WA, United States",
+    "col_index": 90.3,
+    "rent_index": 60.2,
+    "col_plus_rent": 76.9,
+    "groceries": 98.0,
+    "restaurant": 95.8,
+    "local_purchasing": 165.0
+  },
+  {
+    "city": "Oslo, Norway",
+    "col_index": 90.2,
+    "rent_index": 39.3,
+    "col_plus_rent": 67.5,
+    "groceries": 90.7,
+    "restaurant": 99.1,
+    "local_purchasing": 110.8
+  },
+  {
+    "city": "Singapore, Singapore",
+    "col_index": 87.7,
+    "rent_index": 73.1,
+    "col_plus_rent": 81.2,
+    "groceries": 77.3,
+    "restaurant": 55.5,
+    "local_purchasing": 105.5
+  },
+  {
+    "city": "London, United Kingdom",
+    "col_index": 87.5,
+    "rent_index": 70.1,
+    "col_plus_rent": 79.7,
+    "groceries": 68.9,
+    "restaurant": 89.7,
+    "local_purchasing": 117.5
+  },
+  {
+    "city": "Washington, DC, United States",
+    "col_index": 87.3,
+    "rent_index": 69.0,
+    "col_plus_rent": 79.1,
+    "groceries": 88.8,
+    "restaurant": 95.4,
+    "local_purchasing": 152.1
+  },
+  {
+    "city": "San Jose, CA, United States",
+    "col_index": 86.4,
+    "rent_index": 73.1,
+    "col_plus_rent": 80.5,
+    "groceries": 90.2,
+    "restaurant": 86.0,
+    "local_purchasing": 136.0
+  },
+  {
+    "city": "Boston, MA, United States",
+    "col_index": 86.2,
+    "rent_index": 77.7,
+    "col_plus_rent": 82.4,
+    "groceries": 91.4,
+    "restaurant": 91.3,
+    "local_purchasing": 143.9
+  },
+  {
+    "city": "Charleston, SC, United States",
+    "col_index": 86.0,
+    "rent_index": 58.2,
+    "col_plus_rent": 73.6,
+    "groceries": 96.3,
+    "restaurant": 101.8,
+    "local_purchasing": 118.0
+  },
+  {
+    "city": "Copenhagen, Denmark",
+    "col_index": 85.7,
+    "rent_index": 46.1,
+    "col_plus_rent": 68.0,
+    "groceries": 78.3,
+    "restaurant": 99.9,
+    "local_purchasing": 136.9
+  },
+  {
+    "city": "Bergen, Norway",
+    "col_index": 85.6,
+    "rent_index": 29.0,
+    "col_plus_rent": 60.3,
+    "groceries": 84.5,
+    "restaurant": 98.3,
+    "local_purchasing": 126.9
+  },
+  {
+    "city": "Oakland, CA, United States",
+    "col_index": 85.2,
+    "rent_index": 59.5,
+    "col_plus_rent": 73.7,
+    "groceries": 93.9,
+    "restaurant": 100.3,
+    "local_purchasing": 138.1
+  },
+  {
+    "city": "Trondheim, Norway",
+    "col_index": 84.9,
+    "rent_index": 29.8,
+    "col_plus_rent": 60.3,
+    "groceries": 88.0,
+    "restaurant": 89.8,
+    "local_purchasing": 127.6
+  },
+  {
+    "city": "Ramat Gan, Israel",
+    "col_index": 83.7,
+    "rent_index": 33.2,
+    "col_plus_rent": 61.2,
+    "groceries": 82.6,
+    "restaurant": 90.4,
+    "local_purchasing": 132.8
+  },
+  {
+    "city": "Berkeley, CA, United States",
+    "col_index": 83.5,
+    "rent_index": 67.4,
+    "col_plus_rent": 76.3,
+    "groceries": 97.8,
+    "restaurant": 77.4,
+    "local_purchasing": 166.0
+  },
+  {
+    "city": "Jerusalem, Israel",
+    "col_index": 83.0,
+    "rent_index": 40.2,
+    "col_plus_rent": 63.9,
+    "groceries": 74.5,
+    "restaurant": 90.2,
+    "local_purchasing": 110.7
+  },
+  {
+    "city": "Stavanger, Norway",
+    "col_index": 82.7,
+    "rent_index": 37.1,
+    "col_plus_rent": 62.4,
+    "groceries": 84.3,
+    "restaurant": 89.5,
+    "local_purchasing": 134.9
+  },
+  {
+    "city": "Amsterdam, Netherlands",
+    "col_index": 82.6,
+    "rent_index": 60.0,
+    "col_plus_rent": 72.5,
+    "groceries": 71.5,
+    "restaurant": 91.8,
+    "local_purchasing": 129.9
+  },
+  {
+    "city": "San Diego, CA, United States",
+    "col_index": 82.0,
+    "rent_index": 74.5,
+    "col_plus_rent": 78.7,
+    "groceries": 80.9,
+    "restaurant": 89.8,
+    "local_purchasing": 131.6
+  },
+  {
+    "city": "Anchorage, AK, United States",
+    "col_index": 81.5,
+    "rent_index": 36.9,
+    "col_plus_rent": 61.6,
+    "groceries": 87.9,
+    "restaurant": 85.4,
+    "local_purchasing": 145.1
+  },
+  {
+    "city": "Los Angeles, CA, United States",
+    "col_index": 81.5,
+    "rent_index": 64.6,
+    "col_plus_rent": 74.0,
+    "groceries": 87.1,
+    "restaurant": 88.2,
+    "local_purchasing": 117.0
+  },
+  {
+    "city": "Aalborg, Denmark",
+    "col_index": 80.9,
+    "rent_index": 24.7,
+    "col_plus_rent": 55.8,
+    "groceries": 79.2,
+    "restaurant": 93.1,
+    "local_purchasing": 151.8
+  },
+  {
+    "city": "Luxembourg, Luxembourg",
+    "col_index": 80.6,
+    "rent_index": 54.8,
+    "col_plus_rent": 69.1,
+    "groceries": 78.5,
+    "restaurant": 90.7,
+    "local_purchasing": 147.2
+  },
+  {
+    "city": "Haifa, Israel",
+    "col_index": 80.0,
+    "rent_index": 23.6,
+    "col_plus_rent": 54.9,
+    "groceries": 77.2,
+    "restaurant": 91.6,
+    "local_purchasing": 128.9
+  },
+  {
+    "city": "Irvine, CA, United States",
+    "col_index": 79.6,
+    "rent_index": 69.9,
+    "col_plus_rent": 75.2,
+    "groceries": 84.2,
+    "restaurant": 85.9,
+    "local_purchasing": 145.5
+  }
+];
+
+        const elements = {
+            salaryInput: document.getElementById('salary'),
+            baseCitySelect: document.getElementById('base-city'),
+            targetCitySelect: document.getElementById('target-city'),
+            targetCityName: document.getElementById('target-city-name'),
+            equivalentSalary: document.getElementById('equivalent-salary'),
+            salaryDiff: document.getElementById('salary-diff'),
+            chartContainer: document.getElementById('chart-container'),
+            legendBaseName: document.getElementById('legend-base-name'),
+            legendTargetName: document.getElementById('legend-target-name')
+        };
+
+        const formatCurrency = (num) => {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                maximumFractionDigits: 0
+            }).format(num);
+        };
+
+        const populateDropdowns = () => {
+            // Sort alphabetically for dropdown
+            const sortedCities = [...cityData].sort((a, b) => a.city.localeCompare(b.city));
+
+            let optionsHTML = '';
+            sortedCities.forEach(c => {
+                optionsHTML += `<option value="${c.city}">${c.city}</option>`;
+            });
+
+            elements.baseCitySelect.innerHTML = optionsHTML;
+            elements.targetCitySelect.innerHTML = optionsHTML;
+
+            // Set defaults (e.g., NY as base, SF as target, or defaults from available list)
+            const ny = sortedCities.find(c => c.city.includes('New York'));
+            const sf = sortedCities.find(c => c.city.includes('San Francisco')) || sortedCities[0];
+
+            if (ny) elements.baseCitySelect.value = ny.city;
+            if (sf) elements.targetCitySelect.value = sf.city;
+        };
+
+        const calculateAndRender = () => {
+            const salary = parseFloat(elements.salaryInput.value) || 0;
+            const baseCityName = elements.baseCitySelect.value;
+            const targetCityName = elements.targetCitySelect.value;
+
+            const baseCity = cityData.find(c => c.city === baseCityName);
+            const targetCity = cityData.find(c => c.city === targetCityName);
+
+            if (!baseCity || !targetCity) return;
+
+            // Calculate equivalent salary based on overall Cost of Living + Rent index
+            const multiplier = targetCity.col_plus_rent / baseCity.col_plus_rent;
+            const targetSalary = salary * multiplier;
+
+            // Update DOM text
+            elements.targetCityName.textContent = targetCityName.split(',')[0];
+            elements.legendBaseName.textContent = baseCityName.split(',')[0];
+            elements.legendTargetName.textContent = targetCityName.split(',')[0];
+
+            // Format and animate number (simple update for now)
+            elements.equivalentSalary.textContent = formatCurrency(targetSalary);
+
+            const diff = targetSalary - salary;
+            const percentDiff = ((multiplier - 1) * 100).toFixed(1);
+
+            if (diff > 0) {
+                elements.salaryDiff.textContent = `You need ${formatCurrency(diff)} (+${percentDiff}%) more to maintain your lifestyle.`;
+                elements.salaryDiff.className = 'result-diff diff-pos';
+            } else if (diff < 0) {
+                elements.salaryDiff.textContent = `You need ${formatCurrency(Math.abs(diff))} (-${Math.abs(percentDiff).toFixed(1)}%) less to maintain your lifestyle.`;
+                elements.salaryDiff.className = 'result-diff diff-neg';
+            } else {
+                elements.salaryDiff.textContent = `The cost of living is identical.`;
+                elements.salaryDiff.className = 'result-diff';
+            }
+
+            renderChart(baseCity, targetCity);
+        };
+
+        const renderChart = (baseCity, targetCity) => {
+            const metrics = [
+                { key: 'col_plus_rent', label: 'Overall Cost + Rent' },
+                { key: 'col_index', label: 'Consumer Goods (Excl. Rent)' },
+                { key: 'rent_index', label: 'Rent / Housing' },
+                { key: 'groceries', label: 'Groceries' },
+                { key: 'restaurant', label: 'Dining Out' },
+                { key: 'local_purchasing', label: 'Local Purchasing Power' }
+            ];
+
+            // Find max value across both cities for all metrics to normalize bar widths
+            let maxVal = 0;
+            metrics.forEach(m => {
+                maxVal = Math.max(maxVal, baseCity[m.key], targetCity[m.key]);
+            });
+            // Add a little padding to maxVal
+            maxVal *= 1.1;
+
+            let html = '';
+            metrics.forEach(m => {
+                const baseVal = baseCity[m.key];
+                const targetVal = targetCity[m.key];
+
+                const basePct = (baseVal / maxVal) * 100;
+                const targetPct = (targetVal / maxVal) * 100;
+
+                html += `
+                    <div class="bar-item">
+                        <div class="bar-labels">
+                            <span>${m.label}</span>
+                            <span>${baseVal.toFixed(1)} vs ${targetVal.toFixed(1)}</span>
+                        </div>
+                        <div class="bar-track">
+                            <div class="bar-fill base" style="width: ${basePct}%;"></div>
+                        </div>
+                        <div class="bar-track">
+                            <div class="bar-fill target" style="width: ${targetPct}%;"></div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            elements.chartContainer.innerHTML = html;
+        };
+
+        // Event Listeners
+        elements.salaryInput.addEventListener('input', calculateAndRender);
+        elements.baseCitySelect.addEventListener('change', calculateAndRender);
+        elements.targetCitySelect.addEventListener('change', calculateAndRender);
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            populateDropdowns();
+            calculateAndRender();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+[
+  {
+    "city": "Zurich, Switzerland",
+    "col_index": 118.5,
+    "rent_index": 70.6,
+    "col_plus_rent": 97.1,
+    "groceries": 115.4,
+    "restaurant": 121.0,
+    "local_purchasing": 164.4
+  },
+  {
+    "city": "Geneva, Switzerland",
+    "col_index": 116.5,
+    "rent_index": 65.1,
+    "col_plus_rent": 93.6,
+    "groceries": 114.3,
+    "restaurant": 121.8,
+    "local_purchasing": 158.5
+  },
+  {
+    "city": "Basel, Switzerland",
+    "col_index": 112.4,
+    "rent_index": 49.6,
+    "col_plus_rent": 84.4,
+    "groceries": 110.4,
+    "restaurant": 114.9,
+    "local_purchasing": 183.7
+  },
+  {
+    "city": "Lausanne, Switzerland",
+    "col_index": 111.5,
+    "rent_index": 55.0,
+    "col_plus_rent": 86.3,
+    "groceries": 108.9,
+    "restaurant": 116.2,
+    "local_purchasing": 163.7
+  },
+  {
+    "city": "Lugano, Switzerland",
+    "col_index": 110.1,
+    "rent_index": 47.0,
+    "col_plus_rent": 81.9,
+    "groceries": 107.3,
+    "restaurant": 125.3,
+    "local_purchasing": 153.6
+  },
+  {
+    "city": "Bern, Switzerland",
+    "col_index": 110.0,
+    "rent_index": 46.8,
+    "col_plus_rent": 81.8,
+    "groceries": 107.3,
+    "restaurant": 110.2,
+    "local_purchasing": 174.4
+  },
+  {
+    "city": "New York, NY, United States",
+    "col_index": 100.0,
+    "rent_index": 100.0,
+    "col_plus_rent": 100.0,
+    "groceries": 100.0,
+    "restaurant": 100.0,
+    "local_purchasing": 100.0
+  },
+  {
+    "city": "Reykjavik, Iceland",
+    "col_index": 98.9,
+    "rent_index": 50.1,
+    "col_plus_rent": 77.1,
+    "groceries": 105.2,
+    "restaurant": 109.3,
+    "local_purchasing": 109.0
+  },
+  {
+    "city": "Honolulu, HI, United States",
+    "col_index": 98.2,
+    "rent_index": 63.9,
+    "col_plus_rent": 82.9,
+    "groceries": 114.8,
+    "restaurant": 99.9,
+    "local_purchasing": 96.0
+  },
+  {
+    "city": "San Francisco, CA, United States",
+    "col_index": 97.6,
+    "rent_index": 80.5,
+    "col_plus_rent": 90.0,
+    "groceries": 103.2,
+    "restaurant": 109.2,
+    "local_purchasing": 151.0
+  },
+  {
+    "city": "Tel Aviv-Yafo, Israel",
+    "col_index": 91.4,
+    "rent_index": 46.2,
+    "col_plus_rent": 71.2,
+    "groceries": 81.9,
+    "restaurant": 98.2,
+    "local_purchasing": 109.5
+  },
+  {
+    "city": "Seattle, WA, United States",
+    "col_index": 90.3,
+    "rent_index": 60.2,
+    "col_plus_rent": 76.9,
+    "groceries": 98.0,
+    "restaurant": 95.8,
+    "local_purchasing": 165.0
+  },
+  {
+    "city": "Oslo, Norway",
+    "col_index": 90.2,
+    "rent_index": 39.3,
+    "col_plus_rent": 67.5,
+    "groceries": 90.7,
+    "restaurant": 99.1,
+    "local_purchasing": 110.8
+  },
+  {
+    "city": "Singapore, Singapore",
+    "col_index": 87.7,
+    "rent_index": 73.1,
+    "col_plus_rent": 81.2,
+    "groceries": 77.3,
+    "restaurant": 55.5,
+    "local_purchasing": 105.5
+  },
+  {
+    "city": "London, United Kingdom",
+    "col_index": 87.5,
+    "rent_index": 70.1,
+    "col_plus_rent": 79.7,
+    "groceries": 68.9,
+    "restaurant": 89.7,
+    "local_purchasing": 117.5
+  },
+  {
+    "city": "Washington, DC, United States",
+    "col_index": 87.3,
+    "rent_index": 69.0,
+    "col_plus_rent": 79.1,
+    "groceries": 88.8,
+    "restaurant": 95.4,
+    "local_purchasing": 152.1
+  },
+  {
+    "city": "San Jose, CA, United States",
+    "col_index": 86.4,
+    "rent_index": 73.1,
+    "col_plus_rent": 80.5,
+    "groceries": 90.2,
+    "restaurant": 86.0,
+    "local_purchasing": 136.0
+  },
+  {
+    "city": "Boston, MA, United States",
+    "col_index": 86.2,
+    "rent_index": 77.7,
+    "col_plus_rent": 82.4,
+    "groceries": 91.4,
+    "restaurant": 91.3,
+    "local_purchasing": 143.9
+  },
+  {
+    "city": "Charleston, SC, United States",
+    "col_index": 86.0,
+    "rent_index": 58.2,
+    "col_plus_rent": 73.6,
+    "groceries": 96.3,
+    "restaurant": 101.8,
+    "local_purchasing": 118.0
+  },
+  {
+    "city": "Copenhagen, Denmark",
+    "col_index": 85.7,
+    "rent_index": 46.1,
+    "col_plus_rent": 68.0,
+    "groceries": 78.3,
+    "restaurant": 99.9,
+    "local_purchasing": 136.9
+  },
+  {
+    "city": "Bergen, Norway",
+    "col_index": 85.6,
+    "rent_index": 29.0,
+    "col_plus_rent": 60.3,
+    "groceries": 84.5,
+    "restaurant": 98.3,
+    "local_purchasing": 126.9
+  },
+  {
+    "city": "Oakland, CA, United States",
+    "col_index": 85.2,
+    "rent_index": 59.5,
+    "col_plus_rent": 73.7,
+    "groceries": 93.9,
+    "restaurant": 100.3,
+    "local_purchasing": 138.1
+  },
+  {
+    "city": "Trondheim, Norway",
+    "col_index": 84.9,
+    "rent_index": 29.8,
+    "col_plus_rent": 60.3,
+    "groceries": 88.0,
+    "restaurant": 89.8,
+    "local_purchasing": 127.6
+  },
+  {
+    "city": "Ramat Gan, Israel",
+    "col_index": 83.7,
+    "rent_index": 33.2,
+    "col_plus_rent": 61.2,
+    "groceries": 82.6,
+    "restaurant": 90.4,
+    "local_purchasing": 132.8
+  },
+  {
+    "city": "Berkeley, CA, United States",
+    "col_index": 83.5,
+    "rent_index": 67.4,
+    "col_plus_rent": 76.3,
+    "groceries": 97.8,
+    "restaurant": 77.4,
+    "local_purchasing": 166.0
+  },
+  {
+    "city": "Jerusalem, Israel",
+    "col_index": 83.0,
+    "rent_index": 40.2,
+    "col_plus_rent": 63.9,
+    "groceries": 74.5,
+    "restaurant": 90.2,
+    "local_purchasing": 110.7
+  },
+  {
+    "city": "Stavanger, Norway",
+    "col_index": 82.7,
+    "rent_index": 37.1,
+    "col_plus_rent": 62.4,
+    "groceries": 84.3,
+    "restaurant": 89.5,
+    "local_purchasing": 134.9
+  },
+  {
+    "city": "Amsterdam, Netherlands",
+    "col_index": 82.6,
+    "rent_index": 60.0,
+    "col_plus_rent": 72.5,
+    "groceries": 71.5,
+    "restaurant": 91.8,
+    "local_purchasing": 129.9
+  },
+  {
+    "city": "San Diego, CA, United States",
+    "col_index": 82.0,
+    "rent_index": 74.5,
+    "col_plus_rent": 78.7,
+    "groceries": 80.9,
+    "restaurant": 89.8,
+    "local_purchasing": 131.6
+  },
+  {
+    "city": "Anchorage, AK, United States",
+    "col_index": 81.5,
+    "rent_index": 36.9,
+    "col_plus_rent": 61.6,
+    "groceries": 87.9,
+    "restaurant": 85.4,
+    "local_purchasing": 145.1
+  },
+  {
+    "city": "Los Angeles, CA, United States",
+    "col_index": 81.5,
+    "rent_index": 64.6,
+    "col_plus_rent": 74.0,
+    "groceries": 87.1,
+    "restaurant": 88.2,
+    "local_purchasing": 117.0
+  },
+  {
+    "city": "Aalborg, Denmark",
+    "col_index": 80.9,
+    "rent_index": 24.7,
+    "col_plus_rent": 55.8,
+    "groceries": 79.2,
+    "restaurant": 93.1,
+    "local_purchasing": 151.8
+  },
+  {
+    "city": "Luxembourg, Luxembourg",
+    "col_index": 80.6,
+    "rent_index": 54.8,
+    "col_plus_rent": 69.1,
+    "groceries": 78.5,
+    "restaurant": 90.7,
+    "local_purchasing": 147.2
+  },
+  {
+    "city": "Haifa, Israel",
+    "col_index": 80.0,
+    "rent_index": 23.6,
+    "col_plus_rent": 54.9,
+    "groceries": 77.2,
+    "restaurant": 91.6,
+    "local_purchasing": 128.9
+  },
+  {
+    "city": "Irvine, CA, United States",
+    "col_index": 79.6,
+    "rent_index": 69.9,
+    "col_plus_rent": 75.2,
+    "groceries": 84.2,
+    "restaurant": 85.9,
+    "local_purchasing": 145.5
+  }
+]
